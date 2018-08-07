@@ -116,7 +116,8 @@ public class JdlFuncionarios extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        pack();
+        setSize(new java.awt.Dimension(416, 362));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

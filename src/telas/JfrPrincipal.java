@@ -22,7 +22,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
         produtos = new javax.swing.JMenuItem();
         adicionais = new javax.swing.JMenu();
         funcionarios = new javax.swing.JMenuItem();
-        formasDePagamento = new javax.swing.JMenuItem();
         fianceiro = new javax.swing.JMenu();
         contasReceber = new javax.swing.JMenuItem();
         relatorios = new javax.swing.JMenu();
@@ -118,18 +117,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
             }
         });
         adicionais.add(funcionarios);
-
-        formasDePagamento.setBackground(new java.awt.Color(255, 255, 255));
-        formasDePagamento.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        formasDePagamento.setText("Formas de Pagamento");
-        formasDePagamento.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        formasDePagamento.setPreferredSize(new java.awt.Dimension(200, 50));
-        formasDePagamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                formasDePagamentoActionPerformed(evt);
-            }
-        });
-        adicionais.add(formasDePagamento);
 
         registros.add(adicionais);
 
@@ -334,17 +321,16 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private void funcionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionariosActionPerformed
 //        workers = new dlWorkers(this, false);
 //        workers.setVisible(true);
+
+          JdlFuncionarios jdlFuncionarios = new JdlFuncionarios(this, rootPaneCheckingEnabled);
+          jdlFuncionarios.setVisible(true);
+
     }//GEN-LAST:event_funcionariosActionPerformed
 
     private void produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produtosActionPerformed
 //        parts = new dlParts(this, false);
 //        parts.setVisible(true);
     }//GEN-LAST:event_produtosActionPerformed
-
-    private void formasDePagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formasDePagamentoActionPerformed
-//        paymentmethods = new dlPaymentMethods(this, false);
-//        paymentmethods.setVisible(true);
-    }//GEN-LAST:event_formasDePagamentoActionPerformed
 
     private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
 //        users = new dlUsers(this, false);
@@ -463,7 +449,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem contasReceber;
     private javax.swing.JMenuItem desconectar;
     private javax.swing.JMenu fianceiro;
-    private javax.swing.JMenuItem formasDePagamento;
     private javax.swing.JMenuItem funcionarios;
     private javax.swing.JLabel lbUserLogged;
     private javax.swing.JMenuBar menu;
