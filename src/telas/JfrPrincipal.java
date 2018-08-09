@@ -314,8 +314,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_pedidosActionPerformed
 
     private void clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesActionPerformed
-//        clients = new dlClients(this, false);
-//        clients.setVisible(true);
+        JdlClientes clientes = new JdlClientes(this, false);
+        clientes.setVisible(true);
     }//GEN-LAST:event_clientesActionPerformed
 
     private void funcionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionariosActionPerformed
