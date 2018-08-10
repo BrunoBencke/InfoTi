@@ -1,4 +1,4 @@
-package combos1;
+package apoio;
 
 public class ComboItens {
     private int codigo;

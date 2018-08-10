@@ -1,39 +1,46 @@
 package telas;
+
 import apoio.Criptografia;
+import apoio.HibernateUtil;
+import entidades.Usuario;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.awt.event.KeyEvent.VK_TAB;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.hibernate.Session;
+
 public class JfrLogin extends javax.swing.JFrame {
     
-//    Connection con = null;
-//    PreparedStatement pst = null;
-//    ResultSet rs = null;
-//    LoginDao lDao = new LoginDao();
+    Session sessao = HibernateUtil.getSessionFactory().openSession(); 
+     List resultado = null;
 
     public JfrLogin() throws ClassNotFoundException {
-        initComponents();
-//        con = ConectaBD.getInstance().getConnection();        
+        initComponents();           
     }
     
     public void login(){
-            JfrPrincipal tela = new JfrPrincipal();
-            tela.setVisible(true);
-            this.setVisible(false);
-//        UsuarioJpaController user = new UsuarioJpaController(EntityMan.getInstance());
-//        Criptografia c = new Criptografia();
-//        
-//        
-//        if (jtfUsuario.getText() == null || jtfSenha.getText() == null) {
-//            JOptionPane.showMessageDialog(this, "Preencha os dois campos!");
-//        }else{
-//            Usuario u = new Usuario();
-//            u.setNome(jtfUsuario.getText());
-//            u.setSenha(c.criptografa(jtfSenha.getText()));
-//            String usuario1[] = {u.getNome(),u.getSenha()};
-            
-        //}
+        JfrPrincipal tela = new JfrPrincipal();
+        tela.setVisible(true);
+        this.setVisible(false);
+        Criptografia c = new Criptografia();
+
+        if (jtfUsuario.getText() == null || jtfSenha.getText() == null) {
+            JOptionPane.showMessageDialog(this, "Preencha os dois campos!");
+        } else {
+            org.hibernate.Query q = sessao.createQuery("select nome,senha from Usuario");
+            resultado = q.list();
+            System.out.println(resultado.toString());
+            for (Object o : resultado) {
+                Usuario user = (Usuario) o;
+                if (jtfUsuario.getText() == user.getNome() && c.criptografa(jtfSenha.getText()) == user.getSenha()) {
+                    JfrPrincipal telaPrincipal = new JfrPrincipal();
+                    telaPrincipal.setVisible(true);
+                }
+            }
+
+        }
 //        String sql = "Select * from login where usuario = ? and senha = ?";
 //        try{            
 //            pst = con.prepareStatement(sql);

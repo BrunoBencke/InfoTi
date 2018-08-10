@@ -333,8 +333,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_produtosActionPerformed
 
     private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
-//        users = new dlUsers(this, false);
-//        users.setVisible(true);
+        JdlCadastroUsuarios usuarios = new JdlCadastroUsuarios(this, false);
+        usuarios.setVisible(true);
     }//GEN-LAST:event_usuarioActionPerformed
 
     private void desconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desconectarActionPerformed

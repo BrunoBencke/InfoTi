@@ -1,15 +1,20 @@
 package telas;
 
 import apoio.Dao;
-import apoio.HibernateUtilidades;
+import apoio.HibernateUtil;
 import entidades.Cliente;
+import entidades.Endereco;
 import entidades.MarcaProduto;
 import entidades.Produto;
 import java.math.BigDecimal;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class JdlClientes extends javax.swing.JDialog {
     
     Dao dao = new Dao();
+    HibernateUtil hibernate = new HibernateUtil();
 
     public JdlClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -73,25 +78,27 @@ public class JdlClientes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        Cliente c = new Cliente();
-//        c.setIdcliente(1);
-//        c.setNome("bruno");
-//        c.setSexo("Masculino");
-//        c.setSituacao(true);
-//        c.setTelefone("999636062");
-        HibernateUtilidades hibernate = new HibernateUtilidades();
-//        hibernate.getEntityManager().persist(c);
-//        //dao.salvar(c);
-        Produto p = new Produto();
-        p.setIdproduto(1);
-        p.setDescricao("teste");
-        p.setValor(BigDecimal.ZERO);
-        p.setEstoque(2);
-        p.setNome("Testando 1");
-        p.setSituacao(true);
-        MarcaProduto m = new MarcaProduto();
-        p.setIdmarcaProduto(m);
-        hibernate.getEntityManager().persist(p);
+        Cliente c = new Cliente();
+        Endereco e = new Endereco();
+        e.setIdendereco(1);
+        c.setIdcliente(1);
+        c.setNome("bruno");
+        c.setSexo("Masculino");
+        c.setSituacao(true);
+        c.setTelefone("999636062");
+        c.setIdendereco(e);
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Transaction t = sessao.beginTransaction();
+        try{
+        sessao.save(c);
+        
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        t.commit();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
