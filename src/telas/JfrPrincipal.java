@@ -22,6 +22,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         produtos = new javax.swing.JMenuItem();
         adicionais = new javax.swing.JMenu();
         funcionarios = new javax.swing.JMenuItem();
+        marcasProdutos = new javax.swing.JMenuItem();
         fianceiro = new javax.swing.JMenu();
         contasReceber = new javax.swing.JMenuItem();
         relatorios = new javax.swing.JMenu();
@@ -108,6 +109,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         funcionarios.setBackground(new java.awt.Color(255, 255, 255));
         funcionarios.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        funcionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Worker.png"))); // NOI18N
         funcionarios.setText("Funcionários");
         funcionarios.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         funcionarios.setPreferredSize(new java.awt.Dimension(200, 50));
@@ -117,6 +119,19 @@ public class JfrPrincipal extends javax.swing.JFrame {
             }
         });
         adicionais.add(funcionarios);
+
+        marcasProdutos.setBackground(new java.awt.Color(255, 255, 255));
+        marcasProdutos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        marcasProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/ServiceTypes.png"))); // NOI18N
+        marcasProdutos.setText("Marcas de Produtos");
+        marcasProdutos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        marcasProdutos.setPreferredSize(new java.awt.Dimension(200, 50));
+        marcasProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                marcasProdutosActionPerformed(evt);
+            }
+        });
+        adicionais.add(marcasProdutos);
 
         registros.add(adicionais);
 
@@ -319,12 +334,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesActionPerformed
 
     private void funcionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionariosActionPerformed
-//        workers = new dlWorkers(this, false);
-//        workers.setVisible(true);
-
-          JdlFuncionarios jdlFuncionarios = new JdlFuncionarios(this, rootPaneCheckingEnabled);
+          JdlFuncionarios jdlFuncionarios = new JdlFuncionarios(this, false);
           jdlFuncionarios.setVisible(true);
-
     }//GEN-LAST:event_funcionariosActionPerformed
 
     private void produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produtosActionPerformed
@@ -405,6 +416,11 @@ public class JfrPrincipal extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_miAllClientsActionPerformed
 
+    private void marcasProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcasProdutosActionPerformed
+        JdlMarcasProdutos marcas = new JdlMarcasProdutos(this, false);
+        marcas.setVisible(true);
+    }//GEN-LAST:event_marcasProdutosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -451,6 +467,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu fianceiro;
     private javax.swing.JMenuItem funcionarios;
     private javax.swing.JLabel lbUserLogged;
+    private javax.swing.JMenuItem marcasProdutos;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem miAllClients;
     private javax.swing.JMenuItem miAllOrders;

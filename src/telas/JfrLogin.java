@@ -15,17 +15,13 @@ public class JfrLogin extends javax.swing.JFrame {
 
     Session sessao = HibernateUtil.getSessionFactory().openSession();
     List resultado = null;
+    Criptografia c = new Criptografia();
 
     public JfrLogin() throws ClassNotFoundException {
         initComponents();
     }
 
-    public void login() {
-//        JfrPrincipal tela = new JfrPrincipal();
-//        tela.setVisible(true);
-        this.setVisible(false);
-        Criptografia c = new Criptografia();
-
+    public void login() {       
         if (jtfUsuario.getText().trim().length() == 0 || jtfSenha.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Preencha os dois campos!");
         } else {
@@ -42,27 +38,7 @@ public class JfrLogin extends javax.swing.JFrame {
                 }
             }
 
-        }
-//        String sql = "Select * from login where usuario = ? and senha = ?";
-//        try{            
-//            pst = con.prepareStatement(sql);
-//            pst.setString(1,jtfUsuario.getText());
-//            String senha = lDao.criptografa(jtfSenha.getText());
-//            pst.setString(2,senha);            
-//            rs = pst.executeQuery();
-//            if (rs.next()) {
-//                    FrmPrincipal tela = new FrmPrincipal();
-//                    tela.setVisible(true);
-//                    this.dispose();
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos!");
-//                jtfUsuario.setText("");
-//                jtfSenha.setText("");
-//                jtfUsuario.requestFocus();
-//            }
-//        }catch(SQLException erro){
-//            JOptionPane.showMessageDialog(null, "Erro no Banco de Dados!");
-//        }          
+        }   
     }
 
     @SuppressWarnings("unchecked")
