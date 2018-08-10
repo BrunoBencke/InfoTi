@@ -2,37 +2,29 @@ package apoio;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import org.hibernate.Session;
 
 public class Dao<T> {
 
-//    HibernateUtil hibernate = new HibernateUtil();
-//
-//    private EntityTransaction getTransacao(EntityManager session) {
-//        EntityTransaction transaction = session.getTransaction();
-//        return transaction;
-//    }
-//
-//    /* Salva o objeto no banco de dados */
-//
-//    public T salvar(T object) {
-//        EntityTransaction transaction = null;
-//        EntityManager session = hibernate.getEntityManager();        
-//        try {
-//            transaction = getTransacao(session);
-//            transaction.begin();
-//            session.persist(object);
-//            transaction.commit();
-//            return object;
-//        } catch (Exception e) {
-//            //transaction.rollback();
-//            System.out.println("Erro ao inserir os dados!" + e.toString());
-//        }
-////        } finally {
-////            session.close();
-////        }
-//        return null;
-//    }
-//
+    Session sessao = HibernateUtil.getSessionFactory().openSession();
+
+    private EntityTransaction getTransacao(EntityManager session) {
+        EntityTransaction transaction = session.getTransaction();
+        return transaction;
+    }
+
+    /* Salva o objeto no banco de dados */
+
+    public T salvar(T object) {        
+        try {
+            sessao.persist(object);
+            return object;
+        } catch (Exception e) {           
+            System.out.println("Erro ao inserir os dados!" + e.toString());
+        }
+        return null;
+    }
+
 //    /* Faz a busca no banco pelo ID da entidade */
 //
 //    public T procurarPorId(Class classe, Integer id) {

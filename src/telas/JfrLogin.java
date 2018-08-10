@@ -12,31 +12,33 @@ import javax.swing.JOptionPane;
 import org.hibernate.Session;
 
 public class JfrLogin extends javax.swing.JFrame {
-    
-    Session sessao = HibernateUtil.getSessionFactory().openSession(); 
-     List resultado = null;
+
+    Session sessao = HibernateUtil.getSessionFactory().openSession();
+    List resultado = null;
 
     public JfrLogin() throws ClassNotFoundException {
-        initComponents();           
+        initComponents();
     }
-    
-    public void login(){
-        JfrPrincipal tela = new JfrPrincipal();
-        tela.setVisible(true);
+
+    public void login() {
+//        JfrPrincipal tela = new JfrPrincipal();
+//        tela.setVisible(true);
         this.setVisible(false);
         Criptografia c = new Criptografia();
 
-        if (jtfUsuario.getText() == null || jtfSenha.getText() == null) {
+        if (jtfUsuario.getText().trim().length() == 0 || jtfSenha.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Preencha os dois campos!");
         } else {
-            org.hibernate.Query q = sessao.createQuery("select nome,senha from Usuario");
+            org.hibernate.Query q = sessao.createQuery("from Usuario");
             resultado = q.list();
-            System.out.println(resultado.toString());
             for (Object o : resultado) {
                 Usuario user = (Usuario) o;
-                if (jtfUsuario.getText() == user.getNome() && c.criptografa(jtfSenha.getText()) == user.getSenha()) {
+                if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {
+                    System.out.println("user: " + user.getNome());
                     JfrPrincipal telaPrincipal = new JfrPrincipal();
                     telaPrincipal.setVisible(true);
+                } else {
+                    System.out.println("ferrou");
                 }
             }
 
@@ -62,6 +64,7 @@ public class JfrLogin extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(null, "Erro no Banco de Dados!");
 //        }          
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -156,7 +159,7 @@ public class JfrLogin extends javax.swing.JFrame {
         if (evt.getKeyChar() == VK_ENTER) {
             jtfSenha.requestFocus();
         }
-        if (evt.getKeyChar() == VK_TAB){
+        if (evt.getKeyChar() == VK_TAB) {
             jtfSenha.requestFocus();
         }
     }//GEN-LAST:event_jtfUsuarioKeyPressed
