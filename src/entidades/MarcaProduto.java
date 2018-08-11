@@ -5,7 +5,6 @@
  */
 package entidades;
 
-import apoio.HibernateUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -21,8 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -53,8 +50,6 @@ public class MarcaProduto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmarcaProduto")
     private List<Produto> produtoList;
 
-     private Session sessao;
-    private Transaction trans;
     public MarcaProduto() {
     }
 
@@ -125,45 +120,5 @@ public class MarcaProduto implements Serializable {
     public String toString() {
         return "entidades.MarcaProduto[ idmarcaProduto=" + idmarcaProduto + " ]";
     }
-
-    public void salvarMarcasProdutos(MarcaProduto marcaProduto) {
-
-        try {
-
-            sessao = HibernateUtil.getSessionFactory().openSession();
-            trans = sessao.beginTransaction();
-
-            sessao.save(marcaProduto);
-            trans.commit();
-
-        } catch (Exception e) {
-
-            System.out.println("Erro ao salvar a marca");
-        } finally {
-
-            sessao.close();
-        }
-
-    }
-
-    public void deletarMarcasProdutos(MarcaProduto marcaProduto) {
-
-        try {
-
-            sessao = HibernateUtil.getSessionFactory().openSession();
-            trans = sessao.beginTransaction();
-
-            sessao.delete(marcaProduto);
-            trans.commit();
-
-        } catch (Exception e) {
-
-            System.out.println("Erro ao deletar a marca");
-        } finally {
-
-            sessao.close();
-        }
-
-    }
-
+    
 }

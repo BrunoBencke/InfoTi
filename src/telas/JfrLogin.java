@@ -33,11 +33,9 @@ public class JfrLogin extends javax.swing.JFrame {
                     System.out.println("user: " + user.getNome());
                     JfrPrincipal telaPrincipal = new JfrPrincipal();
                     telaPrincipal.setVisible(true);
-                } else {
-                    System.out.println("ferrou");
                 }
             }
-
+            JOptionPane.showMessageDialog(this, "Usuário ou Senha Incorretos!");
         }   
     }
 
