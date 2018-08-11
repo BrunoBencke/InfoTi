@@ -21,7 +21,8 @@ public class JfrLogin extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void login() {       
+    public void login() {
+        
         if (jtfUsuario.getText().trim().length() == 0 || jtfSenha.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Preencha os dois campos!");
         } else {
@@ -33,6 +34,7 @@ public class JfrLogin extends javax.swing.JFrame {
                     System.out.println("user: " + user.getNome());
                     JfrPrincipal telaPrincipal = new JfrPrincipal();
                     telaPrincipal.setVisible(true);
+                    
                 }
             }
             JOptionPane.showMessageDialog(this, "Usuário ou Senha Incorretos!");
