@@ -187,9 +187,7 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
     }//GEN-LAST:event_dtnSalvarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-
         this.dispose();
-
     }//GEN-LAST:event_btnSairActionPerformed
 
     /**

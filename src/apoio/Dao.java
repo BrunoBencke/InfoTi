@@ -2,7 +2,10 @@ package apoio;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.transform.Transformers;
 
 public class Dao<T> {
 
@@ -13,54 +16,76 @@ public class Dao<T> {
         return transaction;
     }
 
-    /* Salva o objeto no banco de dados */
-
     public T salvar(T object) {        
         try {
-            sessao.persist(object);
-            return object;
-        } catch (Exception e) {           
-            System.out.println("Erro ao inserir os dados!" + e.toString());
+            Transaction t = sessao.beginTransaction();
+            sessao.save(object);
+            t.commit();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
         }
         return null;
     }
 
-//    /* Faz a busca no banco pelo ID da entidade */
+    /* Faz a busca no banco pelo ID da entidade */
+
+    public T procurarPorId(Class classe, Integer id) {
+        Transaction t = sessao.beginTransaction();
+        T object = null;
+        try {            
+//            org.hibernate.Query q = sessao.createQuery("from "+classe);
+//            q.setResultTransformer(Transformers.aliasToBean(classe.getClass().class));
+//            ArrayList<Usuario> resultado = new ArrayList<Usuario>();
+//            resultado = (ArrayList<Usuario>) q.list();            
+//            
+//            Object[][] dadosTabela = null;
+//            Object[] cabecalho = new Object[2];
+//        
+//            cabecalho[0] = "Id";
+//            cabecalho[1] = "Login";
 //
-//    public T procurarPorId(Class classe, Integer id) {
-//        EntityManager session = hibernate.getEntityManager();
-//        T object = null;
-//        try {
-//            object = (T) session.find(classe, id);
-//            return object;
-//        } catch (Exception e) {
-//            System.out.println("Erro ao inserir os dados!" + e.toString());
-//        } finally {
-//            session.close();
-//        }
-//        return null;
-//    }
+//            // cria matriz de acordo com nº de registros da tabela
+//            dadosTabela = new Object[resultado.size()][2];
 //
-//    /*Atualiza o objeto no banco de dados.     */
-//
-//    public T atualizar(T object) {
-//        EntityTransaction transaction = null;
-//        EntityManager session = hibernate.getEntityManager();
-//        try {
-//            transaction = getTransacao(session);
-//            transaction.begin();
-//            session.merge(object);
-//            transaction.commit();
-//            return object;
-//        } catch (Exception e) {
-//            transaction.rollback();
-//            System.out.println("Erro ao inserir os dados!" + e.toString());
-//        } finally {
-//            session.close();
-//        }
-//        return null;
-//    }
-//
+//            int lin = 0;
+//            for (int i = 0; i < resultado.size(); i++) {
+//                Usuario u = resultado.get(i);
+//                dadosTabela[lin][0] = u.getIdusuario();
+//                dadosTabela[lin][1] = u.getNome();
+//                lin++;
+//            }
+//            
+//            
+//            
+//            
+//            
+//            
+            return object;
+        } catch (Exception e) {
+            System.out.println("Erro ao Localizar Objeto!" + e.toString());
+        } finally {
+            sessao.close();
+        }
+        return null;
+    }
+
+    /*Atualiza o objeto no banco de dados.     */
+
+    public T atualizar(T object) {
+        try {
+            Transaction t = sessao.beginTransaction();
+            sessao.update(object);
+            t.commit();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return null;
+    }
+
 //    /*Remove a Entidade do banco de dados.*/
 //
 //    public T excluir(T object) {

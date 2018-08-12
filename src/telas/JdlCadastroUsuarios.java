@@ -1,44 +1,55 @@
 package telas;
-
+import apoio.Criptografia;
+import apoio.Dao;
 import apoio.HibernateUtil;
 import entidades.Usuario;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 
 public class JdlCadastroUsuarios extends javax.swing.JDialog {
+    
+    Dao d = new Dao();
+    Criptografia c = new Criptografia();
 
     public JdlCadastroUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         txfLogin.setEditable(false);
         txfSenha.setEditable(false);
+        btnSalvar.setEnabled(false);
+        btnExcluir.setEnabled(false);
         populaUsuarios();
     }
     
     
     public void populaUsuarios(){                
-     List resultado = null;
+     //List resultado = null;
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createQuery("select idusuario,nome from Usuario");
-            resultado = q.list();
+            org.hibernate.Query q = sessao.createSQLQuery("select idusuario,nome from Usuario");
+            q.setResultTransformer(Transformers.aliasToBean(Usuario.class));
+            ArrayList<Usuario> resultado = new ArrayList<Usuario>();
+            resultado = (ArrayList<Usuario>) q.list();            
             
             Object[][] dadosTabela = null;
             Object[] cabecalho = new Object[2];
         
-         cabecalho[0] = "Id";
-         cabecalho[1] = "Login";
+            cabecalho[0] = "Id";
+            cabecalho[1] = "Login";
 
-        // cria matriz de acordo com nº de registros da tabela
+            // cria matriz de acordo com nº de registros da tabela
             dadosTabela = new Object[resultado.size()][2];
 
-        int lin = 0;
-            for (Object o : resultado) {
-                Usuario u = (Usuario) o;
+            int lin = 0;
+            for (int i = 0; i < resultado.size(); i++) {
+                Usuario u = resultado.get(i);
                 dadosTabela[lin][0] = u.getIdusuario();
                 dadosTabela[lin][1] = u.getNome();
                 lin++;
@@ -46,7 +57,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
 
 
         // configuracoes adicionais no componente tabela
-        tabela.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
+        tblUsuarios.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
             @Override
             // quando retorno for FALSE, a tabela nao é editavel
             public boolean isCellEditable(int row, int column) {
@@ -55,12 +66,12 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         });
 
         // permite seleção de apenas uma linha da tabela
-        tabela.setSelectionMode(0);
+        tblUsuarios.setSelectionMode(0);
 
         // redimensiona as colunas de uma tabela
         TableColumn column = null;
-        for (int i = 0; i < tabela.getColumnCount(); i++) {
-            column = tabela.getColumnModel().getColumn(i);
+        for (int i = 0; i < tblUsuarios.getColumnCount(); i++) {
+            column = tblUsuarios.getColumnModel().getColumn(i);
             switch (i) {
                 case 0:
                     column.setPreferredWidth(17);
@@ -83,9 +94,9 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        dtnSalvar = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabela = new javax.swing.JTable();
+        tblUsuarios = new javax.swing.JTable();
         btnSair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -105,12 +116,22 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/editar.png"))); // NOI18N
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
 
-        dtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar.png"))); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar.png"))); // NOI18N
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -118,7 +139,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                 "Usuários"
             }
         ));
-        jScrollPane1.setViewportView(tabela);
+        jScrollPane1.setViewportView(tblUsuarios);
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -151,7 +172,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                                 .addGap(14, 14, 14)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(dtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -168,7 +189,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dtnSalvar)
+                    .addComponent(btnSalvar)
                     .addComponent(btnExcluir)
                     .addComponent(btnEditar)
                     .addComponent(btnNovo)
@@ -210,6 +231,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         txfLogin.setEditable(true);
         txfSenha.setEditable(true);
+        btnSalvar.setEnabled(true);
         btnEditar.setEnabled(false);
         btnExcluir.setEnabled(false);
     }//GEN-LAST:event_btnNovoActionPerformed
@@ -219,6 +241,27 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         txfSenha.setText("");
         this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Usuario user = new Usuario();
+        user.setNome(txfLogin.getText());
+        user.setSenha(c.criptografa(txfSenha.getText()));
+        d.salvar(user);
+        JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
+        txfLogin.setText("");
+        txfSenha.setText("");
+        populaUsuarios();
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int linha = tblUsuarios.getSelectedRow();
+        if (linha > -1) {
+            int codUsuario = Integer.valueOf(String.valueOf(tblUsuarios.getValueAt(linha, 0)));
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,12 +310,12 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;
-    private javax.swing.JButton dtnSalvar;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabela;
+    private javax.swing.JTable tblUsuarios;
     private javax.swing.JTextField txfLogin;
     private javax.swing.JTextField txfSenha;
     // End of variables declaration//GEN-END:variables
