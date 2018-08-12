@@ -24,20 +24,18 @@ public class JfrLogin extends javax.swing.JFrame {
     public void login() {
         
         if (jtfUsuario.getText().trim().length() == 0 || jtfSenha.getText().trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Preencha os dois campos!");
+            JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");
         } else {
             org.hibernate.Query q = sessao.createQuery("from Usuario");
             resultado = q.list();
             for (Object o : resultado) {
                 Usuario user = (Usuario) o;
                 if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {
-                    System.out.println("user: " + user.getNome());
-                    JfrPrincipal telaPrincipal = new JfrPrincipal();
-                    telaPrincipal.setVisible(true);
-                    
+                   this.setVisible(false);
+                    JfrPrincipal telaPrincipal = new JfrPrincipal();                    
+                    telaPrincipal.setVisible(true);                    
                 }
             }
-            JOptionPane.showMessageDialog(this, "Usuário ou Senha Incorretos!");
         }   
     }
 
