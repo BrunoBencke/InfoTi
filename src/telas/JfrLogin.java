@@ -21,22 +21,16 @@ public class JfrLogin extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void login() {
-        
-        if (jtfUsuario.getText().trim().length() == 0 || jtfSenha.getText().trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");
-        } else {
+    public boolean login() {
             org.hibernate.Query q = sessao.createQuery("from Usuario");
             resultado = q.list();
             for (Object o : resultado) {
                 Usuario user = (Usuario) o;
-                if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {
-                   this.setVisible(false);
-                    JfrPrincipal telaPrincipal = new JfrPrincipal();                    
-                    telaPrincipal.setVisible(true);                    
+                if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {                  
+                    return true;
                 }
             }
-        }   
+            return false;
     }
 
     @SuppressWarnings("unchecked")
@@ -122,7 +116,16 @@ public class JfrLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarActionPerformed
-        login();
+        if (login()) {
+            this.setVisible(false);
+            JfrPrincipal telaPrincipal = new JfrPrincipal();
+            telaPrincipal.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");
+            jtfUsuario.setText("");
+            jtfSenha.setText("");
+            jtfUsuario.requestFocus();
+        }
     }//GEN-LAST:event_btnAcessarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -149,7 +152,16 @@ public class JfrLogin extends javax.swing.JFrame {
 
     private void btnAcessarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAcessarKeyPressed
         if (evt.getKeyChar() == VK_ENTER) {
-            login();
+            if (login()) {
+                this.setVisible(false);
+                JfrPrincipal telaPrincipal = new JfrPrincipal();
+                telaPrincipal.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");
+                jtfUsuario.setText("");
+                jtfSenha.setText("");
+                jtfUsuario.requestFocus();
+            }
         }
     }//GEN-LAST:event_btnAcessarKeyPressed
 
