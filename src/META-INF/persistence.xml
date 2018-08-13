@@ -8,7 +8,6 @@
     <class>entidades.TipoPagamento</class>
     <class>entidades.FormaPagamento</class>
     <class>entidades.PessoaFisica</class>
-    <class>entidades.MarcaProduto</class>
     <class>entidades.Estado</class>
     <class>entidades.Endereco</class>
     <class>entidades.Cidade</class>
@@ -20,11 +19,13 @@
     <class>entidades.Funcionario</class>
     <class>entidades.Caixa</class>
     <class>entidades.PessoaJuridica</class>
+    <class>entidades.Marca_Produto</class>
+    <class>entidades.MarcaProduto</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/iNFO-Ti"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="123"/>
+      <property name="javax.persistence.jdbc.password" value="postgres"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
     </properties>
   </persistence-unit>

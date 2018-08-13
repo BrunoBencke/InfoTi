@@ -4,7 +4,6 @@ import dao.Dao;
 import apoio.HibernateUtil;
 import entidades.Cliente;
 import entidades.Endereco;
-import entidades.MarcaProduto;
 import entidades.Produto;
 import java.math.BigDecimal;
 import org.hibernate.HibernateException;

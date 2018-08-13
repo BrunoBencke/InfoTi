@@ -17,7 +17,8 @@ public class Dao<T> {
         return transaction;
     }
 
-    public T salvar(T object) {        
+    public T salvar(T object) {  
+        sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             Transaction t = sessao.beginTransaction();
             sessao.save(object);
@@ -31,7 +32,8 @@ public class Dao<T> {
     }
 
     public T atualizar(T object) {
-        try {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {            
             Transaction t = sessao.beginTransaction();
             sessao.update(object);
             t.commit();
@@ -43,25 +45,21 @@ public class Dao<T> {
         return null;
     }
 
-//    /*Remove a Entidade do banco de dados.*/
-//
-//    public T excluir(T object) {
-//        EntityTransaction transaction = null;
-//        EntityManager session = hibernate.getEntityManager();
-//        try {
-//            transaction.begin();
-//            session.remove(object);
-//            transaction.commit();
-//            return object;
-//        } catch (Exception e) {
-//            transaction.rollback();
-//            System.out.println("Erro ao inserir os dados!" + e.toString());
-//        } finally {
-//            session.close();
-//        }
-//        return null;
-//    }    
-        
+    public T excluir(T object) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Transaction t = sessao.beginTransaction();
+            sessao.delete(object);
+            t.commit();
+            return object;
+        } catch (Exception e) {
+            System.out.println("Erro ao Excluir Registro!" + e.toString());
+        } finally {
+            sessao.close();
+        }
+        return null;
+    }
+
     /**
      * Retorna a lista de itens salvo no banco de dados de acordo com a Entidade
      * passada como parâmetro.

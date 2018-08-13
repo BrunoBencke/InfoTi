@@ -17,7 +17,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         txfLogin.setEditable(false);
         txfSenha.setEditable(false);
         btnSalvar.setEnabled(false);
-        btnExcluir.setEnabled(false);
+        //btnExcluir.setEnabled(false);
         d.populaUsuarios(tblUsuarios);
     }
 
@@ -36,7 +36,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txfLogin = new javax.swing.JTextField();
-        txfSenha = new javax.swing.JTextField();
+        txfSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuários");
@@ -58,6 +58,11 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar.png"))); // NOI18N
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -113,8 +118,8 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txfSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                    .addComponent(txfLogin))))
+                                    .addComponent(txfSenha)
+                                    .addComponent(txfLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                         .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -134,11 +139,11 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -169,7 +174,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         txfSenha.setEditable(true);
         btnSalvar.setEnabled(true);
         btnEditar.setEnabled(false);
-        btnExcluir.setEnabled(false);
+        //btnExcluir.setEnabled(false);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -187,28 +192,48 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
             txfLogin.setText("");
             txfSenha.setText("");
-        } else if (botaopressionado.equals("editar")) {
-            if (txfLogin.getText().trim() == "" || txfSenha.getText().trim() == "") {
+        } else if (botaopressionado.equals("editar")) { 
+            //if (txfLogin.getText().trim() == "" || txfSenha.getText().trim() == "") {
                 user.setNome(txfLogin.getText());
-                user.setSenha(txfSenha.getText());
+                user.setSenha(c.criptografa(txfSenha.getText()));
                 d.atualizar(user);
-            }
+                JOptionPane.showMessageDialog(this, "Usuário Editado!");
+            //}
         }    
         d.populaUsuarios(tblUsuarios);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int linha = tblUsuarios.getSelectedRow();
+        int linha = tblUsuarios.getSelectedRow();        
         if (linha > -1) {
             botaopressionado = "editar";
             int codUsuario = Integer.valueOf(String.valueOf(tblUsuarios.getValueAt(linha, 0)));
-            user = (Usuario) d.procurarPorId(codUsuario);
+            user = d.procurarPorId(codUsuario);
+            txfLogin.setEditable(true);
+            txfSenha.setEditable(true);
+            btnSalvar.setEnabled(true);
             txfLogin.setText(user.getNome());
             txfSenha.setText(user.getSenha());
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int linha = tblUsuarios.getSelectedRow();
+        if (linha > -1) {
+            int resposta = 0;
+            int codUsuario = Integer.valueOf(String.valueOf(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0)));
+            resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
+            if (resposta == JOptionPane.YES_OPTION) {
+                user = d.procurarPorId(codUsuario);
+                d.excluir(user);
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            }
+            d.populaUsuarios(tblUsuarios);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,6 +289,6 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblUsuarios;
     private javax.swing.JTextField txfLogin;
-    private javax.swing.JTextField txfSenha;
+    private javax.swing.JPasswordField txfSenha;
     // End of variables declaration//GEN-END:variables
 }
