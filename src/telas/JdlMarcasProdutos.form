@@ -58,7 +58,7 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="tfdnome" min="-2" pref="142" max="-2" attributes="0"/>
+                  <Component id="txfnome" min="-2" pref="142" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -73,9 +73,9 @@
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Component id="btnEditar" min="-2" pref="46" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="dtnSalvar" min="-2" pref="46" max="-2" attributes="0"/>
+                          <Component id="btsalvar" min="-2" pref="46" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnExcluir" min="-2" pref="46" max="-2" attributes="0"/>
+                          <Component id="btexcluir" min="-2" pref="46" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnSair" min="-2" pref="46" max="-2" attributes="0"/>
                       </Group>
@@ -93,8 +93,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="dtnSalvar" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnExcluir" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btsalvar" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btexcluir" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnEditar" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnNovo" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSair" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -103,7 +103,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel7" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="tfdnome" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txfnome" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -120,6 +120,9 @@
               <Image iconType="3" name="/icones/adicionar.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnEditar">
           <Properties>
@@ -128,21 +131,21 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnExcluir">
+        <Component class="javax.swing.JButton" name="btexcluir">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icones/cancelar.png"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="dtnSalvar">
+        <Component class="javax.swing.JButton" name="btsalvar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icones/salvar.png"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dtnSalvarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btsalvarActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -152,7 +155,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="tblMarcaProduto">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="1" rowCount="0">
@@ -189,7 +192,7 @@
             <Property name="text" type="java.lang.String" value="Situa&#xe7;&#xe3;o :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfdnome">
+        <Component class="javax.swing.JTextField" name="txfnome">
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>

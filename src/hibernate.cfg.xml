@@ -45,7 +45,7 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/iNFO-Ti</property>
     <property name="hibernate.connection.username">postgres</property>
-    <property name="hibernate.connection.password">postgres</property>
+    <property name="hibernate.connection.password">123</property>
     <mapping class="entidades.Cliente"/>
     <mapping class="entidades.Caixa"/>
     <mapping class="entidades.Cidade"/>
