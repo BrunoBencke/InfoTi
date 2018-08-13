@@ -7,7 +7,7 @@ package telas;
 
 import apoio.Dao;
 import apoio.HibernateUtil;
-import entidades.MarcaProduto;
+import entidades.FormaPagamento;
 import entidades.Usuario;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -15,27 +15,26 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 
 /**
  *
- * @author User
+ * @author Christian
  */
-public class JdlMarcasProdutos extends javax.swing.JDialog {
+public class JdlFormaPagamento extends javax.swing.JDialog {
 
     /**
-     * Creates new form JdlMarcasProdutos
+     * Creates new form JdlFormaPagamento
      */
     Dao d = new Dao();
 
-    public JdlMarcasProdutos(java.awt.Frame parent, boolean modal) {
+    public JdlFormaPagamento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         txfnome.setEditable(false);
-        btsalvar.setEnabled(false);
-        btexcluir.setEnabled(false);
-        populaMarcaProduto();
+        btnSalvar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        populaFormaPagamento();
     }
 
     /**
@@ -50,18 +49,16 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btexcluir = new javax.swing.JButton();
-        btsalvar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblMarcaProduto = new javax.swing.JTable();
+        tblFormaPagamento = new javax.swing.JTable();
         btnSair = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         txfnome = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Marcas De Produtos");
+        setTitle("JdlFormaPagamento");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -79,24 +76,24 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             }
         });
 
-        btexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
 
-        btsalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar.png"))); // NOI18N
-        btsalvar.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar.png"))); // NOI18N
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btsalvarActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
             }
         });
 
-        tblMarcaProduto.setModel(new javax.swing.table.DefaultTableModel(
+        tblFormaPagamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Marcas"
+                "Forma Pagamento"
             }
         ));
-        jScrollPane1.setViewportView(tblMarcaProduto);
+        jScrollPane1.setViewportView(tblFormaPagamento);
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -105,44 +102,35 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel6.setText("Marca :");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel7.setText("Situação :");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
+        jLabel1.setText("Nome :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(18, 18, 18)
-                .addComponent(txfnome, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btsalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btexcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txfnome, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -150,20 +138,18 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btsalvar)
-                    .addComponent(btexcluir)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnExcluir)
                     .addComponent(btnEditar)
                     .addComponent(btnNovo)
                     .addComponent(btnSair))
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txfnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,81 +165,74 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        pack();
+        setSize(new java.awt.Dimension(441, 383));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsalvarActionPerformed
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        txfnome.setEditable(true);
+        btnSalvar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }//GEN-LAST:event_btnNovoActionPerformed
 
-        MarcaProduto marcaProduto = new MarcaProduto();
-        marcaProduto.setNome(txfnome.getText());
-        d.salvar(marcaProduto);
-        JOptionPane.showMessageDialog(this, "Marca de Produto Cadastrado!");
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int linha = tblFormaPagamento.getSelectedRow();
+        if (linha > -1) {
+            int codFormaPagamento = Integer.valueOf(String.valueOf(tblFormaPagamento.getValueAt(linha, 0)));
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        FormaPagamento formaPagamento = new FormaPagamento();
+        formaPagamento.setDescricao(txfnome.getText());
+        d.salvar(formaPagamento);
+        JOptionPane.showMessageDialog(this, "Forma Pagamento Cadastrado!");
         txfnome.setText("");
-        populaMarcaProduto();
-    }//GEN-LAST:event_btsalvarActionPerformed
+        populaFormaPagamento();
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         txfnome.setText("");
         this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
-    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-
-        txfnome.setEditable(true);
-        btsalvar.setEnabled(true);
-        btnEditar.setEnabled(false);
-        btexcluir.setEnabled(false);
-
-    }//GEN-LAST:event_btnNovoActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
-        int linha = tblMarcaProduto.getSelectedRow();
-        if (linha > -1) {
-            int codMarcaProduto = Integer.valueOf(String.valueOf(tblMarcaProduto.getValueAt(linha, 0)));
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
-        }
-
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    public void populaMarcaProduto() {
+    public void populaFormaPagamento() {
         //List resultado = null;
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createSQLQuery("select idmarca_produto,nome,situacao from marca_produto");
-            q.setResultTransformer(Transformers.aliasToBean(MarcaProduto.class));
-            ArrayList<MarcaProduto> resultado = new ArrayList<MarcaProduto>();
-            resultado = (ArrayList<MarcaProduto>) q.list();
+            org.hibernate.Query q = sessao.createSQLQuery("select idforma_pagamento,descricao from Forma_Pagamento");
+            q.setResultTransformer(Transformers.aliasToBean(FormaPagamento.class));
+            ArrayList<FormaPagamento> resultado = new ArrayList<FormaPagamento>();
+            resultado = (ArrayList<FormaPagamento>) q.list();
 
             Object[][] dadosTabela = null;
-            Object[] cabecalho = new Object[3];
+            Object[] cabecalho = new Object[2];
 
             cabecalho[0] = "Id";
             cabecalho[1] = "Nome";
-            cabecalho[2] = "Situação";
 
             // cria matriz de acordo com nº de registros da tabela
-            dadosTabela = new Object[resultado.size()][3];
+            dadosTabela = new Object[resultado.size()][2];
 
             int lin = 0;
             for (int i = 0; i < resultado.size(); i++) {
-                MarcaProduto m = resultado.get(i);
-                dadosTabela[lin][0] = m.getIdmarcaProduto();
-                dadosTabela[lin][1] = m.getNome();
-                dadosTabela[lin][2] = m.getSituacao();
+                FormaPagamento fp = resultado.get(i);
+                dadosTabela[lin][0] = fp.getIdformaPagamento();
+                dadosTabela[lin][1] = fp.getDescricao();
                 lin++;
             }
 
             // configuracoes adicionais no componente tabela
-            tblMarcaProduto.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
+            tblFormaPagamento.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
                 @Override
                 // quando retorno for FALSE, a tabela nao é editavel
                 public boolean isCellEditable(int row, int column) {
@@ -262,12 +241,12 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             });
 
             // permite seleção de apenas uma linha da tabela
-            tblMarcaProduto.setSelectionMode(0);
+            tblFormaPagamento.setSelectionMode(0);
 
             // redimensiona as colunas de uma tabela
             TableColumn column = null;
-            for (int i = 0; i < tblMarcaProduto.getColumnCount(); i++) {
-                column = tblMarcaProduto.getColumnModel().getColumn(i);
+            for (int i = 0; i < tblFormaPagamento.getColumnCount(); i++) {
+                column = tblFormaPagamento.getColumnModel().getColumn(i);
                 switch (i) {
                     case 0:
                         column.setPreferredWidth(17);
@@ -299,20 +278,20 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JdlMarcasProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdlFormaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JdlMarcasProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdlFormaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JdlMarcasProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdlFormaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JdlMarcasProdutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JdlFormaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JdlMarcasProdutos dialog = new JdlMarcasProdutos(new javax.swing.JFrame(), true);
+                JdlFormaPagamento dialog = new JdlFormaPagamento(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -325,17 +304,15 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btexcluir;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;
-    private javax.swing.JButton btsalvar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblMarcaProduto;
+    private javax.swing.JTable tblFormaPagamento;
     private javax.swing.JTextField txfnome;
     // End of variables declaration//GEN-END:variables
 }

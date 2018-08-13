@@ -23,6 +23,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         adicionais = new javax.swing.JMenu();
         funcionarios = new javax.swing.JMenuItem();
         marcasProdutos = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         fianceiro = new javax.swing.JMenu();
         contasReceber = new javax.swing.JMenuItem();
         relatorios = new javax.swing.JMenu();
@@ -132,6 +133,16 @@ public class JfrPrincipal extends javax.swing.JFrame {
             }
         });
         adicionais.add(marcasProdutos);
+
+        jMenuItem1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Service.png"))); // NOI18N
+        jMenuItem1.setText("Forma Pagamento");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        adicionais.add(jMenuItem1);
 
         registros.add(adicionais);
 
@@ -421,6 +432,13 @@ public class JfrPrincipal extends javax.swing.JFrame {
         marcas.setVisible(true);
     }//GEN-LAST:event_marcasProdutosActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        JdlFormaPagamento formaPagamento = new JdlFormaPagamento(this, false);
+        formaPagamento.setVisible(true);
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -466,6 +484,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem desconectar;
     private javax.swing.JMenu fianceiro;
     private javax.swing.JMenuItem funcionarios;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel lbUserLogged;
     private javax.swing.JMenuItem marcasProdutos;
     private javax.swing.JMenuBar menu;
