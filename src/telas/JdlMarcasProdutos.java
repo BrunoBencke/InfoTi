@@ -80,6 +80,11 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
         });
 
         btexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
+        btexcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btexcluirActionPerformed(evt);
+            }
+        });
 
         btsalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar.png"))); // NOI18N
         btsalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -189,12 +194,25 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
 
     private void btsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsalvarActionPerformed
 
-        MarcaProduto marcaProduto = new MarcaProduto();
-        marcaProduto.setNome(txfnome.getText());
-        d.salvar(marcaProduto);
-        JOptionPane.showMessageDialog(this, "Marca de Produto Cadastrado!");
-        txfnome.setText("");
-        populaMarcaProduto();
+        Session sessao = null;
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            MarcaProduto obj = new MarcaProduto();
+            obj.setNome(txfnome.getText());
+            obj.setSituacao(true);
+            sessao.save(obj);
+            t.commit();
+            
+            JOptionPane.showMessageDialog(this, "Marca Produto Cadastrado!");
+            
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+
     }//GEN-LAST:event_btsalvarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -222,6 +240,10 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btexcluirActionPerformed
 
     public void populaMarcaProduto() {
         //List resultado = null;

@@ -8,6 +8,7 @@ package telas;
 import apoio.Dao;
 import apoio.HibernateUtil;
 import entidades.FormaPagamento;
+import entidades.MarcaProduto;
 import entidades.Usuario;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 
 /**
@@ -77,6 +79,11 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
         });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar.png"))); // NOI18N
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -191,18 +198,33 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        FormaPagamento formaPagamento = new FormaPagamento();
-        formaPagamento.setDescricao(txfnome.getText());
-        d.salvar(formaPagamento);
-        JOptionPane.showMessageDialog(this, "Forma Pagamento Cadastrado!");
-        txfnome.setText("");
-        populaFormaPagamento();
+        Session sessao = null;
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            Transaction t = sessao.beginTransaction();
+
+            FormaPagamento obj = new FormaPagamento();
+            obj.setDescricao(txfnome.getText());
+            sessao.save(obj);
+            t.commit();
+
+            JOptionPane.showMessageDialog(this, "Forma Pagamento Cadastrado!");
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         txfnome.setText("");
         this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     public void populaFormaPagamento() {
         //List resultado = null;
