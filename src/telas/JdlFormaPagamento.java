@@ -5,7 +5,7 @@
  */
 package telas;
 
-import apoio.Dao;
+import dao.Dao;
 import apoio.HibernateUtil;
 import entidades.FormaPagamento;
 import entidades.MarcaProduto;

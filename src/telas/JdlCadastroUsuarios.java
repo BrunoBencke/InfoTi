@@ -1,21 +1,15 @@
 package telas;
 import apoio.Criptografia;
-import apoio.Dao;
-import apoio.HibernateUtil;
+import dao.UsuarioDao;
 import entidades.Usuario;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.transform.Transformers;
 
 public class JdlCadastroUsuarios extends javax.swing.JDialog {
     
-    Dao d = new Dao();
+    UsuarioDao d = new UsuarioDao();
     Criptografia c = new Criptografia();
+    String botaopressionado = "novo";
+    Usuario user = new Usuario();
 
     public JdlCadastroUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -24,66 +18,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         txfSenha.setEditable(false);
         btnSalvar.setEnabled(false);
         btnExcluir.setEnabled(false);
-        populaUsuarios();
-    }
-    
-    
-    public void populaUsuarios(){                
-     //List resultado = null;
-        try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createSQLQuery("select idusuario,nome from Usuario");
-            q.setResultTransformer(Transformers.aliasToBean(Usuario.class));
-            ArrayList<Usuario> resultado = new ArrayList<Usuario>();
-            resultado = (ArrayList<Usuario>) q.list();            
-            
-            Object[][] dadosTabela = null;
-            Object[] cabecalho = new Object[2];
-        
-            cabecalho[0] = "Id";
-            cabecalho[1] = "Login";
-
-            // cria matriz de acordo com nº de registros da tabela
-            dadosTabela = new Object[resultado.size()][2];
-
-            int lin = 0;
-            for (int i = 0; i < resultado.size(); i++) {
-                Usuario u = resultado.get(i);
-                dadosTabela[lin][0] = u.getIdusuario();
-                dadosTabela[lin][1] = u.getNome();
-                lin++;
-            }
-
-
-        // configuracoes adicionais no componente tabela
-        tblUsuarios.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
-            @Override
-            // quando retorno for FALSE, a tabela nao é editavel
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        });
-
-        // permite seleção de apenas uma linha da tabela
-        tblUsuarios.setSelectionMode(0);
-
-        // redimensiona as colunas de uma tabela
-        TableColumn column = null;
-        for (int i = 0; i < tblUsuarios.getColumnCount(); i++) {
-            column = tblUsuarios.getColumnModel().getColumn(i);
-            switch (i) {
-                case 0:
-                    column.setPreferredWidth(17);
-                    break;
-                case 1:
-                    column.setPreferredWidth(140);
-                    break;
-            }
-        }
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        }
+        d.populaUsuarios(tblUsuarios);
     }
 
     @SuppressWarnings("unchecked")
@@ -229,6 +164,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        botaopressionado = "novo";
         txfLogin.setEditable(true);
         txfSenha.setEditable(true);
         btnSalvar.setEnabled(true);
@@ -243,21 +179,32 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Usuario user = new Usuario();
-        user.setNome(txfLogin.getText());
-        user.setSenha(c.criptografa(txfSenha.getText()));
-        d.salvar(user);
-        JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
-        txfLogin.setText("");
-        txfSenha.setText("");
-        populaUsuarios();
+        if (botaopressionado.equals("novo")) {
+            user = new Usuario();
+            user.setNome(txfLogin.getText());
+            user.setSenha(c.criptografa(txfSenha.getText()));
+            d.salvar(user);
+            JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
+            txfLogin.setText("");
+            txfSenha.setText("");
+        } else if (botaopressionado.equals("editar")) {
+            if (txfLogin.getText().trim() == "" || txfSenha.getText().trim() == "") {
+                user.setNome(txfLogin.getText());
+                user.setSenha(txfSenha.getText());
+                d.atualizar(user);
+            }
+        }    
+        d.populaUsuarios(tblUsuarios);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int linha = tblUsuarios.getSelectedRow();
         if (linha > -1) {
+            botaopressionado = "editar";
             int codUsuario = Integer.valueOf(String.valueOf(tblUsuarios.getValueAt(linha, 0)));
-            
+            user = (Usuario) d.procurarPorId(codUsuario);
+            txfLogin.setText(user.getNome());
+            txfSenha.setText(user.getSenha());
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }

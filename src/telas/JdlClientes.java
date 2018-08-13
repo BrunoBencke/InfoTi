@@ -1,6 +1,6 @@
 package telas;
 
-import apoio.Dao;
+import dao.Dao;
 import apoio.HibernateUtil;
 import entidades.Cliente;
 import entidades.Endereco;

@@ -1,5 +1,6 @@
-package apoio;
+package dao;
 
+import apoio.HibernateUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import org.hibernate.HibernateException;
@@ -28,50 +29,6 @@ public class Dao<T> {
         }
         return null;
     }
-
-    /* Faz a busca no banco pelo ID da entidade */
-
-    public T procurarPorId(Class classe, Integer id) {
-        Transaction t = sessao.beginTransaction();
-        T object = null;
-        try {            
-//            org.hibernate.Query q = sessao.createQuery("from "+classe);
-//            q.setResultTransformer(Transformers.aliasToBean(classe.getClass().class));
-//            ArrayList<Usuario> resultado = new ArrayList<Usuario>();
-//            resultado = (ArrayList<Usuario>) q.list();            
-//            
-//            Object[][] dadosTabela = null;
-//            Object[] cabecalho = new Object[2];
-//        
-//            cabecalho[0] = "Id";
-//            cabecalho[1] = "Login";
-//
-//            // cria matriz de acordo com nº de registros da tabela
-//            dadosTabela = new Object[resultado.size()][2];
-//
-//            int lin = 0;
-//            for (int i = 0; i < resultado.size(); i++) {
-//                Usuario u = resultado.get(i);
-//                dadosTabela[lin][0] = u.getIdusuario();
-//                dadosTabela[lin][1] = u.getNome();
-//                lin++;
-//            }
-//            
-//            
-//            
-//            
-//            
-//            
-            return object;
-        } catch (Exception e) {
-            System.out.println("Erro ao Localizar Objeto!" + e.toString());
-        } finally {
-            sessao.close();
-        }
-        return null;
-    }
-
-    /*Atualiza o objeto no banco de dados.     */
 
     public T atualizar(T object) {
         try {
