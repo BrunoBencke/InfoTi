@@ -37,6 +37,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txfLogin = new javax.swing.JTextField();
         txfSenha = new javax.swing.JPasswordField();
+        btnLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuários");
@@ -92,6 +93,13 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
 
         jLabel2.setText("Senha :");
 
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/limpar.png"))); // NOI18N
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -114,13 +122,15 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txfSenha)
                                     .addComponent(txfLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                         .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -133,7 +143,8 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                     .addComponent(btnExcluir)
                     .addComponent(btnEditar)
                     .addComponent(btnNovo)
-                    .addComponent(btnSair))
+                    .addComponent(btnSair)
+                    .addComponent(btnLimpar))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -143,7 +154,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(txfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -173,7 +184,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         txfLogin.setEditable(true);
         txfSenha.setEditable(true);
         btnSalvar.setEnabled(true);
-        btnEditar.setEnabled(false);
+        //,btnEditar.setEnabled(false);
         //btnExcluir.setEnabled(false);
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -186,19 +197,27 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if (botaopressionado.equals("novo")) {
             user = new Usuario();
-            user.setNome(txfLogin.getText());
-            user.setSenha(c.criptografa(txfSenha.getText()));
-            d.salvar(user);
-            JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
-            txfLogin.setText("");
-            txfSenha.setText("");
-        } else if (botaopressionado.equals("editar")) { 
-            //if (txfLogin.getText().trim() == "" || txfSenha.getText().trim() == "") {
+            if (txfLogin.getText().trim().isEmpty() || txfSenha.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Digite os Dados!");
+            } else {
+                user.setNome(txfLogin.getText());
+                user.setSenha(c.criptografa(txfSenha.getText()));
+                d.salvar(user);
+                JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
+                txfLogin.setText("");
+                txfSenha.setText("");
+            }
+        } else if (botaopressionado.equals("editar")) {
+            if (txfLogin.getText().trim().isEmpty() || txfSenha.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Digite os Dados!");
+            } else {
                 user.setNome(txfLogin.getText());
                 user.setSenha(c.criptografa(txfSenha.getText()));
                 d.atualizar(user);
                 JOptionPane.showMessageDialog(this, "Usuário Editado!");
-            //}
+                txfLogin.setText("");
+                txfSenha.setText("");
+            }
         }    
         d.populaUsuarios(tblUsuarios);
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -234,6 +253,11 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
             d.populaUsuarios(tblUsuarios);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        txfLogin.setText("");
+        txfSenha.setText("");
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,6 +304,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;

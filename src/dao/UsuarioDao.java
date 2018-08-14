@@ -7,13 +7,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 
 public class UsuarioDao<T> extends Dao {
 
     public Usuario procurarPorId(Integer id) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
         Transaction t = sessao.beginTransaction();
         //T object = null;
         try {
@@ -42,7 +42,7 @@ public class UsuarioDao<T> extends Dao {
 
     public void populaUsuarios(JTable tblUsuarios) {
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             org.hibernate.Query q = sessao.createSQLQuery("select idusuario,nome from Usuario");
             q.setResultTransformer(Transformers.aliasToBean(Usuario.class));

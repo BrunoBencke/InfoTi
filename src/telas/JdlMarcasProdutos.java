@@ -179,10 +179,10 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
 
-        txfnome.setEditable(true);
-        btsalvar.setEnabled(true);
-        btnEditar.setEnabled(false);
-        btexcluir.setEnabled(false);
+//        txfnome.setEditable(true);
+//        btsalvar.setEnabled(true);
+//        btnEditar.setEnabled(false);
+//        btexcluir.setEnabled(false);
 
     }//GEN-LAST:event_btnNovoActionPerformed
 
