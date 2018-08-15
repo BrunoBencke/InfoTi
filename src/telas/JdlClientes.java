@@ -15,6 +15,7 @@ public class JdlClientes extends javax.swing.JDialog {
     HibernateUtil hibernate = new HibernateUtil();
     EnderecoDao enderecoDao = new EnderecoDao();
     MaskFormatter mask;
+    String botaopressionado = "novo";
 
     public JdlClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
