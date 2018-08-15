@@ -17,7 +17,6 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         txfLogin.setEditable(false);
         txfSenha.setEditable(false);
         btnSalvar.setEnabled(false);
-        //btnExcluir.setEnabled(false);
         d.populaUsuarios(tblUsuarios);
     }
 
@@ -184,8 +183,6 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         txfLogin.setEditable(true);
         txfSenha.setEditable(true);
         btnSalvar.setEnabled(true);
-        //,btnEditar.setEnabled(false);
-        //btnExcluir.setEnabled(false);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -200,12 +197,16 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
             if (txfLogin.getText().trim().isEmpty() || txfSenha.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Digite os Dados!");
             } else {
+                if (d.procurarPorNome(txfLogin.getText())) {        
                 user.setNome(txfLogin.getText());
                 user.setSenha(c.criptografa(txfSenha.getText()));
                 d.salvar(user);
                 JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
                 txfLogin.setText("");
                 txfSenha.setText("");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Usuário Existente!");
+                }
             }
         } else if (botaopressionado.equals("editar")) {
             if (txfLogin.getText().trim().isEmpty() || txfSenha.getText().trim().isEmpty()) {
@@ -232,7 +233,6 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
             txfSenha.setEditable(true);
             btnSalvar.setEnabled(true);
             txfLogin.setText(user.getNome());
-            txfSenha.setText(user.getSenha());
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -247,16 +247,19 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
             if (resposta == JOptionPane.YES_OPTION) {
                 user = d.procurarPorId(codUsuario);
                 d.excluir(user);
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
-            d.populaUsuarios(tblUsuarios);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
+        d.populaUsuarios(tblUsuarios);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         txfLogin.setText("");
         txfSenha.setText("");
+        txfLogin.setEditable(false);
+        txfSenha.setEditable(false);
+        btnSalvar.setEnabled(false);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     /**

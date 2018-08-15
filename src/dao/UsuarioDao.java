@@ -36,6 +36,28 @@ public class UsuarioDao<T> extends Dao {
         return null;
     }
 
+    public boolean procurarPorNome(String login) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            org.hibernate.Query q = sessao.createQuery("from Usuario");
+            resultado = (ArrayList<Usuario>) q.list();
+            int lin = 0;
+            for (int i = 0; i < resultado.size(); i++) {
+                Usuario u = resultado.get(i);
+                if (Objects.equals(u.getNome(), login)) {
+                    return false;
+                }
+                lin++;
+            }
+            return true;
+        } catch (Exception e) {
+            System.out.println("Erro ao Localizar Objeto!" + e.toString());
+        } finally {
+            sessao.close();
+        }
+        return false;
+    }
+
     public void populaUsuarios(JTable tblUsuarios) {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
