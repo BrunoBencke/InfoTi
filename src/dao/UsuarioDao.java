@@ -11,17 +11,15 @@ import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 
 public class UsuarioDao<T> extends Dao {
+    
+    ArrayList<Usuario> resultado;
 
     public Usuario procurarPorId(Integer id) {
         sessao = HibernateUtil.getSessionFactory().openSession();
         Transaction t = sessao.beginTransaction();
-        //T object = null;
         try {
             org.hibernate.Query q = sessao.createQuery("from Usuario");
-            //q.setResultTransformer(Transformers.aliasToBean(Usuario.class));
-            //ArrayList<Usuario> resultado = new ArrayList<Usuario>();
-            //resultado = (ArrayList<Usuario>) q.list();
-            ArrayList<Usuario> resultado = (ArrayList<Usuario>) q.list();
+            resultado = (ArrayList<Usuario>) q.list();
 
             int lin = 0;
             for (int i = 0; i < resultado.size(); i++) {
@@ -45,8 +43,8 @@ public class UsuarioDao<T> extends Dao {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             org.hibernate.Query q = sessao.createSQLQuery("select idusuario,nome from Usuario");
+            //ArrayList<Usuario> resultado = new ArrayList<Usuario>();
             q.setResultTransformer(Transformers.aliasToBean(Usuario.class));
-            ArrayList<Usuario> resultado = new ArrayList<Usuario>();
             resultado = (ArrayList<Usuario>) q.list();
 
             Object[][] dadosTabela = null;

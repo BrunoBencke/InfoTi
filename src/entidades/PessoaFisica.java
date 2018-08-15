@@ -7,7 +7,9 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,14 +19,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "pessoa_fisica")
@@ -56,6 +60,8 @@ public class PessoaFisica implements Serializable {
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false)
     private Cliente idcliente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpessoaFisica")
+    private List<Funcionario> funcionarioList;
 
     public PessoaFisica() {
     }
@@ -109,6 +115,15 @@ public class PessoaFisica implements Serializable {
 
     public void setIdcliente(Cliente idcliente) {
         this.idcliente = idcliente;
+    }
+
+    @XmlTransient
+    public List<Funcionario> getFuncionarioList() {
+        return funcionarioList;
+    }
+
+    public void setFuncionarioList(List<Funcionario> funcionarioList) {
+        this.funcionarioList = funcionarioList;
     }
 
     @Override

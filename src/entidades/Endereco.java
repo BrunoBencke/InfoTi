@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "endereco")
@@ -58,9 +58,9 @@ public class Endereco implements Serializable {
     @Basic(optional = false)
     @Column(name = "cep")
     private String cep;
-    @JoinColumn(name = "idcidade", referencedColumnName = "idcidade")
+    @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio")
     @ManyToOne(optional = false)
-    private Cidade idcidade;
+    private Municipio idmunicipio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idendereco")
     private List<Cliente> clienteList;
 
@@ -125,12 +125,12 @@ public class Endereco implements Serializable {
         this.cep = cep;
     }
 
-    public Cidade getIdcidade() {
-        return idcidade;
+    public Municipio getIdmunicipio() {
+        return idmunicipio;
     }
 
-    public void setIdcidade(Cidade idcidade) {
-        this.idcidade = idcidade;
+    public void setIdmunicipio(Municipio idmunicipio) {
+        this.idmunicipio = idmunicipio;
     }
 
     @XmlTransient

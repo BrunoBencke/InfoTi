@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "venda")
@@ -60,12 +60,15 @@ public class Venda implements Serializable {
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false)
     private Cliente idcliente;
-    @JoinColumn(name = "idforma_pagamento", referencedColumnName = "idtipo_pagamento")
+    @JoinColumn(name = "idforma_pagamento", referencedColumnName = "idforma_pagamento")
     @ManyToOne(optional = false)
     private FormaPagamento idformaPagamento;
-    @JoinColumn(name = "idfuncionario", referencedColumnName = "idfuncionario")
+    @JoinColumn(name = "idtipo_pagamento", referencedColumnName = "idtipo_pagamento")
     @ManyToOne(optional = false)
-    private Funcionario idfuncionario;
+    private TipoPagamento idtipoPagamento;
+    @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
+    @ManyToOne(optional = false)
+    private Usuario idusuario;
 
     public Venda() {
     }
@@ -129,12 +132,20 @@ public class Venda implements Serializable {
         this.idformaPagamento = idformaPagamento;
     }
 
-    public Funcionario getIdfuncionario() {
-        return idfuncionario;
+    public TipoPagamento getIdtipoPagamento() {
+        return idtipoPagamento;
     }
 
-    public void setIdfuncionario(Funcionario idfuncionario) {
-        this.idfuncionario = idfuncionario;
+    public void setIdtipoPagamento(TipoPagamento idtipoPagamento) {
+        this.idtipoPagamento = idtipoPagamento;
+    }
+
+    public Usuario getIdusuario() {
+        return idusuario;
+    }
+
+    public void setIdusuario(Usuario idusuario) {
+        this.idusuario = idusuario;
     }
 
     @Override

@@ -11,19 +11,19 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "forma_pagamento")
@@ -31,45 +31,38 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "FormaPagamento.findAll", query = "SELECT f FROM FormaPagamento f")
     , @NamedQuery(name = "FormaPagamento.findByIdformaPagamento", query = "SELECT f FROM FormaPagamento f WHERE f.idformaPagamento = :idformaPagamento")
-    , @NamedQuery(name = "FormaPagamento.findByDescricao", query = "SELECT f FROM FormaPagamento f WHERE f.descricao = :descricao")
-    , @NamedQuery(name = "FormaPagamento.findByIdtipoPagamento", query = "SELECT f FROM FormaPagamento f WHERE f.idtipoPagamento = :idtipoPagamento")})
+    , @NamedQuery(name = "FormaPagamento.findByDescricao", query = "SELECT f FROM FormaPagamento f WHERE f.descricao = :descricao")})
 public class FormaPagamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idforma_pagamento")
-    private int idformaPagamento;
+    private Integer idformaPagamento;
     @Basic(optional = false)
     @Column(name = "descricao")
     private String descricao;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "idtipo_pagamento")
-    private Integer idtipoPagamento;
-    @JoinColumn(name = "idtipo_pagamento", referencedColumnName = "idtipo_pagamento", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private TipoPagamento tipoPagamento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idformaPagamento")
     private List<Venda> vendaList;
 
     public FormaPagamento() {
     }
 
-    public FormaPagamento(Integer idtipoPagamento) {
-        this.idtipoPagamento = idtipoPagamento;
+    public FormaPagamento(Integer idformaPagamento) {
+        this.idformaPagamento = idformaPagamento;
     }
 
-    public FormaPagamento(Integer idtipoPagamento, int idformaPagamento, String descricao) {
-        this.idtipoPagamento = idtipoPagamento;
+    public FormaPagamento(Integer idformaPagamento, String descricao) {
         this.idformaPagamento = idformaPagamento;
         this.descricao = descricao;
     }
 
-    public int getIdformaPagamento() {
+    public Integer getIdformaPagamento() {
         return idformaPagamento;
     }
 
-    public void setIdformaPagamento(int idformaPagamento) {
+    public void setIdformaPagamento(Integer idformaPagamento) {
         this.idformaPagamento = idformaPagamento;
     }
 
@@ -79,22 +72,6 @@ public class FormaPagamento implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public Integer getIdtipoPagamento() {
-        return idtipoPagamento;
-    }
-
-    public void setIdtipoPagamento(Integer idtipoPagamento) {
-        this.idtipoPagamento = idtipoPagamento;
-    }
-
-    public TipoPagamento getTipoPagamento() {
-        return tipoPagamento;
-    }
-
-    public void setTipoPagamento(TipoPagamento tipoPagamento) {
-        this.tipoPagamento = tipoPagamento;
     }
 
     @XmlTransient
@@ -109,7 +86,7 @@ public class FormaPagamento implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idtipoPagamento != null ? idtipoPagamento.hashCode() : 0);
+        hash += (idformaPagamento != null ? idformaPagamento.hashCode() : 0);
         return hash;
     }
 
@@ -120,7 +97,7 @@ public class FormaPagamento implements Serializable {
             return false;
         }
         FormaPagamento other = (FormaPagamento) object;
-        if ((this.idtipoPagamento == null && other.idtipoPagamento != null) || (this.idtipoPagamento != null && !this.idtipoPagamento.equals(other.idtipoPagamento))) {
+        if ((this.idformaPagamento == null && other.idformaPagamento != null) || (this.idformaPagamento != null && !this.idformaPagamento.equals(other.idformaPagamento))) {
             return false;
         }
         return true;
@@ -128,7 +105,7 @@ public class FormaPagamento implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.FormaPagamento[ idtipoPagamento=" + idtipoPagamento + " ]";
+        return "entidades.FormaPagamento[ idformaPagamento=" + idformaPagamento + " ]";
     }
     
 }

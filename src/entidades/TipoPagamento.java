@@ -6,6 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,13 +16,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "tipo_pagamento")
@@ -45,8 +47,8 @@ public class TipoPagamento implements Serializable {
     @Basic(optional = false)
     @Column(name = "quantidade")
     private int quantidade;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "tipoPagamento")
-    private FormaPagamento formaPagamento;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipoPagamento")
+    private List<Venda> vendaList;
 
     public TipoPagamento() {
     }
@@ -85,12 +87,13 @@ public class TipoPagamento implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public FormaPagamento getFormaPagamento() {
-        return formaPagamento;
+    @XmlTransient
+    public List<Venda> getVendaList() {
+        return vendaList;
     }
 
-    public void setFormaPagamento(FormaPagamento formaPagamento) {
-        this.formaPagamento = formaPagamento;
+    public void setVendaList(List<Venda> vendaList) {
+        this.vendaList = vendaList;
     }
 
     @Override

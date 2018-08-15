@@ -1,24 +1,20 @@
 package telas;
-
 import dao.Dao;
 import apoio.HibernateUtil;
-import entidades.Cliente;
-import entidades.Endereco;
-import entidades.Produto;
+import dao.EnderecoDao;
 import static java.awt.event.KeyEvent.VK_ENTER;
-import java.math.BigDecimal;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public class JdlClientes extends javax.swing.JDialog {
     
     Dao dao = new Dao();
     HibernateUtil hibernate = new HibernateUtil();
+    EnderecoDao enderecoDao = new EnderecoDao();
 
     public JdlClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        enderecoDao.popularEstados(jcbEstado);
+        enderecoDao.popularCidades(jcbCidade, jcbEstado.getSelectedItem().toString());
     }
 
 
@@ -48,6 +44,10 @@ public class JdlClientes extends javax.swing.JDialog {
         lblData = new javax.swing.JLabel();
         lblCpf = new javax.swing.JLabel();
         lblRg1 = new javax.swing.JLabel();
+        lblCidade = new javax.swing.JLabel();
+        jcbCidade = new javax.swing.JComboBox<>();
+        lblEstado = new javax.swing.JLabel();
+        jcbEstado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -171,6 +171,35 @@ public class JdlClientes extends javax.swing.JDialog {
 
         lblRg1.setText("RG : ");
 
+        lblCidade.setText("Cidade :");
+
+        jcbCidade.setMaximumRowCount(500);
+        jcbCidade.setMaximumSize(new java.awt.Dimension(300, 300));
+        jcbCidade.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcbCidadeItemStateChanged(evt);
+            }
+        });
+        jcbCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbCidadeActionPerformed(evt);
+            }
+        });
+
+        lblEstado.setText("Estado :");
+
+        jcbEstado.setMaximumRowCount(1000);
+        jcbEstado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcbEstadoItemStateChanged(evt);
+            }
+        });
+        jcbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbEstadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -186,6 +215,14 @@ public class JdlClientes extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jcbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblData, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
@@ -233,7 +270,7 @@ public class JdlClientes extends javax.swing.JDialog {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbStatus))
                 .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -253,7 +290,13 @@ public class JdlClientes extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblData, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txfData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
+                .addGap(45, 45, 45)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,6 +412,23 @@ public class JdlClientes extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txfDataKeyPressed
 
+    private void jcbCidadeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbCidadeItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbCidadeItemStateChanged
+
+    private void jcbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbCidadeActionPerformed
+
+    private void jcbEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbEstadoItemStateChanged
+
+    }//GEN-LAST:event_jcbEstadoItemStateChanged
+
+    private void jcbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstadoActionPerformed
+            jcbCidade.removeAllItems();
+            enderecoDao.popularCidades(jcbCidade, jcbEstado.getSelectedItem().toString());
+    }//GEN-LAST:event_jcbEstadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -421,9 +481,13 @@ public class JdlClientes extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> jcbCidade;
+    public javax.swing.JComboBox<String> jcbEstado;
     private javax.swing.JComboBox<String> jcbTipo;
+    private javax.swing.JLabel lblCidade;
     private javax.swing.JLabel lblCpf;
     private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblRg;
     private javax.swing.JLabel lblRg1;

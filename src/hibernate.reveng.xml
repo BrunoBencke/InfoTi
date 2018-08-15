@@ -41,22 +41,21 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="iNFO-Ti" match-schema="public"/>
-  <table-filter match-name="estado"/>
-  <table-filter match-name="tipo_pagamento"/>
   <table-filter match-name="endereco"/>
-  <table-filter match-name="login"/>
-  <table-filter match-name="caixa"/>
   <table-filter match-name="usuario"/>
-  <table-filter match-name="pessoa_juridica"/>
-  <table-filter match-name="funcionario"/>
-  <table-filter match-name="marca_produto"/>
-  <table-filter match-name="produto"/>
-  <table-filter match-name="pessoa_fisica"/>
-  <table-filter match-name="titulo_pagar"/>
   <table-filter match-name="regiao"/>
-  <table-filter match-name="cidade"/>
-  <table-filter match-name="cliente"/>
-  <table-filter match-name="forma_pagamento"/>
-  <table-filter match-name="venda"/>
   <table-filter match-name="titulo"/>
+  <table-filter match-name="marca_produto"/>
+  <table-filter match-name="estado"/>
+  <table-filter match-name="forma_pagamento"/>
+  <table-filter match-name="municipio"/>
+  <table-filter match-name="pessoa_juridica"/>
+  <table-filter match-name="tipo_pagamento"/>
+  <table-filter match-name="funcionario"/>
+  <table-filter match-name="titulo_pagar"/>
+  <table-filter match-name="produto"/>
+  <table-filter match-name="cliente"/>
+  <table-filter match-name="venda"/>
+  <table-filter match-name="pessoa_fisica"/>
+  <table-filter match-name="caixa"/>
 </hibernate-reverse-engineering>

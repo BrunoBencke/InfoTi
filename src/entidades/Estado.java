@@ -6,26 +6,20 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "estado")
@@ -33,8 +27,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Estado.findAll", query = "SELECT e FROM Estado e")
     , @NamedQuery(name = "Estado.findByIdestado", query = "SELECT e FROM Estado e WHERE e.idestado = :idestado")
+    , @NamedQuery(name = "Estado.findByCodigouf", query = "SELECT e FROM Estado e WHERE e.codigouf = :codigouf")
     , @NamedQuery(name = "Estado.findByNome", query = "SELECT e FROM Estado e WHERE e.nome = :nome")
-    , @NamedQuery(name = "Estado.findByUf", query = "SELECT e FROM Estado e WHERE e.uf = :uf")})
+    , @NamedQuery(name = "Estado.findByUf", query = "SELECT e FROM Estado e WHERE e.uf = :uf")
+    , @NamedQuery(name = "Estado.findByRegiao", query = "SELECT e FROM Estado e WHERE e.regiao = :regiao")})
 public class Estado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,16 +40,17 @@ public class Estado implements Serializable {
     @Column(name = "idestado")
     private Integer idestado;
     @Basic(optional = false)
+    @Column(name = "codigouf")
+    private int codigouf;
+    @Basic(optional = false)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
     @Column(name = "uf")
     private String uf;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestado")
-    private List<Cidade> cidadeList;
-    @JoinColumn(name = "idregiao", referencedColumnName = "idregiao")
-    @ManyToOne(optional = false)
-    private Regiao idregiao;
+    @Basic(optional = false)
+    @Column(name = "regiao")
+    private int regiao;
 
     public Estado() {
     }
@@ -62,10 +59,12 @@ public class Estado implements Serializable {
         this.idestado = idestado;
     }
 
-    public Estado(Integer idestado, String nome, String uf) {
+    public Estado(Integer idestado, int codigouf, String nome, String uf, int regiao) {
         this.idestado = idestado;
+        this.codigouf = codigouf;
         this.nome = nome;
         this.uf = uf;
+        this.regiao = regiao;
     }
 
     public Integer getIdestado() {
@@ -74,6 +73,14 @@ public class Estado implements Serializable {
 
     public void setIdestado(Integer idestado) {
         this.idestado = idestado;
+    }
+
+    public int getCodigouf() {
+        return codigouf;
+    }
+
+    public void setCodigouf(int codigouf) {
+        this.codigouf = codigouf;
     }
 
     public String getNome() {
@@ -92,21 +99,12 @@ public class Estado implements Serializable {
         this.uf = uf;
     }
 
-    @XmlTransient
-    public List<Cidade> getCidadeList() {
-        return cidadeList;
+    public int getRegiao() {
+        return regiao;
     }
 
-    public void setCidadeList(List<Cidade> cidadeList) {
-        this.cidadeList = cidadeList;
-    }
-
-    public Regiao getIdregiao() {
-        return idregiao;
-    }
-
-    public void setIdregiao(Regiao idregiao) {
-        this.idregiao = idregiao;
+    public void setRegiao(int regiao) {
+        this.regiao = regiao;
     }
 
     @Override
