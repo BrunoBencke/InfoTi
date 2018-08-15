@@ -1,7 +1,7 @@
 package dao;
 
 import apoio.HibernateUtil;
-import entidades.MarcaProduto;
+import entidades.FormaPagamento;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.swing.JTable;
@@ -11,24 +11,23 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class MarcasProdutosDao extends Dao{
-    
-    
-    public MarcaProduto procurarPorId(Integer id) {
+public class FormaPagamentoDao extends Dao {
+
+    public FormaPagamento procurarPorId(Integer id) {
         sessao = HibernateUtil.getSessionFactory().openSession();
         Transaction t = sessao.beginTransaction();
         //T object = null;
         try {
-            org.hibernate.Query q = sessao.createQuery("from MarcaProduto");
+            org.hibernate.Query q = sessao.createQuery("from FormaPagamento");
             //q.setResultTransformer(Transformers.aliasToBean(Usuario.class));
             //ArrayList<Usuario> resultado = new ArrayList<Usuario>();
             //resultado = (ArrayList<Usuario>) q.list();
-            ArrayList<MarcaProduto> resultado = (ArrayList<MarcaProduto>) q.list();
+            ArrayList<FormaPagamento> resultado = (ArrayList<FormaPagamento>) q.list();
 
             int lin = 0;
             for (int i = 0; i < resultado.size(); i++) {
-                MarcaProduto u = resultado.get(i);
-                if (Objects.equals(u.getIdmarcaProduto(), id)) {
+                FormaPagamento u = resultado.get(i);
+                if (Objects.equals(u.getIdformaPagamento(), id)) {
                     return u;
                 }
                 lin++;
@@ -41,39 +40,30 @@ public class MarcasProdutosDao extends Dao{
         }
         return null;
     }
-    
-    
-    
-        public void populaMarcaProduto(JTable tabela) {
+
+    public void populaFormaPagamento(JTable tabela) {
         //List resultado = null;
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createQuery("from MarcaProduto");
-            ArrayList<MarcaProduto> resultado = new ArrayList<MarcaProduto>();
-            resultado = (ArrayList<MarcaProduto>) q.list();            
-            
+            org.hibernate.Query q = sessao.createQuery("from FormaPagamento");
+            ArrayList<FormaPagamento> resultado = new ArrayList<FormaPagamento>();
+            resultado = (ArrayList<FormaPagamento>) q.list();
+
             Object[][] dadosTabela = null;
-            Object[] cabecalho = new Object[3];
+            Object[] cabecalho = new Object[2];
 
             cabecalho[0] = "Id";
             cabecalho[1] = "Nome";
-            cabecalho[2] = "Situação";
-
+            
             // cria matriz de acordo com nº de registros da tabela
-            dadosTabela = new Object[resultado.size()][3];
+            dadosTabela = new Object[resultado.size()][2];
 
             int lin = 0;
             for (int i = 0; i < resultado.size(); i++) {
-                MarcaProduto m = resultado.get(i);
-                dadosTabela[lin][0] = m.getIdmarcaProduto();
-                dadosTabela[lin][1] = m.getNome();
-                if (resultado.get(i).getSituacao()) {
-                    dadosTabela[lin][2] = "Ativo";
-                }else{
-                    dadosTabela[lin][2] = "Inativo";
-                }
-                lin++;
+                FormaPagamento m = resultado.get(i);
+                dadosTabela[lin][0] = m.getIdformaPagamento();
+                dadosTabela[lin][1] = m.getDescricao();
             }
 
             // configuracoes adicionais no componente tabela
@@ -105,4 +95,5 @@ public class MarcasProdutosDao extends Dao{
             he.printStackTrace();
         }
     }
+
 }

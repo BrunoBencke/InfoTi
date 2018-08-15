@@ -1,4 +1,5 @@
 package telas;
+
 import dao.MarcasProdutosDao;
 import entidades.MarcaProduto;
 import javax.swing.JOptionPane;
@@ -12,9 +13,9 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
     public JdlMarcasProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-//        txfnome.setEditable(false);
-//        btsalvar.setEnabled(false);
-//        btexcluir.setEnabled(false);
+        txfnome.setEditable(false);
+        btsalvar.setEnabled(false);
+        btexcluir.setEnabled(true);
         d.populaMarcaProduto(tblMarcaProduto);
     }
 
@@ -163,11 +164,10 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Marca Cadastrada!");
             txfnome.setText("");
         } else if (botaopressionado.equals("editar")) {
-            //if (txfLogin.getText().trim() == "" || txfSenha.getText().trim() == "") {
             obj.setNome(txfnome.getText());
             d.atualizar(obj);
             JOptionPane.showMessageDialog(this, "Marca Editada!");
-            //}
+            txfnome.setText("");
         }
         d.populaMarcaProduto(tblMarcaProduto);
     }//GEN-LAST:event_btsalvarActionPerformed
@@ -179,22 +179,26 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
 
-//        txfnome.setEditable(true);
-//        btsalvar.setEnabled(true);
-//        btnEditar.setEnabled(false);
-//        btexcluir.setEnabled(false);
+        txfnome.setEditable(true);
+        btsalvar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btexcluir.setEnabled(false);
 
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int linha = tblMarcaProduto.getSelectedRow();        
+        txfnome.setEditable(true);
+        btsalvar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btexcluir.setEnabled(true);
+        int linha = tblMarcaProduto.getSelectedRow();
         if (linha > -1) {
             botaopressionado = "editar";
-            int codUsuario = Integer.valueOf(String.valueOf(tblMarcaProduto.getValueAt(linha, 0)));
-            obj = d.procurarPorId(codUsuario);
+            int codMarca = Integer.valueOf(String.valueOf(tblMarcaProduto.getValueAt(linha, 0)));
+            obj = d.procurarPorId(codMarca);
             txfnome.setText(obj.getNome());
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione uma Marca1 !", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Selecione uma Marca !", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -208,13 +212,11 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
                 obj = d.procurarPorId(codUsuario);
                 d.excluir(obj);
             } else {
-                JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Selecione um Marca!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
             d.populaMarcaProduto(tblMarcaProduto);
         }
     }//GEN-LAST:event_btexcluirActionPerformed
-
-
 
     /**
      * @param args the command line arguments

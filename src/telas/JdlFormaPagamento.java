@@ -7,6 +7,7 @@ package telas;
 
 import dao.Dao;
 import apoio.HibernateUtil;
+import dao.FormaPagamentoDao;
 import entidades.FormaPagamento;
 import entidades.MarcaProduto;
 import entidades.Usuario;
@@ -25,9 +26,9 @@ import org.hibernate.transform.Transformers;
  */
 public class JdlFormaPagamento extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JdlFormaPagamento
-     */
+    FormaPagamento formaPagamento = new FormaPagamento();
+    FormaPagamentoDao formaPagamentoDao = new FormaPagamentoDao();
+    String botaopressionado = "novo";
     Dao d = new Dao();
 
     public JdlFormaPagamento(java.awt.Frame parent, boolean modal) {
@@ -35,8 +36,9 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
         initComponents();
         txfnome.setEditable(false);
         btnSalvar.setEnabled(false);
-        btnExcluir.setEnabled(false);
-        populaFormaPagamento();
+        btnExcluir.setEnabled(true);
+
+        formaPagamentoDao.populaFormaPagamento(tblFormaPagamento);
     }
 
     /**
@@ -188,33 +190,36 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        txfnome.setEditable(true);
+        btnSalvar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        
         int linha = tblFormaPagamento.getSelectedRow();
         if (linha > -1) {
-            int codFormaPagamento = Integer.valueOf(String.valueOf(tblFormaPagamento.getValueAt(linha, 0)));
-
+            botaopressionado = "editar";
+            int codUsuario = Integer.valueOf(String.valueOf(tblFormaPagamento.getValueAt(linha, 0)));
+            formaPagamento = formaPagamentoDao.procurarPorId(codUsuario);
+            txfnome.setText(formaPagamento.getDescricao());
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Selecione uma Forma de Pagamento !", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Session sessao = null;
-        try {
-            sessao = HibernateUtil.getSessionFactory().openSession();
-            Transaction t = sessao.beginTransaction();
-
-            FormaPagamento obj = new FormaPagamento();
-            obj.setDescricao(txfnome.getText());
-            sessao.save(obj);
-            t.commit();
-
-            JOptionPane.showMessageDialog(this, "Forma Pagamento Cadastrado!");
-
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        } finally {
-            sessao.close();
+        if (botaopressionado.equals("novo")) {
+            formaPagamento = new FormaPagamento();
+            formaPagamento.setDescricao(txfnome.getText());
+            formaPagamentoDao.salvar(formaPagamento);
+            JOptionPane.showMessageDialog(this, "Forma de Pagamento Cadastrada!");
+            txfnome.setText("");
+        } else if (botaopressionado.equals("editar")) {
+            formaPagamento.setDescricao(txfnome.getText());
+            formaPagamentoDao.atualizar(formaPagamento);
+            JOptionPane.showMessageDialog(this, "Forma de Pagamento Editada!");
+            txfnome.setText("");
         }
+        formaPagamentoDao.populaFormaPagamento(tblFormaPagamento);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -223,69 +228,23 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+
+        int linha = tblFormaPagamento.getSelectedRow();
+        if (linha > -1) {
+            int resposta = 0;
+            int codUsuario = Integer.valueOf(String.valueOf(tblFormaPagamento.getValueAt(tblFormaPagamento.getSelectedRow(), 0)));
+            resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
+            if (resposta == JOptionPane.YES_OPTION) {
+                formaPagamento = formaPagamentoDao.procurarPorId(codUsuario);
+                d.excluir(formaPagamento);
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione uma Forma de Pagamento!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            }
+            formaPagamentoDao.populaFormaPagamento(tblFormaPagamento);
+        }
+
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    public void populaFormaPagamento() {
-        //List resultado = null;
-        try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createSQLQuery("select idforma_pagamento,descricao from Forma_Pagamento");
-            q.setResultTransformer(Transformers.aliasToBean(FormaPagamento.class));
-            ArrayList<FormaPagamento> resultado = new ArrayList<FormaPagamento>();
-            resultado = (ArrayList<FormaPagamento>) q.list();
-
-            Object[][] dadosTabela = null;
-            Object[] cabecalho = new Object[2];
-
-            cabecalho[0] = "Id";
-            cabecalho[1] = "Nome";
-
-            // cria matriz de acordo com nº de registros da tabela
-            dadosTabela = new Object[resultado.size()][2];
-
-            int lin = 0;
-            for (int i = 0; i < resultado.size(); i++) {
-                FormaPagamento fp = resultado.get(i);
-                dadosTabela[lin][0] = fp.getIdformaPagamento();
-                dadosTabela[lin][1] = fp.getDescricao();
-                lin++;
-            }
-
-            // configuracoes adicionais no componente tabela
-            tblFormaPagamento.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
-                @Override
-                // quando retorno for FALSE, a tabela nao é editavel
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            });
-
-            // permite seleção de apenas uma linha da tabela
-            tblFormaPagamento.setSelectionMode(0);
-
-            // redimensiona as colunas de uma tabela
-            TableColumn column = null;
-            for (int i = 0; i < tblFormaPagamento.getColumnCount(); i++) {
-                column = tblFormaPagamento.getColumnModel().getColumn(i);
-                switch (i) {
-                    case 0:
-                        column.setPreferredWidth(17);
-                        break;
-                    case 1:
-                        column.setPreferredWidth(140);
-                        break;
-                }
-            }
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
