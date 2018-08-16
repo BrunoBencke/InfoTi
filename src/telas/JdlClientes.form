@@ -403,7 +403,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblCpf">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CPF* :"/>
+            <Property name="text" type="java.lang.String" value="CPF :"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblRg">

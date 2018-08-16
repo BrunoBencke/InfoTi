@@ -2,10 +2,15 @@ package telas;
 import dao.Dao;
 import apoio.HibernateUtil;
 import dao.EnderecoDao;
+import entidades.Cliente;
+import entidades.Endereco;
+import entidades.PessoaFisica;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
@@ -16,6 +21,8 @@ public class JdlClientes extends javax.swing.JDialog {
     EnderecoDao enderecoDao = new EnderecoDao();
     MaskFormatter mask;
     String botaopressionado = "novo";
+    String tipoCadastro = "fisica";
+    Cliente c;
 
     public JdlClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -198,7 +205,7 @@ public class JdlClientes extends javax.swing.JDialog {
 
         lblData.setText("Data de Nascimento :");
 
-        lblCpf.setText("CPF* :");
+        lblCpf.setText("CPF :");
 
         lblRg.setText("RG : ");
 
@@ -414,6 +421,7 @@ public class JdlClientes extends javax.swing.JDialog {
                 Logger.getLogger(JdlClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
             mascaraEmpresa();
+            tipoCadastro = "juridica";
         }
         if (jcbTipo.getSelectedIndex() == 0) {
             try {
@@ -424,6 +432,7 @@ public class JdlClientes extends javax.swing.JDialog {
                 Logger.getLogger(JdlClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
             mascaraPessoa();
+            tipoCadastro = "fisica";
         }
     }//GEN-LAST:event_jcbTipoActionPerformed
 
@@ -436,19 +445,47 @@ public class JdlClientes extends javax.swing.JDialog {
     }//GEN-LAST:event_cbStatusActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-//        if (botaopressionado.equals("novo")) {
-//            user = new Usuario();
-//            if (txfLogin.getText().trim().isEmpty() || txfSenha.getText().trim().isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "Digite os Dados!");
-//            } else {
-//                user.setNome(txfLogin.getText());
-//                user.setSenha(c.criptografa(txfSenha.getText()));
-//                d.salvar(user);
-//                JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
-//                txfLogin.setText("");
-//                txfSenha.setText("");
-//            }
-//        } else if (botaopressionado.equals("editar")) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        if (botaopressionado.equals("novo")) {
+            if (tipoCadastro.equals("fisica")) {              
+            c = new Cliente();
+            PessoaFisica pf = new PessoaFisica();
+            Endereco endereco = new Endereco();
+                if (cbStatus.isSelected()) {
+                    c.setSituacao(true);
+                } else {
+                    c.setSituacao(false);
+                }
+                if (txfNome.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Campo Obrigatório Vazio");
+                } else {
+                    c.setNome(txfNome.getText());
+                }
+                c.setSexo(txfSexo.getText());
+                c.setTelefone(txfTelefone.getText());
+                c.setObservacao(txfInformacao.getText());
+                pf.setCpf(txfCpf.getText());
+                pf.setRg(txfRg.getText());
+                if (txfData.getText().equals("  /  /    ")) {
+                    pf.setDataNascimento(null);
+                } else {
+                    try {
+                        java.sql.Date data = new java.sql.Date(sdf.parse(txfData.getText()).getTime());
+                    } catch (ParseException ex) {
+                        Logger.getLogger(JdlClientes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                endereco.setRua(txfRua.getText());
+                endereco.setBairro(txfBairro.getText());
+                endereco.setNumero(txfNumero.getText());
+                endereco.setComplemento(txfComplemento.getText());
+                endereco.setCep(txfCep.getText());
+                
+            }else if (tipoCadastro.equals("juridica")) {
+                
+            }            
+        } else if (botaopressionado.equals("editar")) {
 //            if (txfLogin.getText().trim().isEmpty() || txfSenha.getText().trim().isEmpty()) {
 //                JOptionPane.showMessageDialog(this, "Digite os Dados!");
 //            } else {
@@ -459,7 +496,7 @@ public class JdlClientes extends javax.swing.JDialog {
 //                txfLogin.setText("");
 //                txfSenha.setText("");
 //            }
-//        }
+        }
 //        d.populaUsuarios(tblUsuarios);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
