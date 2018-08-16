@@ -18,6 +18,7 @@ public class JdlProdutos extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
+        btexcluir = new javax.swing.JButton();
         Cadastro1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txfBuscar1 = new javax.swing.JTextField();
@@ -26,6 +27,7 @@ public class JdlProdutos extends javax.swing.JDialog {
         jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro Produtos");
 
         Botoes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -45,6 +47,13 @@ public class JdlProdutos extends javax.swing.JDialog {
             }
         });
 
+        btexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
+        btexcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btexcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout BotoesLayout = new javax.swing.GroupLayout(Botoes);
         Botoes.setLayout(BotoesLayout);
         BotoesLayout.setHorizontalGroup(
@@ -54,6 +63,8 @@ public class JdlProdutos extends javax.swing.JDialog {
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btexcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -63,6 +74,7 @@ public class JdlProdutos extends javax.swing.JDialog {
             .addGroup(BotoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btexcluir)
                     .addComponent(btnEditar)
                     .addComponent(btnNovo)
                     .addComponent(btnSair))
@@ -78,13 +90,10 @@ public class JdlProdutos extends javax.swing.JDialog {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -142,7 +151,8 @@ public class JdlProdutos extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        pack();
+        setSize(new java.awt.Dimension(789, 666));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -152,6 +162,10 @@ public class JdlProdutos extends javax.swing.JDialog {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         //JdlCadastroProdutos produto = new JdlCadastroProdutos(parent, false);
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexcluirActionPerformed
+ 
+    }//GEN-LAST:event_btexcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,6 +212,7 @@ public class JdlProdutos extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Botoes;
     private javax.swing.JPanel Cadastro1;
+    private javax.swing.JButton btexcluir;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;

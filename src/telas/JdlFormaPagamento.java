@@ -60,9 +60,10 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txfnome = new javax.swing.JTextField();
+        btnLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("JdlFormaPagamento");
+        setTitle("Cadastro Forma Pagamento");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -113,6 +114,13 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
 
         jLabel1.setText("Nome :");
 
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/limpar.png"))); // NOI18N
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -134,11 +142,13 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txfnome, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                         .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -151,7 +161,8 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
                     .addComponent(btnExcluir)
                     .addComponent(btnEditar)
                     .addComponent(btnNovo)
-                    .addComponent(btnSair))
+                    .addComponent(btnSair)
+                    .addComponent(btnLimpar))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,7 +189,7 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(441, 383));
+        setSize(new java.awt.Dimension(465, 383));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -245,6 +256,14 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        txfnome.setText("");
+        txfnome.setEditable(false);
+        btnSalvar.setEnabled(false);
+        btnEditar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+    }//GEN-LAST:event_btnLimparActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -287,6 +306,7 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
