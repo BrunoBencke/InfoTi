@@ -160,7 +160,10 @@ public class JdlProdutos extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        //JdlCadastroProdutos produto = new JdlCadastroProdutos(parent, false);
+
+        JdlCadastroProdutos jdlCadastroProdutos = new JdlCadastroProdutos(null, false);
+        jdlCadastroProdutos.setVisible(true);
+
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexcluirActionPerformed
