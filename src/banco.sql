@@ -19,19 +19,19 @@ CREATE TABLE Municipio (
   constraint pk_municipio PRIMARY KEY (IdMunicipio));
 
 create table endereco(idEndereco SERIAL NOT NULL,
-                       rua VARCHAR(100) NOT NULL,
+                       rua VARCHAR(100),
                        bairro VARCHAR(100),
                        numero VARCHAR(10),
                        complemento VARCHAR(100),
-                       cep VARCHAR(100) NOT NULL,
+                       cep VARCHAR(100),
                        idMunicipio INT NOT NULL,
 constraint pk_endereco PRIMARY KEY (idEndereco),
 constraint fk_idMunicipio FOREIGN KEY (idMunicipio) REFERENCES municipio);
 
 create table cliente(idCliente SERIAL NOT NULL,
                        nome VARCHAR(100) NOT NULL,
-                       sexo VARCHAR(45) NOT NULL,
-                       telefone VARCHAR(25) NOT NULL,
+                       sexo VARCHAR(45),
+                       telefone VARCHAR(25),
                        observacao VARCHAR(200),
                        situacao BOOLEAN NOT NULL,
                        idEndereco INT NOT NULL,
@@ -39,18 +39,18 @@ constraint pk_cliente PRIMARY KEY (idCliente),
 constraint fk_idEndereco_endereco FOREIGN KEY (idEndereco) REFERENCES endereco);
 
 create table pessoa_juridica(idPessoa_Juridica SERIAL NOT NULL,
-                       		  CNPJ VARCHAR(20) NOT NULL,
-                       		  razao_social VARCHAR(50) NOT NULL,
-                       		  data_abertura DATE NOT NULL,
+                       		  CNPJ VARCHAR(20),
+                       		  razao_social VARCHAR(50),
+                       		  data_abertura DATE,
                        		  inscricao_estadual VARCHAR(20),
                         	  idCliente INT NOT NULL,
 constraint pk_pessoa_juridica PRIMARY KEY (idPessoa_Juridica),
 constraint fk_idCliente_cliente FOREIGN KEY (idCliente) REFERENCES cliente);
 
 create table pessoa_fisica(idPessoa_Fisica SERIAL NOT NULL,
-                       		  RG VARCHAR(20) NOT NULL,
-                       		  CPF VARCHAR(50) NOT NULL,
-                       		  data_nascimento DATE NOT NULL,
+                       		  RG VARCHAR(20),
+                       		  CPF VARCHAR(50),
+                       		  data_nascimento DATE,
                        		  idCliente INT NOT NULL,
 constraint pk_pessoa_fisica PRIMARY KEY (idPessoa_Fisica),
 constraint fk_idCliente_cliente FOREIGN KEY (idCliente) REFERENCES cliente);

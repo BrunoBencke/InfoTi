@@ -4,6 +4,7 @@ import apoio.HibernateUtil;
 import dao.EnderecoDao;
 import entidades.Cliente;
 import entidades.Endereco;
+import entidades.Estado;
 import entidades.PessoaFisica;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.text.ParseException;
@@ -482,6 +483,13 @@ public class JdlClientes extends javax.swing.JDialog {
                 endereco.setComplemento(txfComplemento.getText());
                 endereco.setCep(txfCep.getText());
                 
+                Estado uf = enderecoDao.retornaObjetoUf(jcbEstado.getSelectedItem().toString());
+                
+                dao.salvar(endereco);
+                c.setIdendereco(endereco);
+                dao.salvar(c);
+                pf.setIdcliente(c);
+                dao.salvar(pf);
             }else if (tipoCadastro.equals("juridica")) {
                 
             }            

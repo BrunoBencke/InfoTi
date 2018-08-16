@@ -40,4 +40,30 @@ public class EnderecoDao extends Dao{
             System.out.println("Erro ao Popular Cidades!" + e.toString());
         }
     }
+    
+    public Estado retornaObjetoUf(String criterio) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            org.hibernate.Query q = sessao.createSQLQuery("SELECT * FROM Estado WHERE Uf = '" + criterio + "' ORDER BY Nome");
+            //q.setResultTransformer(Transformers.aliasToBean(Municipio.class));
+            Estado uf = (Estado) q;
+            return uf;
+        } catch (Exception e) {
+            System.out.println("Erro ao Localizar Uf!" + e.toString());
+        }
+        return null;
+    }
+    
+        public Estado retornaObjetoMunicipio(String criterio) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            org.hibernate.Query q = sessao.createSQLQuery("SELECT * FROM Municipio WHERE nome = '" + criterio + "' ORDER BY Nome");
+            q.setResultTransformer(Transformers.aliasToBean(Municipio.class));
+            Estado uf = (Estado) q;
+            return uf;
+        } catch (Exception e) {
+            System.out.println("Erro ao Localizar Uf!" + e.toString());
+        }
+        return null;
+    }
 }
