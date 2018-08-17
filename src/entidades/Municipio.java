@@ -5,6 +5,7 @@
  */
 package entidades;
 
+import dao.Generica;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -34,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Municipio.findByCodigo", query = "SELECT m FROM Municipio m WHERE m.codigo = :codigo")
     , @NamedQuery(name = "Municipio.findByNome", query = "SELECT m FROM Municipio m WHERE m.nome = :nome")
     , @NamedQuery(name = "Municipio.findByUf", query = "SELECT m FROM Municipio m WHERE m.uf = :uf")})
-public class Municipio implements Serializable {
+public class Municipio implements Serializable, Generica {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -133,5 +134,14 @@ public class Municipio implements Serializable {
     public String toString() {
         return "entidades.Municipio[ idmunicipio=" + idmunicipio + " ]";
     }
-    
+
+    @Override
+    public int getId() {
+        return idmunicipio;
+    }
+
+    @Override
+    public String getnome() {
+        return nome;
+    }    
 }

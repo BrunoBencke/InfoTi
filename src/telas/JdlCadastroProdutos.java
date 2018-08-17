@@ -1,5 +1,6 @@
 package telas;
 
+import apoio.CombosDAO;
 import dao.ProdutosDao;
 
 public class JdlCadastroProdutos extends javax.swing.JDialog {
@@ -9,7 +10,9 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
     public JdlCadastroProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        produtosDao.popularMarcas(jcbProduto);
+        //jcbProduto.removeAllItems();
+        new CombosDAO().popularCombo("Estado", jcbProduto);
+        //produtosDao.popularMarcas(jcbProduto);
     }
 
     @SuppressWarnings("unchecked")
@@ -72,7 +75,6 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
 
         jLabel13.setText("Marca :");
 
-        jcbProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jcbProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbProdutoActionPerformed(evt);

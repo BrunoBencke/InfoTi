@@ -5,6 +5,7 @@
  */
 package entidades;
 
+import dao.Generica;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Estado.findByNome", query = "SELECT e FROM Estado e WHERE e.nome = :nome")
     , @NamedQuery(name = "Estado.findByUf", query = "SELECT e FROM Estado e WHERE e.uf = :uf")
     , @NamedQuery(name = "Estado.findByRegiao", query = "SELECT e FROM Estado e WHERE e.regiao = :regiao")})
-public class Estado implements Serializable {
+public class Estado implements Serializable, Generica {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -131,5 +132,14 @@ public class Estado implements Serializable {
     public String toString() {
         return "entidades.Estado[ idestado=" + idestado + " ]";
     }
-    
+
+    @Override
+    public int getId() {
+        return idestado;
+    }
+
+    @Override
+    public String getnome() {
+        return nome;
+    }    
 }

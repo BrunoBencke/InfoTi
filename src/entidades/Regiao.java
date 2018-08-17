@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Regiao.findAll", query = "SELECT r FROM Regiao r")
     , @NamedQuery(name = "Regiao.findByIdregiao", query = "SELECT r FROM Regiao r WHERE r.idregiao = :idregiao")
     , @NamedQuery(name = "Regiao.findByNome", query = "SELECT r FROM Regiao r WHERE r.nome = :nome")})
-public class Regiao implements Serializable {
+public class Regiao implements Serializable{
 
     private static final long serialVersionUID = 1L;
     @Id
