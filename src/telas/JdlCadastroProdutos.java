@@ -12,7 +12,6 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         initComponents();
         //jcbProduto.removeAllItems();
         new CombosDAO().popularCombo("Estado", jcbProduto);
-        //produtosDao.popularMarcas(jcbProduto);
     }
 
     @SuppressWarnings("unchecked")
@@ -190,8 +189,6 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
 
     private void jcbProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProdutoActionPerformed
 
-        jcbProduto.removeAllItems();
-        produtosDao.popularMarcas(jcbProduto);
 
     }//GEN-LAST:event_jcbProdutoActionPerformed
 

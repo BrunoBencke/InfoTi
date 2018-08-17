@@ -1,12 +1,18 @@
 
 package telas;
 
+import dao.ProdutosDao;
+
 public class JdlProdutos extends javax.swing.JDialog {
 
+    ProdutosDao produtosDao = new ProdutosDao();
 
+    
     public JdlProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        produtosDao.populaProduto(JtProdutos);
     }
 
 
@@ -24,7 +30,7 @@ public class JdlProdutos extends javax.swing.JDialog {
         txfBuscar1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        JtProdutos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Produtos");
@@ -88,7 +94,7 @@ public class JdlProdutos extends javax.swing.JDialog {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Search.png"))); // NOI18N
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        JtProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -96,7 +102,7 @@ public class JdlProdutos extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(JtProdutos);
 
         javax.swing.GroupLayout Cadastro1Layout = new javax.swing.GroupLayout(Cadastro1);
         Cadastro1.setLayout(Cadastro1Layout);
@@ -215,6 +221,7 @@ public class JdlProdutos extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Botoes;
     private javax.swing.JPanel Cadastro1;
+    private javax.swing.JTable JtProdutos;
     private javax.swing.JButton btexcluir;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNovo;
@@ -222,7 +229,6 @@ public class JdlProdutos extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField txfBuscar1;
     // End of variables declaration//GEN-END:variables
 }
