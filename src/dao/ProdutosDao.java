@@ -21,10 +21,9 @@ public class ProdutosDao extends Dao {
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createSQLQuery("SELECT p.idProduto,p.nome,mp.nome AS MarcaProduto,p.valor,p.estoque,p.descricao,p.situacao FROM Marca_Produto mp, Produto p WHERE p.idMarca_Produto = mp.idMarca_produto ORDER BY p.nome" );
+            org.hibernate.Query q = sessao.createSQLQuery("SELECT p.idProduto,p.nome,mp.nome AS MarcaProduto,p.valor,p.estoque,p.descricao,p.situacao FROM Marca_Produto mp, Produto p WHERE p.idMarca_Produto = mp.idMarca_produto ORDER BY p.nome");
             ArrayList<Produto> resultado = new ArrayList<Produto>();
-            resultado = (ArrayList<Produto>) q.list();            
-            
+            resultado = (ArrayList<Produto>) q.list();
             Object[][] dadosTabela = null;
             Object[] cabecalho = new Object[7];
 
@@ -35,9 +34,12 @@ public class ProdutosDao extends Dao {
             cabecalho[4] = "Estoque";
             cabecalho[5] = "Descrição";
             cabecalho[6] = "Situação";
-            
+
+            System.out.println("passsou2");
             // cria matriz de acordo com nº de registros da tabela
             dadosTabela = new Object[resultado.size()][7];
+
+            System.out.println("passsou2");
 
             int lin = 0;
             for (int i = 0; i < resultado.size(); i++) {
@@ -50,7 +52,7 @@ public class ProdutosDao extends Dao {
                 dadosTabela[lin][5] = m.getDescricao();
                 if (resultado.get(i).getSituacao()) {
                     dadosTabela[lin][6] = "Ativo";
-                }else{
+                } else {
                     dadosTabela[lin][6] = "Inativo";
                 }
                 lin++;

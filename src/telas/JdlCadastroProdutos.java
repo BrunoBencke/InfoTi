@@ -11,7 +11,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         //jcbProduto.removeAllItems();
-        new CombosDAO().popularCombo("Estado", jcbProduto);
+        new CombosDAO().popularCombo("marca_produto", jcbProduto);
     }
 
     @SuppressWarnings("unchecked")
