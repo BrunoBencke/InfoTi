@@ -140,6 +140,6 @@ public class Estado implements Serializable, Generica {
 
     @Override
     public String getnome() {
-        return nome;
+        return uf;
     }    
 }

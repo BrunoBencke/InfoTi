@@ -1,4 +1,5 @@
 package telas;
+import apoio.CombosDAO;
 import dao.Dao;
 import apoio.HibernateUtil;
 import dao.EnderecoDao;
@@ -19,7 +20,6 @@ public class JdlClientes extends javax.swing.JDialog {
     
     Dao dao = new Dao();
     HibernateUtil hibernate = new HibernateUtil();
-    EnderecoDao enderecoDao = new EnderecoDao();
     MaskFormatter mask;
     String botaopressionado = "novo";
     String tipoCadastro = "fisica";
@@ -28,8 +28,10 @@ public class JdlClientes extends javax.swing.JDialog {
     public JdlClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        enderecoDao.popularEstados(jcbEstado);
-        enderecoDao.popularCidades(jcbCidade, jcbEstado.getSelectedItem().toString());
+        jcbCidade.setMaximumRowCount(15);
+        jcbEstado.setMaximumRowCount(15);
+        new CombosDAO().popularCombo("Estado", jcbEstado);
+        new CombosDAO().popularComboComComplemento("Municipio", "Uf", jcbEstado.getSelectedItem().toString(), jcbCidade);
     }
     
     public void mascaraEmpresa(){
@@ -483,7 +485,7 @@ public class JdlClientes extends javax.swing.JDialog {
                 endereco.setComplemento(txfComplemento.getText());
                 endereco.setCep(txfCep.getText());
                 
-                Estado uf = enderecoDao.retornaObjetoUf(jcbEstado.getSelectedItem().toString());
+                //Estado uf = enderecoDao.retornaObjetoUf(jcbEstado.getSelectedItem().toString());
                 
                 dao.salvar(endereco);
                 c.setIdendereco(endereco);
@@ -547,7 +549,7 @@ public class JdlClientes extends javax.swing.JDialog {
 
     private void jcbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstadoActionPerformed
             jcbCidade.removeAllItems();
-            enderecoDao.popularCidades(jcbCidade, jcbEstado.getSelectedItem().toString());
+            new CombosDAO().popularComboComComplemento("Municipio", "Uf", jcbEstado.getSelectedItem().toString(), jcbCidade);
     }//GEN-LAST:event_jcbEstadoActionPerformed
 
     /**

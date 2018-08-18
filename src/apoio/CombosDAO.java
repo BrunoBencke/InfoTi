@@ -34,31 +34,21 @@ public class CombosDAO {
         }
     }
 
-//    public void popularComboComComplemento(String tabela, String complementos, JComboBox combo) {
-//
-//        ComboItens item = new ComboItens();
-//        item.setCodigo(0);
-//        item.setDescricao("Selecione");
-//        combo.addItem(item);
-//
-//        try {
-//            if (complementos.equals("")) {
-//                resultado = new ConexaoBD().getConnection().createStatement().executeQuery("select * from " + tabela);
-//            } else {
-//                resultado = new ConexaoBD().getConnection().createStatement().executeQuery("select * from " + tabela + " " + complementos);
-//            }
-//
-//            if (resultado.isBeforeFirst()) {
-//                while (resultado.next()) {
-//                    item = new ComboItens();
-//                    item.setCodigo(resultado.getInt(1));
-//                    item.setDescricao(resultado.getString(2));
-//
-//                    combo.addItem(item);
-//                }
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Erro ao popular Combo = " + e.toString());
-//        }
-//    }
+    public void popularComboComComplemento(String tabela, String c1, String c2, JComboBox combo) {
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query q = sessao.createQuery("from " + tabela + " where " + c1 + " = '" + c2 + "'");
+            List lista = q.list();
+
+            for (int i = 0; i < lista.size(); i++) {
+                ComboItens item = new ComboItens();
+                Generica generico = (Generica) lista.get(i);
+                item.setCodigo(generico.getId());
+                item.setDescricao(generico.getnome());
+                combo.addItem(item);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao popular Combo Com Complemento= " + e.toString());
+        }
+    }
 }
