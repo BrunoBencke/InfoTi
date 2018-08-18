@@ -1,4 +1,5 @@
 package telas;
+import apoio.ComboItens;
 import apoio.CombosDAO;
 import dao.Dao;
 import apoio.HibernateUtil;
@@ -6,6 +7,7 @@ import dao.EnderecoDao;
 import entidades.Cliente;
 import entidades.Endereco;
 import entidades.Estado;
+import entidades.Municipio;
 import entidades.PessoaFisica;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.text.ParseException;
@@ -20,6 +22,7 @@ public class JdlClientes extends javax.swing.JDialog {
     
     Dao dao = new Dao();
     HibernateUtil hibernate = new HibernateUtil();
+    EnderecoDao enderecoDao = new EnderecoDao();
     MaskFormatter mask;
     String botaopressionado = "novo";
     String tipoCadastro = "fisica";
@@ -470,7 +473,12 @@ public class JdlClientes extends javax.swing.JDialog {
                 pf.setCpf(txfCpf.getText());
                 pf.setRg(txfRg.getText());
                 if (txfData.getText().equals("  /  /    ")) {
-                    pf.setDataNascimento(null);
+                try {
+                    // pf.setDataNascimento(null);
+                    pf.setDataNascimento(sdf.parse("00/00/0000"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(JdlClientes.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 } else {
                     try {
                         java.sql.Date data = new java.sql.Date(sdf.parse(txfData.getText()).getTime());
@@ -484,9 +492,10 @@ public class JdlClientes extends javax.swing.JDialog {
                 endereco.setNumero(txfNumero.getText());
                 endereco.setComplemento(txfComplemento.getText());
                 endereco.setCep(txfCep.getText());
-                
-                //Estado uf = enderecoDao.retornaObjetoUf(jcbEstado.getSelectedItem().toString());
-                
+                ComboItens item = (ComboItens) jcbCidade.getSelectedItem();
+                Municipio cidade = enderecoDao.retornaObjetoMunicipio(item.getCodigo());
+                item = (ComboItens) jcbEstado.getSelectedItem();
+                endereco.setIdmunicipio(cidade);
                 dao.salvar(endereco);
                 c.setIdendereco(endereco);
                 dao.salvar(c);
