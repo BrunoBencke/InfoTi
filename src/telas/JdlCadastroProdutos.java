@@ -1,17 +1,26 @@
 package telas;
 
+import apoio.ComboItens;
 import apoio.CombosDAO;
+import dao.Dao;
 import dao.ProdutosDao;
+import entidades.MarcaProduto;
+import entidades.Produto;
+import java.math.BigDecimal;
+import javax.swing.JOptionPane;
 
 public class JdlCadastroProdutos extends javax.swing.JDialog {
 
     ProdutosDao produtosDao = new ProdutosDao();
+    String botaopressionado = "novo";
+    Dao d = new Dao();
 
     public JdlCadastroProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //jcbProduto.removeAllItems();
-        new CombosDAO().popularCombo("marca_produto", jcbProduto);
+        jcbProduto.removeAllItems();
+        jcbProduto.setMaximumRowCount(15);
+        new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +39,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         dtnSalvar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        txfNome1 = new javax.swing.JTextField();
+        txfDescricao = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jcbProduto = new javax.swing.JComboBox<>();
 
@@ -56,6 +65,11 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         jLabel4.setText("Estoque :");
 
         dtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar.png"))); // NOI18N
+        dtnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dtnSalvarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -66,9 +80,9 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
 
         jLabel12.setText("Descrição :");
 
-        txfNome1.addActionListener(new java.awt.event.ActionListener() {
+        txfDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfNome1ActionPerformed(evt);
+                txfDescricaoActionPerformed(evt);
             }
         });
 
@@ -114,7 +128,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txfNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jcbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(20, Short.MAX_VALUE))))))
         );
@@ -139,7 +153,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfNome1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -177,9 +191,9 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfNomeActionPerformed
 
-    private void txfNome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNome1ActionPerformed
+    private void txfDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfDescricaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txfNome1ActionPerformed
+    }//GEN-LAST:event_txfDescricaoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
 
@@ -189,8 +203,33 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
 
     private void jcbProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProdutoActionPerformed
 
-
+        jcbProduto.removeAllItems();
+        new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
     }//GEN-LAST:event_jcbProdutoActionPerformed
+
+    private void dtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtnSalvarActionPerformed
+
+        if (botaopressionado.equals("novo")) {
+            Produto produto = new Produto();
+            produto.setNome(txfNome.getText());
+            produto.setValor(BigDecimal.valueOf(Double.parseDouble(txfPrecoCusto.getText())));
+            produto.setEstoque(Integer.parseInt(txfEstoque.getText()));
+            produto.setDescricao(txfDescricao.getText());
+            ComboItens item = (ComboItens) jcbProduto.getSelectedItem();
+            item = (ComboItens) jcbProduto.getSelectedItem();
+            MarcaProduto marcaProduto = new MarcaProduto();
+            marcaProduto.getIdmarcaProduto();
+            produtosDao.salvar(produto);
+            JOptionPane.showMessageDialog(this, "Produto Cadastrada!");
+            txfNome.setText("");
+            txfEstoque.setText("");
+            txfPrecoCusto.setText("");
+            txfDescricao.setText("");
+        }else{
+            
+            
+        }
+    }//GEN-LAST:event_dtnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,9 +285,9 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox<String> jcbProduto;
     private javax.swing.JTextField txfCod;
+    private javax.swing.JTextField txfDescricao;
     private javax.swing.JTextField txfEstoque;
     private javax.swing.JTextField txfNome;
-    private javax.swing.JTextField txfNome1;
     private javax.swing.JTextField txfPrecoCusto;
     // End of variables declaration//GEN-END:variables
 }

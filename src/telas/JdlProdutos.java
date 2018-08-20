@@ -1,18 +1,22 @@
 
 package telas;
 
+import dao.Dao;
 import dao.ProdutosDao;
+import entidades.Produto;
+import javax.swing.JOptionPane;
 
 public class JdlProdutos extends javax.swing.JDialog {
 
     ProdutosDao produtosDao = new ProdutosDao();
-
+    Produto produto = new Produto();
+    Dao d = new Dao();
     
     public JdlProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
-        produtosDao.populaProduto(JtProdutos);
+        produtosDao.populaProduto(JtlProdutos);
     }
 
 
@@ -30,7 +34,7 @@ public class JdlProdutos extends javax.swing.JDialog {
         txfBuscar1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        JtProdutos = new javax.swing.JTable();
+        JtlProdutos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Produtos");
@@ -94,7 +98,7 @@ public class JdlProdutos extends javax.swing.JDialog {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Search.png"))); // NOI18N
 
-        JtProdutos.setModel(new javax.swing.table.DefaultTableModel(
+        JtlProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -102,7 +106,7 @@ public class JdlProdutos extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane2.setViewportView(JtProdutos);
+        jScrollPane2.setViewportView(JtlProdutos);
 
         javax.swing.GroupLayout Cadastro1Layout = new javax.swing.GroupLayout(Cadastro1);
         Cadastro1.setLayout(Cadastro1Layout);
@@ -173,6 +177,19 @@ public class JdlProdutos extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexcluirActionPerformed
+        int linha = JtlProdutos.getSelectedRow();
+        if (linha > -1) {
+            int resposta = 0;
+            int codProduto = Integer.valueOf(String.valueOf(JtlProdutos.getValueAt(JtlProdutos.getSelectedRow(), 0)));
+            resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
+            if (resposta == JOptionPane.YES_OPTION) {
+                produto = produtosDao.procurarPorId(codProduto);
+                d.excluir(produto);
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            }
+            produtosDao.populaProduto(JtlProdutos);
+        }
  
     }//GEN-LAST:event_btexcluirActionPerformed
 
@@ -221,7 +238,7 @@ public class JdlProdutos extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Botoes;
     private javax.swing.JPanel Cadastro1;
-    private javax.swing.JTable JtProdutos;
+    private javax.swing.JTable JtlProdutos;
     private javax.swing.JButton btexcluir;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNovo;

@@ -2,10 +2,12 @@ package dao;
 
 import apoio.CombosDAO;
 import apoio.HibernateUtil;
+import entidades.Cliente;
 import entidades.MarcaProduto;
 import entidades.Produto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -16,14 +18,48 @@ import org.hibernate.transform.Transformers;
 
 public class ProdutosDao extends Dao {
 
+   ArrayList<Produto> resultado;
+    
+    public Produto procurarPorId(Integer id) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            org.hibernate.Query q = sessao.createQuery("from Produto");
+            resultado = (ArrayList<Produto>) q.list();
+            int lin = 0;
+            for (int i = 0; i < resultado.size(); i++) {
+                Produto u = resultado.get(i);
+                if (Objects.equals(u.getIdproduto(), id)) {
+                    return u;
+                }
+                lin++;
+            }
+            return null;
+        } catch (Exception e) {
+            System.out.println("Erro ao Localizar Objeto!" + e.toString());
+        } finally {
+            sessao.close();
+        }
+        return null;
+    }
+    
+    public String retornaMarcaProduto(int codigo) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Query q = sessao.createQuery("from marca_produto where idMarcaProduto = '" + codigo + "'");
+        List lista = q.list();
+        MarcaProduto marcaProduto = (MarcaProduto) lista.get(0);
+        String retorno = marcaProduto.getNome();
+        return retorno;
+    }
+    
     public void populaProduto(JTable tabela) {
         //List resultado = null;
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createSQLQuery("SELECT p.idProduto,p.nome,mp.nome AS MarcaProduto,p.valor,p.estoque,p.descricao,p.situacao FROM Marca_Produto mp, Produto p WHERE p.idMarca_Produto = mp.idMarca_produto ORDER BY p.nome");
+            org.hibernate.Query q = sessao.createQuery("from Produto");
             ArrayList<Produto> resultado = new ArrayList<Produto>();
             resultado = (ArrayList<Produto>) q.list();
+            
             Object[][] dadosTabela = null;
             Object[] cabecalho = new Object[7];
 
@@ -46,7 +82,7 @@ public class ProdutosDao extends Dao {
                 Produto m = resultado.get(i);
                 dadosTabela[lin][0] = m.getIdproduto();
                 dadosTabela[lin][1] = m.getNome();
-                dadosTabela[lin][2] = m.getIdmarcaProduto();
+                dadosTabela[lin][2] = retornaMarcaProduto(m.getIdmarcaProduto().getIdmarcaProduto());
                 dadosTabela[lin][3] = m.getValor();
                 dadosTabela[lin][4] = m.getEstoque();
                 dadosTabela[lin][5] = m.getDescricao();
