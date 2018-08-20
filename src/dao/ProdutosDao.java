@@ -44,7 +44,7 @@ public class ProdutosDao extends Dao {
     
     public String retornaMarcaProduto(int codigo) {
         sessao = HibernateUtil.getSessionFactory().openSession();
-        org.hibernate.Query q = sessao.createQuery("from marca_produto where idMarcaProduto = '" + codigo + "'");
+        org.hibernate.Query q = sessao.createQuery("from Marca_Produto where idMarcaProduto = '" + codigo + "'");
         List lista = q.list();
         MarcaProduto marcaProduto = (MarcaProduto) lista.get(0);
         String retorno = marcaProduto.getNome();
