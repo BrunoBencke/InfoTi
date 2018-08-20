@@ -92,21 +92,27 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
                                           <Component id="txfData" min="-2" pref="80" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="txfSexo" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="lblTelefone" max="32767" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="txfCpf" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="lblRg" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="txfSexo" max="32767" attributes="0"/>
+                                              <Component id="txfCpf" pref="120" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="lblRg" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                                  <Component id="lblTelefone" max="32767" attributes="0"/>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -177,8 +183,8 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblTelefone" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="txfTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txfSexo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblSexo" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="txfSexo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -273,13 +279,6 @@
         <Component class="javax.swing.JLabel" name="lblSexo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sexo :"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="txfSexo">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-              <Format format="##########" subtype="-1" type="5"/>
-            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="cbStatus">
@@ -493,6 +492,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txfComplemento">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txfSexo">
         </Component>
       </SubComponents>
     </Container>

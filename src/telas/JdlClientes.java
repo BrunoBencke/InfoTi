@@ -170,7 +170,7 @@ public class JdlClientes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        JdlCadastroClientes jdlCadastroClientes = new JdlCadastroClientes(null, false);
+        JdlCadastroClientes jdlCadastroClientes = new JdlCadastroClientes(null, false, tblClientes);
         jdlCadastroClientes.setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -196,7 +196,7 @@ public class JdlClientes extends javax.swing.JDialog {
             botaopressionado = "editar";
             int codCli = Integer.valueOf(String.valueOf(tblClientes.getValueAt(linha, 0)));
             Cliente cliente = cDao.procurarPorId(codCli);
-            JdlCadastroClientes telaClientes = new JdlCadastroClientes(null, false, cliente);
+            JdlCadastroClientes telaClientes = new JdlCadastroClientes(null, false, cliente, tblClientes);
             telaClientes.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um cliente!", "Informação", JOptionPane.INFORMATION_MESSAGE);

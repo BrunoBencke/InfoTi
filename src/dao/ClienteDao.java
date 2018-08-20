@@ -3,6 +3,8 @@ package dao;
 import apoio.HibernateUtil;
 import entidades.Cliente;
 import entidades.Endereco;
+import entidades.PessoaFisica;
+import entidades.PessoaJuridica;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +16,34 @@ import org.hibernate.HibernateException;
 public class ClienteDao extends Dao {
     
     ArrayList<Cliente> resultado;
+    
+    public PessoaFisica retornaPf(Cliente c){
+        PessoaFisica pf = new PessoaFisica();
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Query q = sessao.createQuery("from PessoaFisica where idCliente = '" + c.getIdcliente() + "'");
+        ArrayList<PessoaFisica> resultado1 = (ArrayList<PessoaFisica>) q.list();
+        if (resultado1.isEmpty()) {
+            System.out.println("não e pessoa fisica");
+            return null;
+        } else {
+            pf = resultado1.get(0);
+            return pf;
+        }
+    }
+
+    public PessoaJuridica retornaPj(Cliente c) {
+        PessoaJuridica pj = new PessoaJuridica();
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Query q = sessao.createQuery("from PessoaJuridica where idCliente = '" + c.getIdcliente() + "'");
+        ArrayList<PessoaJuridica> resultado1 = (ArrayList<PessoaJuridica>) q.list();
+        if (resultado1.isEmpty()) {
+            return null;
+        } else {
+            pj = resultado1.get(0);
+            System.out.println("retorna pj cpnj"+pj.getCnpj());
+            return pj;
+        }
+    }
 
     public Cliente procurarPorId(Integer id) {
         sessao = HibernateUtil.getSessionFactory().openSession();
@@ -44,6 +74,14 @@ public class ClienteDao extends Dao {
         Endereco endereco = (Endereco) lista.get(0);
         String retorno = endereco.getRua() + " " + endereco.getNumero();
         return retorno;
+    }
+
+    public Endereco retornaObjetoEndereco(int codigo) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Query q = sessao.createQuery("from Endereco where idEndereco = '" + codigo + "'");
+        List lista = q.list();
+        Endereco endereco = (Endereco) lista.get(0);
+        return endereco;
     }
 
         public void populaClientes(JTable tblClientes) {

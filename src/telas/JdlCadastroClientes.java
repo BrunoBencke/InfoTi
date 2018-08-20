@@ -3,18 +3,22 @@ import apoio.ComboItens;
 import apoio.CombosDAO;
 import dao.Dao;
 import apoio.HibernateUtil;
+import dao.ClienteDao;
 import dao.EnderecoDao;
 import entidades.Cliente;
 import entidades.Endereco;
 import entidades.Estado;
 import entidades.Municipio;
 import entidades.PessoaFisica;
+import entidades.PessoaJuridica;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
@@ -23,12 +27,16 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
     Dao dao = new Dao();
     HibernateUtil hibernate = new HibernateUtil();
     EnderecoDao enderecoDao = new EnderecoDao();
+    ClienteDao cDao = new ClienteDao();
+    Endereco endereco = new Endereco();
+    PessoaFisica pf = new PessoaFisica();
+    PessoaJuridica pj = new PessoaJuridica();
     MaskFormatter mask;
     String botaopressionado = "novo";
     String tipoCadastro = "fisica";
     Cliente c;
 
-    public JdlCadastroClientes(java.awt.Frame parent, boolean modal) {
+    public JdlCadastroClientes(java.awt.Frame parent, boolean modal,JTable tblClientes) {
         super(parent, modal);
         initComponents();
         jcbCidade.setMaximumRowCount(15);
@@ -37,7 +45,7 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         new CombosDAO().popularComboComComplemento("Municipio", "Uf", jcbEstado.getSelectedItem().toString(), jcbCidade);
     }
     
-    public JdlCadastroClientes(java.awt.Frame parent, boolean modal, Cliente c) {
+    public JdlCadastroClientes(java.awt.Frame parent, boolean modal, Cliente c, JTable tblClientes) {
         super(parent, modal);
         initComponents();
         jcbCidade.setMaximumRowCount(15);
@@ -63,6 +71,23 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
     
     
     public void carregarDados(Cliente c){
+        endereco = cDao.retornaObjetoEndereco(c.getIdendereco().getIdendereco());
+        if (cDao.retornaPf(c) == null) {
+            System.out.println("entrou PJ");
+            pj = cDao.retornaPj(c);
+            jcbTipo.setSelectedIndex(1);
+            //System.out.println("cnpj"+pj.getCnpj());
+            //txfNome.setText(pj.getRazaoSocial());
+//            txfCpf.setText(pj.getCnpj());
+//            txfRg.setText(pj.getInscricaoEstadual());
+//            txfData.setText(pj.getDataAbertura().toString());
+        }else{
+            System.out.println("entrou PF");
+            pf = cDao.retornaPf(c);
+            txfCpf.setText(pf.getCpf());
+            txfRg.setText(pf.getRg());
+            txfData.setText(pf.getDataNascimento().toString());
+        }
         if (c.getSituacao()) {
             cbStatus.setSelected(true);
         } else {
@@ -74,15 +99,20 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
 //        } else {
 //            jcbTipo.setSelectedIndex(1);
 //        }
-
-        txfNome.setText(c.getNome());
-        txfSexo.setText(c.getSexo());
-        
 //        if (c.get != null) {
 //            txfData.setText(c.getData_nascimento().toString());
 //            txfData.setText(cDao.data_sistema(c.getData_nascimento().toString()));
 //        }
+
+        txfNome.setText(c.getNome());
+        txfSexo.setText(c.getSexo());
+        txfInformacao.setText(c.getObservacao());
         txfTelefone.setText(c.getTelefone());
+        txfRua.setText(endereco.getRua());
+        txfNumero.setText(endereco.getNumero());
+        txfBairro.setText(endereco.getBairro());
+        txfCep.setText(endereco.getCep());
+        txfComplemento.setText(endereco.getComplemento());
     }
 
 
@@ -98,7 +128,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         lblTelefone = new javax.swing.JLabel();
         txfTelefone = new javax.swing.JTextField();
         lblSexo = new javax.swing.JLabel();
-        txfSexo = new javax.swing.JFormattedTextField();
         cbStatus = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -126,6 +155,7 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         txfCep = new javax.swing.JTextField();
         lblComplemento = new javax.swing.JLabel();
         txfComplemento = new javax.swing.JTextField();
+        txfSexo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Clientes");
@@ -152,12 +182,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         lblTelefone.setText("Telefone :");
 
         lblSexo.setText("Sexo :");
-
-        try {
-            txfSexo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
 
         cbStatus.setSelected(true);
         cbStatus.setText("Ativo");
@@ -327,15 +351,18 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                                         .addComponent(txfData, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lblRg)
-                                        .addGap(31, 31, 31)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(txfSexo)
+                                            .addComponent(txfCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblRg)
+                                                .addGap(31, 31, 31))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(10, 10, 10)
+                                                .addComponent(lblTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txfRg, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -387,8 +414,8 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -509,7 +536,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 pf.setRg(txfRg.getText());
                 if (txfData.getText().equals("  /  /    ")) {
                 try {
-                    // pf.setDataNascimento(null);
                     pf.setDataNascimento(sdf.parse("00/00/0000"));
                 } catch (ParseException ex) {
                     Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
@@ -520,8 +546,7 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                     } catch (ParseException ex) {
                         Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
-                
+                }                
                 endereco.setRua(txfRua.getText());
                 endereco.setBairro(txfBairro.getText());
                 endereco.setNumero(txfNumero.getText());
@@ -538,8 +563,55 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 dao.salvar(pf);
                 JOptionPane.showMessageDialog(this, "Cliente Cadastrado!");
                 this.dispose();
-            }else if (tipoCadastro.equals("juridica")) {
-                
+            } else if (tipoCadastro.equals("juridica")) {
+                c = new Cliente();
+                pj = new PessoaJuridica();
+                Endereco endereco = new Endereco();
+                if (cbStatus.isSelected()) {
+                    c.setSituacao(true);
+                } else {
+                    c.setSituacao(false);
+                }
+                if (txfNome.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Campo Obrigatório Vazio");
+                } else {
+                    c.setNome(txfNome.getText());
+                }
+                c.setSexo(txfSexo.getText());
+                c.setTelefone(txfTelefone.getText());
+                c.setObservacao(txfInformacao.getText());
+                pj.setRazaoSocial(txfNome.getText());
+                pj.setCnpj(txfCpf.getText());
+                pj.setInscricaoEstadual(txfRg.getText());
+                if (txfData.getText().equals("  /  /    ")) {
+                    try {
+                        pj.setDataAbertura(sdf.parse("00/00/0000"));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        java.sql.Date data = new java.sql.Date(sdf.parse(txfData.getText()).getTime());
+                    } catch (ParseException ex) {
+                        Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                endereco.setRua(txfRua.getText());
+                endereco.setBairro(txfBairro.getText());
+                endereco.setNumero(txfNumero.getText());
+                endereco.setComplemento(txfComplemento.getText());
+                endereco.setCep(txfCep.getText());
+                ComboItens item = (ComboItens) jcbCidade.getSelectedItem();
+                Municipio cidade = enderecoDao.retornaObjetoMunicipio(item.getCodigo());
+                item = (ComboItens) jcbEstado.getSelectedItem();
+                endereco.setIdmunicipio(cidade);
+                dao.salvar(endereco);
+                c.setIdendereco(endereco);
+                dao.salvar(c);
+                pj.setIdcliente(c);
+                dao.salvar(pj);
+                JOptionPane.showMessageDialog(this, "Empresa Cadastrada!");
+                this.dispose();
             }            
         } else if (botaopressionado.equals("editar")) {
 //            if (txfLogin.getText().trim().isEmpty() || txfSenha.getText().trim().isEmpty()) {
@@ -629,7 +701,8 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JdlCadastroClientes dialog = new JdlCadastroClientes(new javax.swing.JFrame(), true);
+                JTable tblClientes = null;
+                JdlCadastroClientes dialog = new JdlCadastroClientes(new javax.swing.JFrame(), true, tblClientes);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -676,7 +749,7 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
     private javax.swing.JTextField txfNumero;
     private javax.swing.JFormattedTextField txfRg;
     private javax.swing.JTextField txfRua;
-    private javax.swing.JFormattedTextField txfSexo;
+    private javax.swing.JTextField txfSexo;
     private javax.swing.JTextField txfTelefone;
     // End of variables declaration//GEN-END:variables
 }
