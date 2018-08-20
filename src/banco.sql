@@ -40,7 +40,6 @@ constraint fk_idEndereco_endereco FOREIGN KEY (idEndereco) REFERENCES endereco);
 
 create table pessoa_juridica(idPessoa_Juridica SERIAL NOT NULL,
                        		  CNPJ VARCHAR(20),
-                       		  razao_social VARCHAR(50),
                        		  data_abertura DATE,
                        		  inscricao_estadual VARCHAR(20),
                         	  idCliente INT NOT NULL,

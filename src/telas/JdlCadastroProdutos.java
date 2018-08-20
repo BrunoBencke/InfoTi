@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 public class JdlCadastroProdutos extends javax.swing.JDialog {
 
     ProdutosDao produtosDao = new ProdutosDao();
+    MarcaProduto marcaProduto = new MarcaProduto();
     String botaopressionado = "novo";
     Dao d = new Dao();
 
@@ -217,17 +218,15 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
             produto.setDescricao(txfDescricao.getText());
             ComboItens item = (ComboItens) jcbProduto.getSelectedItem();
             item = (ComboItens) jcbProduto.getSelectedItem();
-            MarcaProduto marcaProduto = new MarcaProduto();
-            marcaProduto.getIdmarcaProduto();
             produtosDao.salvar(produto);
             JOptionPane.showMessageDialog(this, "Produto Cadastrada!");
             txfNome.setText("");
             txfEstoque.setText("");
             txfPrecoCusto.setText("");
             txfDescricao.setText("");
-        }else{
             
-            
+        } else {
+
         }
     }//GEN-LAST:event_dtnSalvarActionPerformed
 

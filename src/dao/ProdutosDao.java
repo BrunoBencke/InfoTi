@@ -44,7 +44,7 @@ public class ProdutosDao extends Dao {
     
     public String retornaMarcaProduto(int codigo) {
         sessao = HibernateUtil.getSessionFactory().openSession();
-        org.hibernate.Query q = sessao.createQuery("from Marca_Produto where idMarcaProduto = '" + codigo + "'");
+        org.hibernate.Query q = sessao.createQuery("from MarcaProduto where idmarcaProduto = '" + codigo + "'");
         List lista = q.list();
         MarcaProduto marcaProduto = (MarcaProduto) lista.get(0);
         String retorno = marcaProduto.getNome();
@@ -71,11 +71,8 @@ public class ProdutosDao extends Dao {
             cabecalho[5] = "Descrição";
             cabecalho[6] = "Situação";
 
-            System.out.println("passsou2");
             // cria matriz de acordo com nº de registros da tabela
             dadosTabela = new Object[resultado.size()][7];
-
-            System.out.println("passsou2");
 
             int lin = 0;
             for (int i = 0; i < resultado.size(); i++) {
