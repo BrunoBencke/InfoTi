@@ -8,11 +8,13 @@ import entidades.MarcaProduto;
 import entidades.Produto;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 public class JdlCadastroProdutos extends javax.swing.JDialog {
 
     ProdutosDao produtosDao = new ProdutosDao();
     MarcaProduto marcaProduto = new MarcaProduto();
+    Produto produto = new Produto();
     String botaopressionado = "novo";
     Dao d = new Dao();
 
@@ -22,6 +24,28 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         jcbProduto.removeAllItems();
         jcbProduto.setMaximumRowCount(15);
         new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
+      
+
+    }
+
+    JdlCadastroProdutos(Object object, JTable JtlProdutos) {
+
+        initComponents();
+        jcbProduto.removeAllItems();
+        jcbProduto.setMaximumRowCount(15);
+        new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
+        produtosDao.populaProduto(JtlProdutos);
+    }
+
+    public void carregarDados(Produto c) {
+
+        txfNome.setText(produto.getNome());
+//      txfPrecoCusto.setText(BigDecimal.valueOf(Double.parseDouble(produto.getValor())));
+//      txfEstoque.setText(Integer.parseInt(produto.getEstoque()));
+        txfDescricao.setText(produto.getDescricao());
+        new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
+        carregarDados(c);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -210,21 +234,27 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
 
     private void dtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtnSalvarActionPerformed
 
+        MarcaProduto marcaProduto = new MarcaProduto();
+        Produto produto = new Produto();
         if (botaopressionado.equals("novo")) {
-            Produto produto = new Produto();
             produto.setNome(txfNome.getText());
             produto.setValor(BigDecimal.valueOf(Double.parseDouble(txfPrecoCusto.getText())));
             produto.setEstoque(Integer.parseInt(txfEstoque.getText()));
             produto.setDescricao(txfDescricao.getText());
             ComboItens item = (ComboItens) jcbProduto.getSelectedItem();
-            item = (ComboItens) jcbProduto.getSelectedItem();
+            marcaProduto.setIdmarcaProduto(item.getCodigo());
+            marcaProduto.setNome(item.getDescricao());
+            produto.setIdmarcaProduto(marcaProduto);
+            produto.setSituacao(true);
             produtosDao.salvar(produto);
             JOptionPane.showMessageDialog(this, "Produto Cadastrada!");
             txfNome.setText("");
             txfEstoque.setText("");
             txfPrecoCusto.setText("");
             txfDescricao.setText("");
-            
+
+            this.dispose();
+
         } else {
 
         }

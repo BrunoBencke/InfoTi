@@ -203,7 +203,7 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         txfnome.setEditable(true);
         btnSalvar.setEnabled(true);
-        btnEditar.setEnabled(false);
+        btnEditar.setEnabled(true);
         btnExcluir.setEnabled(false);
         
         int linha = tblFormaPagamento.getSelectedRow();
@@ -231,6 +231,12 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
             txfnome.setText("");
         }
         formaPagamentoDao.populaFormaPagamento(tblFormaPagamento);
+        txfnome.setEditable(false);
+        btnSalvar.setEnabled(false);
+        btnExcluir.setEnabled(true);
+        btnEditar.setEnabled(true);
+        btnNovo.setEnabled(true);
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed

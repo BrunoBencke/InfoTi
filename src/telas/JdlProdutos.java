@@ -1,4 +1,3 @@
-
 package telas;
 
 import dao.Dao;
@@ -11,18 +10,20 @@ public class JdlProdutos extends javax.swing.JDialog {
     ProdutosDao produtosDao = new ProdutosDao();
     Produto produto = new Produto();
     Dao d = new Dao();
-    
+
     public JdlProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        String botaopressionado = "novo";
         produtosDao.populaProduto(JtlProdutos);
     }
 
     JdlProdutos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initComponents();
+        String botaopressionado = "novo";
+        produtosDao.populaProduto(JtlProdutos);
+        
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -53,6 +54,11 @@ public class JdlProdutos extends javax.swing.JDialog {
         });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/editar.png"))); // NOI18N
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/adicionar.png"))); // NOI18N
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +181,7 @@ public class JdlProdutos extends javax.swing.JDialog {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
 
-        JdlCadastroProdutos jdlCadastroProdutos = new JdlCadastroProdutos(null, false);
+        JdlCadastroProdutos jdlCadastroProdutos = new JdlCadastroProdutos(null, true);
         jdlCadastroProdutos.setVisible(true);
 
     }//GEN-LAST:event_btnNovoActionPerformed
@@ -194,8 +200,23 @@ public class JdlProdutos extends javax.swing.JDialog {
             }
             produtosDao.populaProduto(JtlProdutos);
         }
- 
+
     }//GEN-LAST:event_btexcluirActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
+        int linha = JtlProdutos.getSelectedRow();
+        if (linha > -1) {
+            String botaopressionado = "editar";
+            int codProd = Integer.valueOf(String.valueOf(JtlProdutos.getValueAt(linha, 0)));
+            Produto produto = produtosDao.procurarPorId(codProd);
+            JdlCadastroProdutos telaProdutos = new JdlCadastroProdutos(null, JtlProdutos);
+            telaProdutos.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
