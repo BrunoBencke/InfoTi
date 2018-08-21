@@ -23,9 +23,11 @@ public class ClienteDao extends Dao {
         org.hibernate.Query q = sessao.createQuery("from PessoaFisica where idCliente = '" + c.getIdcliente() + "'");
         ArrayList<PessoaFisica> resultado1 = (ArrayList<PessoaFisica>) q.list();
         if (resultado1.isEmpty()) {
+            sessao.close();
             return null;
         } else {
             pf = resultado1.get(0);
+            sessao.close();
             return pf;
         }
     }
@@ -36,9 +38,11 @@ public class ClienteDao extends Dao {
         org.hibernate.Query q = sessao.createQuery("from PessoaJuridica where idCliente = '" + c.getIdcliente() + "'");
         ArrayList<PessoaJuridica> resultado1 = (ArrayList<PessoaJuridica>) q.list();
         if (resultado1.isEmpty()) {
+            sessao.close();
             return null;
         } else {
-            pj = resultado1.get(0);;
+            pj = resultado1.get(0);
+            sessao.close();
             return pj;
         }
     }

@@ -509,6 +509,14 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date dataAtual = null;
+        if (jcbTipo.getSelectedIndex() == 1) {
+            mascaraEmpresa();
+            tipoCadastro = "juridica";
+        }
+        if (jcbTipo.getSelectedIndex() == 0) {
+            mascaraPessoa();
+            tipoCadastro = "fisica";
+        }
         if (botaopressionado.equals("novo")) {
             if (tipoCadastro.equals("fisica")) {
                 c = new Cliente();
