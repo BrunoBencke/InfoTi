@@ -23,7 +23,6 @@ public class ClienteDao extends Dao {
         org.hibernate.Query q = sessao.createQuery("from PessoaFisica where idCliente = '" + c.getIdcliente() + "'");
         ArrayList<PessoaFisica> resultado1 = (ArrayList<PessoaFisica>) q.list();
         if (resultado1.isEmpty()) {
-            System.out.println("não e pessoa fisica");
             return null;
         } else {
             pf = resultado1.get(0);
@@ -39,8 +38,7 @@ public class ClienteDao extends Dao {
         if (resultado1.isEmpty()) {
             return null;
         } else {
-            pj = resultado1.get(0);
-            System.out.println("retorna pj cpnj"+pj.getCnpj());
+            pj = resultado1.get(0);;
             return pj;
         }
     }

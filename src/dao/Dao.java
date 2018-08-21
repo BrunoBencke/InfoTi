@@ -1,6 +1,8 @@
 package dao;
 
 import apoio.HibernateUtil;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import org.hibernate.HibernateException;
@@ -79,4 +81,10 @@ public class Dao<T> {
 //            session.close();
 //        }
 //    }
+    public String data_sistema(String data) throws ParseException {
+        SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+        String result = out.format(in.parse(data.toString()));
+        return result;
+    }
 }

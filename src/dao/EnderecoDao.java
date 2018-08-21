@@ -58,7 +58,6 @@ public class EnderecoDao extends Dao{
             org.hibernate.Query q = sessao.createQuery("from Municipio where idMunicipio = '" + id + "'");
             List lista = q.list();
             Municipio cidade = (Municipio) lista.get(0);
-            System.out.println("nome "+cidade.getNome()+" codigo cidade "+cidade.getId());
             return cidade;
         } catch (Exception e) {
             System.out.println("Erro ao Localizar Cidade!" + e.toString());

@@ -14,6 +14,7 @@ import entidades.PessoaJuridica;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,29 +26,40 @@ import javax.swing.text.MaskFormatter;
 public class JdlCadastroClientes extends javax.swing.JDialog {
     
     Dao dao = new Dao();
+    CombosDAO comboDao = new CombosDAO();
+    ComboItens comboItens = new ComboItens();
+    JTable tblClientes;
     HibernateUtil hibernate = new HibernateUtil();
     EnderecoDao enderecoDao = new EnderecoDao();
     ClienteDao cDao = new ClienteDao();
     Endereco endereco = new Endereco();
     PessoaFisica pf = new PessoaFisica();
+    PessoaFisica pfAux = new PessoaFisica();
     PessoaJuridica pj = new PessoaJuridica();
+    PessoaJuridica pjAux = new PessoaJuridica();
     MaskFormatter mask;
-    String botaopressionado = "novo";
-    String tipoCadastro = "fisica";
+    String botaopressionado;
+    String tipoCadastro;
     Cliente c;
 
     public JdlCadastroClientes(java.awt.Frame parent, boolean modal,JTable tblClientes) {
         super(parent, modal);
         initComponents();
+        botaopressionado = "novo";
+        this.tblClientes = tblClientes;
         jcbCidade.setMaximumRowCount(15);
         jcbEstado.setMaximumRowCount(15);
         new CombosDAO().popularCombo("Estado", jcbEstado);
         new CombosDAO().popularComboComComplemento("Municipio", "Uf", jcbEstado.getSelectedItem().toString(), jcbCidade);
     }
     
-    public JdlCadastroClientes(java.awt.Frame parent, boolean modal, Cliente c, JTable tblClientes) {
+    public JdlCadastroClientes(java.awt.Frame parent, boolean modal, Cliente c, JTable tblClientes) throws ParseException {
         super(parent, modal);
         initComponents();
+        jcbTipo.setEnabled(false);
+        botaopressionado = "editar";
+        this.tblClientes = tblClientes;
+        this.c = c;
         jcbCidade.setMaximumRowCount(15);
         jcbEstado.setMaximumRowCount(15);
         new CombosDAO().popularCombo("Estado", jcbEstado);
@@ -59,7 +71,14 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         lblNome.setText("Razão Social :");
         lblCpf.setText("CNPJ :");
         lblData.setText("   Data de Abertura :");
-        lblRg.setText("IE :");        
+        lblRg.setText("IE :");
+        try {
+            txfCpf.setText("");
+            mask = new MaskFormatter("##.###.###/####-##");
+            txfCpf.setFormatterFactory(new DefaultFormatterFactory(mask));
+        } catch (ParseException ex) {
+            Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void mascaraPessoa() {
@@ -67,43 +86,49 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         lblCpf.setText("CPF :");
         lblData.setText("Data de Nascimento :");
         lblRg.setText("RG :");
+        try {
+            txfCpf.setText("");
+            mask = new MaskFormatter("###.###.###-##");
+            txfCpf.setFormatterFactory(new DefaultFormatterFactory(mask));
+        } catch (ParseException ex) {
+            Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
-    public void carregarDados(Cliente c){
+    public void carregarDados(Cliente c) throws ParseException{
         endereco = cDao.retornaObjetoEndereco(c.getIdendereco().getIdendereco());
         if (cDao.retornaPf(c) == null) {
-            System.out.println("entrou PJ");
-            pj = cDao.retornaPj(c);
+            mascaraEmpresa();
+            pjAux = cDao.retornaPj(c);
             jcbTipo.setSelectedIndex(1);
-            //System.out.println("cnpj"+pj.getCnpj());
-            //txfNome.setText(pj.getRazaoSocial());
-//            txfCpf.setText(pj.getCnpj());
-//            txfRg.setText(pj.getInscricaoEstadual());
-//            txfData.setText(pj.getDataAbertura().toString());
+            txfCpf.setText(pjAux.getCnpj());
+            txfRg.setText(pjAux.getInscricaoEstadual());
+            txfData.setText(cDao.data_sistema(pjAux.getDataAbertura().toString()));
+            tipoCadastro = "juridica";
         }else{
-            System.out.println("entrou PF");
-            pf = cDao.retornaPf(c);
-            txfCpf.setText(pf.getCpf());
-            txfRg.setText(pf.getRg());
-            txfData.setText(pf.getDataNascimento().toString());
+            mascaraPessoa();
+            pfAux = cDao.retornaPf(c);
+            jcbTipo.setSelectedIndex(0);
+            txfCpf.setText(pfAux.getCpf());
+            txfRg.setText(pfAux.getRg());
+            txfData.setText(cDao.data_sistema(pfAux.getDataNascimento().toString()));
+            tipoCadastro = "fisica";
         }
         if (c.getSituacao()) {
             cbStatus.setSelected(true);
         } else {
             cbStatus.setSelected(false);
         }
-
-//        if (c. == 0) {
-//            jcbTipo.setSelectedIndex(0);
-//        } else {
-//            jcbTipo.setSelectedIndex(1);
-//        }
-//        if (c.get != null) {
-//            txfData.setText(c.getData_nascimento().toString());
-//            txfData.setText(cDao.data_sistema(c.getData_nascimento().toString()));
-//        }
-
+        comboItens.setCodigo(endereco.getIdmunicipio().getIdmunicipio());
+        System.out.println("cod endereco"+endereco.getIdmunicipio().getIdmunicipio());
+        comboItens.setDescricao(endereco.getIdmunicipio().getNome());
+        System.out.println("nome municipio "+endereco.getIdmunicipio().getNome());
+        comboDao.definirItemCombo(jcbCidade, comboItens);
+        //comboItens.setCodigo(endereco.getIdmunicipio().);
+//        System.out.println(" jcb estado "+endereco.getIdmunicipio().getUf());
+//        jcbCidade.setSelectedItem(endereco.getIdmunicipio().getNome());
+//        System.out.println("jcb cidade"+endereco.getIdmunicipio().getNome());
         txfNome.setText(c.getNome());
         txfSexo.setText(c.getSexo());
         txfInformacao.setText(c.getObservacao());
@@ -133,10 +158,8 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         txfInformacao = new javax.swing.JTextArea();
         btnSalvar = new javax.swing.JButton();
-        btnLimpar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         txfCpf = new javax.swing.JFormattedTextField();
-        txfRg = new javax.swing.JFormattedTextField();
         txfData = new javax.swing.JFormattedTextField();
         lblData = new javax.swing.JLabel();
         lblCpf = new javax.swing.JLabel();
@@ -156,6 +179,7 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         lblComplemento = new javax.swing.JLabel();
         txfComplemento = new javax.swing.JTextField();
         txfSexo = new javax.swing.JTextField();
+        txfRg = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Clientes");
@@ -221,13 +245,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
             }
         });
 
-        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/limpar.png"))); // NOI18N
-        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparActionPerformed(evt);
-            }
-        });
-
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,12 +267,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 txfCpfKeyPressed(evt);
             }
         });
-
-        try {
-            txfRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
 
         try {
             txfData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -363,9 +374,9 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                                                 .addGap(10, 10, 10)
                                                 .addComponent(lblTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txfRg, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txfTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                                    .addComponent(txfRg)))
                             .addComponent(txfNome)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -391,8 +402,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -453,8 +462,7 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalvar)
-                    .addComponent(btnSair)
-                    .addComponent(btnLimpar))
+                    .addComponent(btnSair))
                 .addGap(29, 29, 29))
         );
 
@@ -481,24 +489,10 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
 
     private void jcbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoActionPerformed
         if (jcbTipo.getSelectedIndex() == 1) {
-            try {
-                txfCpf.setText("");
-                mask = new MaskFormatter("##.###.###/####-##");
-                txfCpf.setFormatterFactory(new DefaultFormatterFactory(mask));
-            } catch (ParseException ex) {
-                Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
-            }
             mascaraEmpresa();
             tipoCadastro = "juridica";
         }
         if (jcbTipo.getSelectedIndex() == 0) {
-            try {
-                txfCpf.setText("");
-                mask = new MaskFormatter("###.###.###-##");                
-                txfCpf.setFormatterFactory(new DefaultFormatterFactory(mask));
-            } catch (ParseException ex) {
-                Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
-            }
             mascaraPessoa();
             tipoCadastro = "fisica";
         }
@@ -514,11 +508,12 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataAtual = null;
         if (botaopressionado.equals("novo")) {
-            if (tipoCadastro.equals("fisica")) {              
-            c = new Cliente();
-            PessoaFisica pf = new PessoaFisica();
-            Endereco endereco = new Endereco();
+            if (tipoCadastro.equals("fisica")) {
+                c = new Cliente();
+                PessoaFisica pf = new PessoaFisica();
+                Endereco endereco = new Endereco();
                 if (cbStatus.isSelected()) {
                     c.setSituacao(true);
                 } else {
@@ -535,18 +530,15 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 pf.setCpf(txfCpf.getText());
                 pf.setRg(txfRg.getText());
                 if (txfData.getText().equals("  /  /    ")) {
-                try {
-                    pf.setDataNascimento(sdf.parse("00/00/0000"));
-                } catch (ParseException ex) {
-                    Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    pf.setDataNascimento(new java.sql.Date(0000, 00, 00));
                 } else {
                     try {
-                        java.sql.Date data = new java.sql.Date(sdf.parse(txfData.getText()).getTime());
+                        dataAtual = sdf.parse(txfData.getText());
                     } catch (ParseException ex) {
                         Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }                
+                    pf.setDataNascimento(dataAtual);
+                }
                 endereco.setRua(txfRua.getText());
                 endereco.setBairro(txfBairro.getText());
                 endereco.setNumero(txfNumero.getText());
@@ -584,17 +576,14 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 pj.setCnpj(txfCpf.getText());
                 pj.setInscricaoEstadual(txfRg.getText());
                 if (txfData.getText().equals("  /  /    ")) {
-                    try {
-                        pj.setDataAbertura(sdf.parse("00/00/0000"));
-                    } catch (ParseException ex) {
-                        Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    pj.setDataAbertura(new java.sql.Date(0000, 00, 00));
                 } else {
                     try {
-                        java.sql.Date data = new java.sql.Date(sdf.parse(txfData.getText()).getTime());
+                        dataAtual = sdf.parse(txfData.getText());
                     } catch (ParseException ex) {
                         Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    pj.setDataAbertura(dataAtual);
                 }
                 endereco.setRua(txfRua.getText());
                 endereco.setBairro(txfBairro.getText());
@@ -612,26 +601,102 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 dao.salvar(pj);
                 JOptionPane.showMessageDialog(this, "Empresa Cadastrada!");
                 this.dispose();
-            }            
-        } else if (botaopressionado.equals("editar")) {
-//            if (txfLogin.getText().trim().isEmpty() || txfSenha.getText().trim().isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "Digite os Dados!");
-//            } else {
-//                user.setNome(txfLogin.getText());
-//                user.setSenha(c.criptografa(txfSenha.getText()));
-//                d.atualizar(user);
-//                JOptionPane.showMessageDialog(this, "Usuário Editado!");
-//                txfLogin.setText("");
-//                txfSenha.setText("");
-//            }
+            }
+            cDao.populaClientes(tblClientes);
+        } else if (botaopressionado.equals("editar")) {     
+            if (tipoCadastro.equals("fisica")) {
+                Endereco endereco = new Endereco();
+                if (cbStatus.isSelected()) {
+                    c.setSituacao(true);
+                } else {
+                    c.setSituacao(false);
+                }
+                if (txfNome.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Campo Obrigatório Vazio");
+                } else {
+                    c.setNome(txfNome.getText());
+                }
+                c.setSexo(txfSexo.getText());
+                c.setTelefone(txfTelefone.getText());
+                c.setObservacao(txfInformacao.getText());
+                pfAux.setCpf(txfCpf.getText());
+                pfAux.setRg(txfRg.getText());
+                if (txfData.getText().equals("  /  /    ")) {
+                    pfAux.setDataNascimento(new java.sql.Date(0000, 00, 00));
+                } else {
+                    try {
+                        dataAtual = sdf.parse(txfData.getText());
+                    } catch (ParseException ex) {
+                        Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    pfAux.setDataNascimento(dataAtual);
+                }
+                endereco.setRua(txfRua.getText());
+                endereco.setBairro(txfBairro.getText());
+                endereco.setNumero(txfNumero.getText());
+                endereco.setComplemento(txfComplemento.getText());
+                endereco.setCep(txfCep.getText());
+                ComboItens item = (ComboItens) jcbCidade.getSelectedItem();
+                Municipio cidade = enderecoDao.retornaObjetoMunicipio(item.getCodigo());
+                item = (ComboItens) jcbEstado.getSelectedItem();
+                endereco.setIdmunicipio(cidade);
+                endereco.setIdendereco(c.getIdendereco().getIdendereco());
+                dao.atualizar(endereco);
+                c.setIdendereco(endereco);
+                dao.atualizar(c);
+                pfAux.setIdcliente(c);
+                dao.atualizar(pfAux);
+                JOptionPane.showMessageDialog(this, "Cliente Atualizado!");
+                this.dispose();
+            } else if (tipoCadastro.equals("juridica")) {
+                if (txfNome.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Campo Obrigatório Vazio");
+                } else {
+                    Endereco endereco = new Endereco();
+                    c.setNome(txfNome.getText());
+                    if (cbStatus.isSelected()) {
+                        c.setSituacao(true);
+                    } else {
+                        c.setSituacao(false);
+                    }
+                    c.setSexo(txfSexo.getText());
+                    c.setTelefone(txfTelefone.getText());
+                    c.setObservacao(txfInformacao.getText());
+                    pjAux.setRazaoSocial(txfNome.getText());
+                    pjAux.setCnpj(txfCpf.getText());
+                    pjAux.setInscricaoEstadual(txfRg.getText());
+                    if (txfData.getText().equals("  /  /    ")) {
+                        pjAux.setDataAbertura(new java.sql.Date(0000, 00, 00));
+                    } else {
+                        try {
+                            dataAtual = sdf.parse(txfData.getText());
+                        } catch (ParseException ex) {
+                            Logger.getLogger(JdlCadastroClientes.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        pjAux.setDataAbertura(dataAtual);
+                    }
+                    endereco.setRua(txfRua.getText());
+                    endereco.setBairro(txfBairro.getText());
+                    endereco.setNumero(txfNumero.getText());
+                    endereco.setComplemento(txfComplemento.getText());
+                    endereco.setCep(txfCep.getText());
+                    ComboItens item = (ComboItens) jcbCidade.getSelectedItem();
+                    Municipio cidade = enderecoDao.retornaObjetoMunicipio(item.getCodigo());
+                    item = (ComboItens) jcbEstado.getSelectedItem();
+                    endereco.setIdmunicipio(cidade);
+                    endereco.setIdendereco(c.getIdendereco().getIdendereco());
+                    dao.atualizar(endereco);
+                    c.setIdendereco(endereco);
+                    dao.atualizar(c);
+                    pjAux.setIdcliente(c);
+                    dao.atualizar(pjAux);
+                    JOptionPane.showMessageDialog(this, "Empresa Atualizada!");
+                    this.dispose();
+                }                
+            }
+            cDao.populaClientes(tblClientes);
         }
-//        d.populaUsuarios(tblUsuarios);
     }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-//        txfLogin.setText("");
-//        txfSenha.setText("");
-    }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.dispose();
@@ -715,7 +780,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JCheckBox cbStatus;
@@ -747,7 +811,7 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
     private javax.swing.JTextArea txfInformacao;
     private javax.swing.JTextField txfNome;
     private javax.swing.JTextField txfNumero;
-    private javax.swing.JFormattedTextField txfRg;
+    private javax.swing.JTextField txfRg;
     private javax.swing.JTextField txfRua;
     private javax.swing.JTextField txfSexo;
     private javax.swing.JTextField txfTelefone;

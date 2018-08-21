@@ -2,6 +2,9 @@ package telas;
 
 import dao.ClienteDao;
 import entidades.Cliente;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class JdlClientes extends javax.swing.JDialog {
@@ -196,7 +199,12 @@ public class JdlClientes extends javax.swing.JDialog {
             botaopressionado = "editar";
             int codCli = Integer.valueOf(String.valueOf(tblClientes.getValueAt(linha, 0)));
             Cliente cliente = cDao.procurarPorId(codCli);
-            JdlCadastroClientes telaClientes = new JdlCadastroClientes(null, false, cliente, tblClientes);
+            JdlCadastroClientes telaClientes = null;
+            try {
+                telaClientes = new JdlCadastroClientes(null, false, cliente, tblClientes);
+            } catch (ParseException ex) {
+                Logger.getLogger(JdlClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
             telaClientes.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um cliente!", "Informação", JOptionPane.INFORMATION_MESSAGE);
