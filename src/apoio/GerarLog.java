@@ -1,40 +1,40 @@
 package apoio;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GerarLog {
 
-    private PrintWriter out;
+    File arquivo;
+    FileReader fileReader;
+    BufferedReader bufferedReader;
+    FileWriter fileWriter1;
+    BufferedWriter bufferedWriter;
 
-    public GerarLog() {
+    public GerarLog(String erros) {
+
+        EscreverLog(erros);
+    }
+
+    private void EscreverLog(String erros) {
         try {
-            out = new PrintWriter(new FileWriter("Log.txt"));
-        } catch (IOException e) {
-            /*
-			 * Se der algum erro com o arquivo de log, imprime a stacktrace no console, mas a 
-			 * aplicação continua funcionando
-             */
-            e.printStackTrace();
-        }
-    }
+            fileReader = new FileReader(arquivo);
+            arquivo = new File("Exceptions.lg");
 
-    public void gravaErro(Throwable erro) {
-        out.print("Data do erro: ");
-        out.println(new Date());
-        out.print("Mensagem de erro: ");
-        out.println(erro);
-        out.print("Stacktrace: ");
-        erro.printStackTrace(out);
-    }
-
-    public void close() {
-        if (out != null) {
-            out.flush();
-            out.close();
+        } catch (FileNotFoundException ex) {
+            
+            
         }
+        bufferedReader = new BufferedReader(fileReader);
     }
 
 }
