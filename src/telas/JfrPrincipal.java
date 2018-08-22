@@ -38,6 +38,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         sistema = new javax.swing.JMenu();
         usuario = new javax.swing.JMenuItem();
         desconectar = new javax.swing.JMenuItem();
+        config = new javax.swing.JMenuItem();
         sair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -300,6 +301,19 @@ public class JfrPrincipal extends javax.swing.JFrame {
         });
         sistema.add(desconectar);
 
+        config.setBackground(new java.awt.Color(255, 255, 255));
+        config.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        config.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/config.png"))); // NOI18N
+        config.setText("Configurações");
+        config.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        config.setPreferredSize(new java.awt.Dimension(200, 50));
+        config.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                configActionPerformed(evt);
+            }
+        });
+        sistema.add(config);
+
         sair.setBackground(new java.awt.Color(255, 255, 255));
         sair.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Exit.png"))); // NOI18N
@@ -440,6 +454,10 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_configActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -481,6 +499,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu adicionais;
     private javax.swing.JMenuItem clientes;
+    private javax.swing.JMenuItem config;
     private javax.swing.JMenuItem contasReceber;
     private javax.swing.JMenuItem desconectar;
     private javax.swing.JMenu fianceiro;
