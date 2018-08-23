@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javassist.CtMethod.ConstParameter.string;
+import javax.persistence.Convert;
 
 public class GerarLog {
 
@@ -29,7 +31,7 @@ public class GerarLog {
     private void EscreverLog(String erros) {
         try {
             fileReader = new FileReader(arquivo);
-            arquivo = new File("Exceptions.lg");
+            arquivo = new File("Exceptions.log");
             bufferedReader = new BufferedReader(fileReader);
             Vector texto = new Vector();
             while (bufferedReader.ready()) {
@@ -63,5 +65,4 @@ public class GerarLog {
             System.exit(0);
         }
     }
-
 }
