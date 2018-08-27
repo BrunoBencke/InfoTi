@@ -1,5 +1,6 @@
 package dao;
 
+import apoio.ArquivoLog;
 import apoio.HibernateUtil;
 import entidades.Cliente;
 import entidades.Endereco;
@@ -62,7 +63,9 @@ public class ClienteDao extends Dao {
             }
             return null;
         } catch (Exception e) {
-            System.out.println("Erro ao Localizar Objeto!" + e.toString());
+            
+            System.out.println("Erro ao Localizar Objeto!" + e.toString());  
+            
         } finally {
             sessao.close();
         }
@@ -140,7 +143,7 @@ public class ClienteDao extends Dao {
                 }
             }
         } catch (HibernateException he) {
-            he.printStackTrace();
+           he.printStackTrace();
         }
     }
 }

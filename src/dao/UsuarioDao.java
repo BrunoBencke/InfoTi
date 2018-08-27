@@ -1,5 +1,5 @@
 package dao;
-import apoio.GerarLog;
+import apoio.ArquivoLog;
 import apoio.HibernateUtil;
 import entidades.Usuario;
 import java.util.ArrayList;

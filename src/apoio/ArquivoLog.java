@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import static javassist.CtMethod.ConstParameter.string;
 import javax.persistence.Convert;
 
-public class GerarLog {
+public class ArquivoLog {
 
     File arquivo;
     FileReader fileReader;
@@ -23,7 +23,7 @@ public class GerarLog {
     FileWriter fileWriter1;
     BufferedWriter bufferedWriter;
 
-    public GerarLog(String erros) {
+    public ArquivoLog(String erros) {
 
         EscreverLog(erros);
     }
