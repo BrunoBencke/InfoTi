@@ -30,8 +30,8 @@ public class ArquivoLog {
 
     private void EscreverLog(String erros) {
         try {
-            fileReader = new FileReader(arquivo);
             arquivo = new File("Exceptions.log");
+            fileReader = new FileReader(arquivo);
             bufferedReader = new BufferedReader(fileReader);
             Vector texto = new Vector();
             while (bufferedReader.ready()) {

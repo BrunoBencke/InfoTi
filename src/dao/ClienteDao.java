@@ -64,7 +64,7 @@ public class ClienteDao extends Dao {
             return null;
         } catch (Exception e) {
             
-            System.out.println("Erro ao Localizar Objeto!" + e.toString());  
+            new ArquivoLog(e.toString());
             
         } finally {
             sessao.close();
