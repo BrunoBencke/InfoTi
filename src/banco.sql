@@ -54,14 +54,30 @@ create table pessoa_fisica(idPessoa_Fisica SERIAL NOT NULL,
 constraint pk_pessoa_fisica PRIMARY KEY (idPessoa_Fisica),
 constraint fk_idCliente_cliente FOREIGN KEY (idCliente) REFERENCES cliente);
 
+create table config(idConfig SERIAL NOT NULL,
+                      auditoria INT NOT NULL,
+constraint pk_config PRIMARY KEY (idConfig));
+
+INSERT INTO config
+VALUES (default,'1');
+
 create table usuario(idUsuario SERIAL NOT NULL,
                       nome VARCHAR(100) NOT NULL,
                       senha VARCHAR(200) NOT NULL,
-constraint pk_usuario PRIMARY KEY (idUsuario));
+					  idConfig INT NOT NULL,
+constraint pk_usuario PRIMARY KEY (idUsuario),
+constraint fk_id_config FOREIGN KEY (idConfig) REFERENCES config);
 
 INSERT INTO usuario
-VALUES (default,'1','xMpCOKC5I4INzFCab3WEmw==');
+VALUES (default,'1','xMpCOKC5I4INzFCab3WEmw==','1');
 
+create table auditoria(idAuditoria SERIAL NOT NULL,
+                       		  idUsuario INT NOT NULL,
+                       		  data_hora VARCHAR(45),
+                       		  dado_anterior VARCHAR(255),
+							  dado_novo VARCHAR(255),
+constraint pk_auditoria PRIMARY KEY (idAuditoria),
+constraint fk_idAuditoria FOREIGN KEY (idUsuario) REFERENCES usuario);
 
 create table funcionario(idFuncionario SERIAL NOT NULL,
                        		  CTPS VARCHAR(20) NOT NULL,
