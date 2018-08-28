@@ -1,5 +1,6 @@
 package apoio;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,46 +25,29 @@ public class ArquivoLog {
     FileWriter fileWriter1;
     BufferedWriter bufferedWriter;
 
-    public ArquivoLog(String erros) {
-
-        EscreverLog(erros);
-    }
-
-    private void EscreverLog(String erros) {
+    public void gravaErro(String erro) {
+        File log = new File("Log.txt");
+        GregorianCalendar gc = new GregorianCalendar();
         try {
-            arquivo = new File("Exceptions.log");
-            fileReader = new FileReader(arquivo);
-            bufferedReader = new BufferedReader(fileReader);
-            Vector texto = new Vector();
-            while (bufferedReader.ready()) {
-
-                texto.add(bufferedReader.readLine());
+            FileWriter escrever = new FileWriter("Log.txt", true);
+            if (log.exists()) {
+                escrever.write("Data: " + gc.getTime() + "\nErro: " + erro + "\n\n");
+                escrever.close();
+            } else {
+                log.createNewFile();
             }
+        } catch (IOException e) {
 
-            fileReader = new FileReader(arquivo);
-            bufferedWriter = new BufferedWriter(fileWriter1);
+            throw new RuntimeException(e);
 
-            for (int i = 0; i > texto.size(); i++) {
+        } catch (NullPointerException e) {
 
-                bufferedWriter.write(texto.get(i).toString());
-                bufferedWriter.newLine();
-            }
-            bufferedWriter.write(erros);
-            bufferedReader.close();
-            bufferedWriter.close();
+            throw new RuntimeException(e);
 
-        } catch (FileNotFoundException ex) {
+        } catch (Exception e) {
 
-            try {
-                arquivo.createNewFile();
-                EscreverLog(erros);
-            } catch (IOException ex1) {
-
-                System.exit(0);
-            }
-        } catch (IOException er) {
-
-            System.exit(0);
+            throw new RuntimeException(e);
         }
     }
+
 }

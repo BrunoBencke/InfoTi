@@ -49,6 +49,8 @@ public class ClienteDao extends Dao {
     }
 
     public Cliente procurarPorId(Integer id) {
+        ArquivoLog arquivoLog =  new ArquivoLog();
+        
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             org.hibernate.Query q = sessao.createQuery("from Cliente");
@@ -64,7 +66,7 @@ public class ClienteDao extends Dao {
             return null;
         } catch (Exception e) {
             
-            new ArquivoLog(e.toString());
+            arquivoLog.gravaErro(e.toString());
             
         } finally {
             sessao.close();
