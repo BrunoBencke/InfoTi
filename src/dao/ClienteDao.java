@@ -1,5 +1,6 @@
 package dao;
 
+import apoio.ArquivoLog;
 import apoio.HibernateUtil;
 import entidades.Cliente;
 import entidades.Endereco;
@@ -48,6 +49,8 @@ public class ClienteDao extends Dao {
     }
 
     public Cliente procurarPorId(Integer id) {
+        ArquivoLog arquivoLog =  new ArquivoLog();
+        
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             org.hibernate.Query q = sessao.createQuery("from Cliente");
@@ -62,7 +65,9 @@ public class ClienteDao extends Dao {
             }
             return null;
         } catch (Exception e) {
-            System.out.println("Erro ao Localizar Objeto!" + e.toString());
+            
+            arquivoLog.gravaErro(e.toString());
+            
         } finally {
             sessao.close();
         }
@@ -140,7 +145,7 @@ public class ClienteDao extends Dao {
                 }
             }
         } catch (HibernateException he) {
-            he.printStackTrace();
+           he.printStackTrace();
         }
     }
 }
