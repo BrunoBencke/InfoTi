@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "forma_pagamento")

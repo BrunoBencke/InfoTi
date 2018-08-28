@@ -16,6 +16,7 @@ public class JfrLogin extends javax.swing.JFrame {
     Session sessao = HibernateUtil.getSessionFactory().openSession();
     List resultado = null;
     Criptografia c = new Criptografia();
+    Usuario user;
 
     public JfrLogin() throws ClassNotFoundException {
         initComponents();
@@ -25,7 +26,7 @@ public class JfrLogin extends javax.swing.JFrame {
             org.hibernate.Query q = sessao.createQuery("from Usuario");
             resultado = q.list();
             for (Object o : resultado) {
-                Usuario user = (Usuario) o;
+                user = (Usuario) o;
                 if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {                  
                     return true;
                 }
@@ -118,7 +119,7 @@ public class JfrLogin extends javax.swing.JFrame {
     private void btnAcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarActionPerformed
         if (login()) {
             this.setVisible(false);
-            JfrPrincipal telaPrincipal = new JfrPrincipal();
+            JfrPrincipal telaPrincipal = new JfrPrincipal(user);
             telaPrincipal.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");
@@ -154,7 +155,7 @@ public class JfrLogin extends javax.swing.JFrame {
         if (evt.getKeyChar() == VK_ENTER) {
             if (login()) {
                 this.setVisible(false);
-                JfrPrincipal telaPrincipal = new JfrPrincipal();
+                JfrPrincipal telaPrincipal = new JfrPrincipal(user);
                 telaPrincipal.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");

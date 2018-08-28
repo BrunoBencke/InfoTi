@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "cliente")
@@ -49,10 +49,8 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "nome")
     private String nome;
-    @Basic(optional = false)
     @Column(name = "sexo")
     private String sexo;
-    @Basic(optional = false)
     @Column(name = "telefone")
     private String telefone;
     @Column(name = "observacao")
@@ -77,11 +75,9 @@ public class Cliente implements Serializable {
         this.idcliente = idcliente;
     }
 
-    public Cliente(Integer idcliente, String nome, String sexo, String telefone, boolean situacao) {
+    public Cliente(Integer idcliente, String nome, boolean situacao) {
         this.idcliente = idcliente;
         this.nome = nome;
-        this.sexo = sexo;
-        this.telefone = telefone;
         this.situacao = situacao;
     }
 

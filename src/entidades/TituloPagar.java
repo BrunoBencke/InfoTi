@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "titulo_pagar")

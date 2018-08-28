@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "pessoa_juridica")
@@ -33,7 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PessoaJuridica.findAll", query = "SELECT p FROM PessoaJuridica p")
     , @NamedQuery(name = "PessoaJuridica.findByIdpessoaJuridica", query = "SELECT p FROM PessoaJuridica p WHERE p.idpessoaJuridica = :idpessoaJuridica")
     , @NamedQuery(name = "PessoaJuridica.findByCnpj", query = "SELECT p FROM PessoaJuridica p WHERE p.cnpj = :cnpj")
-    , @NamedQuery(name = "PessoaJuridica.findByRazaoSocial", query = "SELECT p FROM PessoaJuridica p WHERE p.razaoSocial = :razaoSocial")
     , @NamedQuery(name = "PessoaJuridica.findByDataAbertura", query = "SELECT p FROM PessoaJuridica p WHERE p.dataAbertura = :dataAbertura")
     , @NamedQuery(name = "PessoaJuridica.findByInscricaoEstadual", query = "SELECT p FROM PessoaJuridica p WHERE p.inscricaoEstadual = :inscricaoEstadual")})
 public class PessoaJuridica implements Serializable {
@@ -44,13 +43,8 @@ public class PessoaJuridica implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpessoa_juridica")
     private Integer idpessoaJuridica;
-    @Basic(optional = false)
     @Column(name = "cnpj")
     private String cnpj;
-    @Basic(optional = false)
-    @Column(name = "razao_social")
-    private String razaoSocial;
-    @Basic(optional = false)
     @Column(name = "data_abertura")
     @Temporal(TemporalType.DATE)
     private Date dataAbertura;
@@ -67,13 +61,6 @@ public class PessoaJuridica implements Serializable {
         this.idpessoaJuridica = idpessoaJuridica;
     }
 
-    public PessoaJuridica(Integer idpessoaJuridica, String cnpj, String razaoSocial, Date dataAbertura) {
-        this.idpessoaJuridica = idpessoaJuridica;
-        this.cnpj = cnpj;
-        this.razaoSocial = razaoSocial;
-        this.dataAbertura = dataAbertura;
-    }
-
     public Integer getIdpessoaJuridica() {
         return idpessoaJuridica;
     }
@@ -88,14 +75,6 @@ public class PessoaJuridica implements Serializable {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
-    }
-
-    public String getRazaoSocial() {
-        return razaoSocial;
-    }
-
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
     }
 
     public Date getDataAbertura() {

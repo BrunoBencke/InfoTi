@@ -1,7 +1,11 @@
 package telas;
 
+import apoio.Calendario;
+import dao.ConfigDao;
 import dao.MarcasProdutosDao;
+import entidades.Auditoria;
 import entidades.MarcaProduto;
+import entidades.Usuario;
 import javax.swing.JOptionPane;
 
 public class JdlMarcasProdutos extends javax.swing.JDialog {
@@ -9,10 +13,15 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
     MarcasProdutosDao d = new MarcasProdutosDao();
     MarcaProduto obj = new MarcaProduto();
     String botaopressionado = "novo";
+    ConfigDao config = new ConfigDao();
+    Auditoria auditoria = new Auditoria();
+    Calendario calendario = new Calendario();
+    Usuario user;
 
-    public JdlMarcasProdutos(java.awt.Frame parent, boolean modal) {
+    public JdlMarcasProdutos(java.awt.Frame parent, boolean modal, Usuario user) {
         super(parent, modal);
         initComponents();
+        this.user = user;
         txfnome.setEditable(false);
         btsalvar.setEnabled(false);
         btexcluir.setEnabled(true);
@@ -173,7 +182,14 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             obj.setSituacao(true);
             d.salvar(obj);
             JOptionPane.showMessageDialog(this, "Marca Cadastrada!");
-            txfnome.setText("");
+            if (config.status_auditoria()) {
+                auditoria.setDadoAnterior("Novo Cadastro");
+                auditoria.setDadoNovo("Nome : "+txfnome.getText());
+                auditoria.setDataHora(calendario.obterDataAtualDMA()+" "+calendario.obterHoraAtual());
+                auditoria.setIdusuario(user);
+                d.salvar(auditoria);
+                System.out.println("Auditoria!");                
+            }
         } else if (botaopressionado.equals("editar")) {
             obj.setNome(txfnome.getText());
             d.atualizar(obj);
@@ -267,7 +283,8 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JdlMarcasProdutos dialog = new JdlMarcasProdutos(new javax.swing.JFrame(), true);
+                Usuario user = new Usuario();
+                JdlMarcasProdutos dialog = new JdlMarcasProdutos(new javax.swing.JFrame(), true, user);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -580,7 +580,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 c.setSexo(txfSexo.getText());
                 c.setTelefone(txfTelefone.getText());
                 c.setObservacao(txfInformacao.getText());
-                pj.setRazaoSocial(txfNome.getText());
                 pj.setCnpj(txfCpf.getText());
                 pj.setInscricaoEstadual(txfRg.getText());
                 if (txfData.getText().equals("  /  /    ")) {
@@ -670,7 +669,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                     c.setSexo(txfSexo.getText());
                     c.setTelefone(txfTelefone.getText());
                     c.setObservacao(txfInformacao.getText());
-                    pjAux.setRazaoSocial(txfNome.getText());
                     pjAux.setCnpj(txfCpf.getText());
                     pjAux.setInscricaoEstadual(txfRg.getText());
                     if (txfData.getText().equals("  /  /    ")) {

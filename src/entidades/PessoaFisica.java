@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "pessoa_fisica")
@@ -47,13 +47,10 @@ public class PessoaFisica implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpessoa_fisica")
     private Integer idpessoaFisica;
-    @Basic(optional = false)
     @Column(name = "rg")
     private String rg;
-    @Basic(optional = false)
     @Column(name = "cpf")
     private String cpf;
-    @Basic(optional = false)
     @Column(name = "data_nascimento")
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
@@ -68,13 +65,6 @@ public class PessoaFisica implements Serializable {
 
     public PessoaFisica(Integer idpessoaFisica) {
         this.idpessoaFisica = idpessoaFisica;
-    }
-
-    public PessoaFisica(Integer idpessoaFisica, String rg, String cpf, Date dataNascimento) {
-        this.idpessoaFisica = idpessoaFisica;
-        this.rg = rg;
-        this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
     }
 
     public Integer getIdpessoaFisica() {

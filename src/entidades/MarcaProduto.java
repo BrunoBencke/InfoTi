@@ -5,7 +5,6 @@
  */
 package entidades;
 
-import dao.Generica;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -24,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "marca_produto")
@@ -34,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MarcaProduto.findByIdmarcaProduto", query = "SELECT m FROM MarcaProduto m WHERE m.idmarcaProduto = :idmarcaProduto")
     , @NamedQuery(name = "MarcaProduto.findByNome", query = "SELECT m FROM MarcaProduto m WHERE m.nome = :nome")
     , @NamedQuery(name = "MarcaProduto.findBySituacao", query = "SELECT m FROM MarcaProduto m WHERE m.situacao = :situacao")})
-public class MarcaProduto implements Serializable, Generica {
+public class MarcaProduto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -120,16 +119,6 @@ public class MarcaProduto implements Serializable, Generica {
     @Override
     public String toString() {
         return "entidades.MarcaProduto[ idmarcaProduto=" + idmarcaProduto + " ]";
-    }
-
-    @Override
-    public int getId() {
-        return idmarcaProduto;
-    }
-
-    @Override
-    public String getnome() {
-        return nome;
     }
     
 }

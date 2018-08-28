@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "municipio")
@@ -143,5 +143,6 @@ public class Municipio implements Serializable, Generica {
     @Override
     public String getnome() {
         return nome;
-    }    
+    }
+    
 }

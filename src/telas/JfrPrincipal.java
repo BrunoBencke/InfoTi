@@ -1,20 +1,24 @@
 package telas;
 
+import dao.AuditoriaDao;
+import entidades.Usuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class JfrPrincipal extends javax.swing.JFrame {
+    
+    Usuario user;
 
-    public JfrPrincipal() {
+    public JfrPrincipal(Usuario user) {
         initComponents();
+        this.user = user;
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbUserLogged = new javax.swing.JLabel();
         menu = new javax.swing.JMenuBar();
         registros = new javax.swing.JMenu();
         pedidos = new javax.swing.JMenuItem();
@@ -43,11 +47,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iNFO-Ti");
-
-        lbUserLogged.setBackground(new java.awt.Color(255, 255, 255));
-        lbUserLogged.setFont(new java.awt.Font("Arial", 2, 14)); // NOI18N
-        lbUserLogged.setText("Usuário");
-        lbUserLogged.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         menu.setBackground(new java.awt.Color(255, 255, 255));
         menu.setBorder(null);
@@ -335,13 +334,11 @@ public class JfrPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbUserLogged, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
+            .addGap(0, 878, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(465, Short.MAX_VALUE)
-                .addComponent(lbUserLogged))
+            .addGap(0, 486, Short.MAX_VALUE)
         );
 
         pack();
@@ -443,7 +440,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miAllClientsActionPerformed
 
     private void marcasProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcasProdutosActionPerformed
-        JdlMarcasProdutos marcas = new JdlMarcasProdutos(this, false);
+        JdlMarcasProdutos marcas = new JdlMarcasProdutos(this, false, user);
         marcas.setVisible(true);
     }//GEN-LAST:event_marcasProdutosActionPerformed
 
@@ -491,7 +488,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JfrPrincipal().setVisible(true);
+                Usuario user = null;
+                new JfrPrincipal(user).setVisible(true);
             }
         });
     }
@@ -505,7 +503,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu fianceiro;
     private javax.swing.JMenuItem funcionarios;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JLabel lbUserLogged;
     private javax.swing.JMenuItem marcasProdutos;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem miAllClients;

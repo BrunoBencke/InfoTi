@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -23,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "usuario")
@@ -49,6 +51,11 @@ public class Usuario implements Serializable {
     private String senha;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
     private List<Venda> vendaList;
+    @JoinColumn(name = "idconfig", referencedColumnName = "idconfig")
+    @ManyToOne(optional = false)
+    private Config idconfig;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
+    private List<Auditoria> auditoriaList;
 
     public Usuario() {
     }
@@ -94,6 +101,23 @@ public class Usuario implements Serializable {
 
     public void setVendaList(List<Venda> vendaList) {
         this.vendaList = vendaList;
+    }
+
+    public Config getIdconfig() {
+        return idconfig;
+    }
+
+    public void setIdconfig(Config idconfig) {
+        this.idconfig = idconfig;
+    }
+
+    @XmlTransient
+    public List<Auditoria> getAuditoriaList() {
+        return auditoriaList;
+    }
+
+    public void setAuditoriaList(List<Auditoria> auditoriaList) {
+        this.auditoriaList = auditoriaList;
     }
 
     @Override

@@ -63,5 +63,7 @@ Contributor(s):
     <mapping class="entidades.TituloPagar"/>
     <mapping class="entidades.Usuario"/>
     <mapping class="entidades.Venda"/>
+    <mapping class="entidades.Config"/>
+    <mapping class="entidades.Auditoria"/>
   </session-factory>
 </hibernate-configuration>

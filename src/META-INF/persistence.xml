@@ -2,6 +2,25 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="InfoTiPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>entidades.Estado</class>
+    <class>entidades.Regiao</class>
+    <class>entidades.Titulo</class>
+    <class>entidades.Usuario</class>
+    <class>entidades.TituloPagar</class>
+    <class>entidades.Cliente</class>
+    <class>entidades.Caixa</class>
+    <class>entidades.FormaPagamento</class>
+    <class>entidades.TipoPagamento</class>
+    <class>entidades.PessoaJuridica</class>
+    <class>entidades.Funcionario</class>
+    <class>entidades.Produto</class>
+    <class>entidades.Municipio</class>
+    <class>entidades.PessoaFisica</class>
+    <class>entidades.Auditoria</class>
+    <class>entidades.Endereco</class>
+    <class>entidades.Venda</class>
+    <class>entidades.Config</class>
+    <class>entidades.MarcaProduto</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/iNFO-Ti"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

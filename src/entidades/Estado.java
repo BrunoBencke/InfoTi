@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "estado")
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Estado.findByNome", query = "SELECT e FROM Estado e WHERE e.nome = :nome")
     , @NamedQuery(name = "Estado.findByUf", query = "SELECT e FROM Estado e WHERE e.uf = :uf")
     , @NamedQuery(name = "Estado.findByRegiao", query = "SELECT e FROM Estado e WHERE e.regiao = :regiao")})
-public class Estado implements Serializable, Generica {
+public class Estado implements Serializable, Generica{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -141,5 +141,6 @@ public class Estado implements Serializable, Generica {
     @Override
     public String getnome() {
         return uf;
-    }    
+    }
+    
 }

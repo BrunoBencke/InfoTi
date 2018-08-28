@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "endereco")
@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Endereco.findByNumero", query = "SELECT e FROM Endereco e WHERE e.numero = :numero")
     , @NamedQuery(name = "Endereco.findByComplemento", query = "SELECT e FROM Endereco e WHERE e.complemento = :complemento")
     , @NamedQuery(name = "Endereco.findByCep", query = "SELECT e FROM Endereco e WHERE e.cep = :cep")})
-public class Endereco implements Serializable {
+public class Endereco implements Serializable{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,7 +46,6 @@ public class Endereco implements Serializable {
     @Basic(optional = false)
     @Column(name = "idendereco")
     private Integer idendereco;
-    @Basic(optional = false)
     @Column(name = "rua")
     private String rua;
     @Column(name = "bairro")
@@ -55,7 +54,6 @@ public class Endereco implements Serializable {
     private String numero;
     @Column(name = "complemento")
     private String complemento;
-    @Basic(optional = false)
     @Column(name = "cep")
     private String cep;
     @JoinColumn(name = "idmunicipio", referencedColumnName = "idmunicipio")
@@ -69,12 +67,6 @@ public class Endereco implements Serializable {
 
     public Endereco(Integer idendereco) {
         this.idendereco = idendereco;
-    }
-
-    public Endereco(Integer idendereco, String rua, String cep) {
-        this.idendereco = idendereco;
-        this.rua = rua;
-        this.cep = cep;
     }
 
     public Integer getIdendereco() {
