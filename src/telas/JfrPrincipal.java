@@ -21,13 +21,14 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         menu = new javax.swing.JMenuBar();
         registros = new javax.swing.JMenu();
-        pedidos = new javax.swing.JMenuItem();
         clientes = new javax.swing.JMenuItem();
         produtos = new javax.swing.JMenuItem();
         adicionais = new javax.swing.JMenu();
         funcionarios = new javax.swing.JMenuItem();
         marcasProdutos = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        pedidos = new javax.swing.JMenuItem();
         fianceiro = new javax.swing.JMenu();
         contasReceber = new javax.swing.JMenuItem();
         relatorios = new javax.swing.JMenu();
@@ -60,20 +61,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
         registros.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         registros.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         registros.setPreferredSize(new java.awt.Dimension(170, 50));
-
-        pedidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        pedidos.setBackground(new java.awt.Color(255, 255, 255));
-        pedidos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        pedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/OS.png"))); // NOI18N
-        pedidos.setText("Pedidos");
-        pedidos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        pedidos.setPreferredSize(new java.awt.Dimension(200, 50));
-        pedidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pedidosActionPerformed(evt);
-            }
-        });
-        registros.add(pedidos);
 
         clientes.setBackground(new java.awt.Color(255, 255, 255));
         clientes.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -147,6 +134,28 @@ public class JfrPrincipal extends javax.swing.JFrame {
         registros.add(adicionais);
 
         menu.add(registros);
+
+        jMenu1.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\iNFO-Ti\\InfoTi\\src\\icones\\produto.png")); // NOI18N
+        jMenu1.setText("Vendas");
+        jMenu1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenu1.setMaximumSize(new java.awt.Dimension(150, 32767));
+
+        pedidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        pedidos.setBackground(new java.awt.Color(255, 255, 255));
+        pedidos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        pedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/OS.png"))); // NOI18N
+        pedidos.setText("Pedidos");
+        pedidos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        pedidos.setPreferredSize(new java.awt.Dimension(200, 50));
+        pedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pedidosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(pedidos);
+
+        menu.add(jMenu1);
 
         fianceiro.setBackground(new java.awt.Color(255, 255, 255));
         fianceiro.setBorder(null);
@@ -502,6 +511,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem desconectar;
     private javax.swing.JMenu fianceiro;
     private javax.swing.JMenuItem funcionarios;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem marcasProdutos;
     private javax.swing.JMenuBar menu;
