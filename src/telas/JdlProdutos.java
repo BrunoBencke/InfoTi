@@ -22,7 +22,7 @@ public class JdlProdutos extends javax.swing.JDialog {
         initComponents();
         String botaopressionado = "novo";
         produtosDao.populaProduto(JtlProdutos);
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -210,8 +210,10 @@ public class JdlProdutos extends javax.swing.JDialog {
             String botaopressionado = "editar";
             int codProd = Integer.valueOf(String.valueOf(JtlProdutos.getValueAt(linha, 0)));
             Produto produto = produtosDao.procurarPorId(codProd);
-            JdlCadastroProdutos telaProdutos = new JdlCadastroProdutos(null, JtlProdutos);
+            JdlCadastroProdutos telaProdutos = null;
+            telaProdutos = new JdlCadastroProdutos(null, false, produto, JtlProdutos);
             telaProdutos.setVisible(true);
+
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
