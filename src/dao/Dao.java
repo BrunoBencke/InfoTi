@@ -1,6 +1,8 @@
 package dao;
 
+import apoio.Calendario;
 import apoio.HibernateUtil;
+import entidades.Auditoria;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.persistence.EntityManager;
@@ -8,10 +10,14 @@ import javax.persistence.EntityTransaction;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import static telas.JfrPrincipal.user;
 
 public class Dao<T> {
 
     Session sessao = HibernateUtil.getSessionFactory().openSession();
+    ConfigDao config = new ConfigDao();
+    Auditoria auditoria = new Auditoria();
+    Calendario calendario = new Calendario();
 
     private EntityTransaction getTransacao(EntityManager session) {
         EntityTransaction transaction = session.getTransaction();
@@ -23,6 +29,14 @@ public class Dao<T> {
         try {
             Transaction t = sessao.beginTransaction();
             sessao.save(object);
+            if (config.status_auditoria()) {
+                auditoria.setDadoAnterior("Novo Cadastro");
+                auditoria.setDadoNovo(object.toString());
+                auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
+                auditoria.setIdusuario(user);
+                auditoria.setOperacao("Insert");                
+                sessao.save(auditoria);
+            }
             t.commit();
         } catch (HibernateException he) {
             he.printStackTrace();

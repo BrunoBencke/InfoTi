@@ -76,6 +76,7 @@ create table auditoria(idAuditoria SERIAL NOT NULL,
                        		  data_hora VARCHAR(45),
                        		  dado_anterior VARCHAR(255),
 							  dado_novo VARCHAR(255),
+							  operacao VARCHAR(45),
 constraint pk_auditoria PRIMARY KEY (idAuditoria),
 constraint fk_idAuditoria FOREIGN KEY (idUsuario) REFERENCES usuario);
 

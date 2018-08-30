@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "auditoria")
@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Auditoria.findByIdauditoria", query = "SELECT a FROM Auditoria a WHERE a.idauditoria = :idauditoria")
     , @NamedQuery(name = "Auditoria.findByDataHora", query = "SELECT a FROM Auditoria a WHERE a.dataHora = :dataHora")
     , @NamedQuery(name = "Auditoria.findByDadoAnterior", query = "SELECT a FROM Auditoria a WHERE a.dadoAnterior = :dadoAnterior")
-    , @NamedQuery(name = "Auditoria.findByDadoNovo", query = "SELECT a FROM Auditoria a WHERE a.dadoNovo = :dadoNovo")})
+    , @NamedQuery(name = "Auditoria.findByDadoNovo", query = "SELECT a FROM Auditoria a WHERE a.dadoNovo = :dadoNovo")
+    , @NamedQuery(name = "Auditoria.findByOperacao", query = "SELECT a FROM Auditoria a WHERE a.operacao = :operacao")})
 public class Auditoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +47,8 @@ public class Auditoria implements Serializable {
     private String dadoAnterior;
     @Column(name = "dado_novo")
     private String dadoNovo;
+    @Column(name = "operacao")
+    private String operacao;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario idusuario;
@@ -87,6 +90,14 @@ public class Auditoria implements Serializable {
 
     public void setDadoNovo(String dadoNovo) {
         this.dadoNovo = dadoNovo;
+    }
+
+    public String getOperacao() {
+        return operacao;
+    }
+
+    public void setOperacao(String operacao) {
+        this.operacao = operacao;
     }
 
     public Usuario getIdusuario() {

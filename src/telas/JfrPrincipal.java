@@ -1,5 +1,4 @@
 package telas;
-
 import dao.AuditoriaDao;
 import entidades.Usuario;
 import java.util.logging.Level;
@@ -8,7 +7,7 @@ import javax.swing.JOptionPane;
 
 public class JfrPrincipal extends javax.swing.JFrame {
     
-    Usuario user;
+    public static Usuario user;
 
     public JfrPrincipal(Usuario user) {
         initComponents();

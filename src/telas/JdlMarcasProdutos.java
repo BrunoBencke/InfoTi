@@ -13,9 +13,6 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
     MarcasProdutosDao d = new MarcasProdutosDao();
     MarcaProduto obj = new MarcaProduto();
     String botaopressionado = "novo";
-    ConfigDao config = new ConfigDao();
-    Auditoria auditoria = new Auditoria();
-    Calendario calendario = new Calendario();
     Usuario user;
 
     public JdlMarcasProdutos(java.awt.Frame parent, boolean modal, Usuario user) {
@@ -182,14 +179,6 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             obj.setSituacao(true);
             d.salvar(obj);
             JOptionPane.showMessageDialog(this, "Marca Cadastrada!");
-            if (config.status_auditoria()) {
-                auditoria.setDadoAnterior("Novo Cadastro");
-                auditoria.setDadoNovo("Nome : "+txfnome.getText());
-                auditoria.setDataHora(calendario.obterDataAtualDMA()+" "+calendario.obterHoraAtual());
-                auditoria.setIdusuario(user);
-                d.salvar(auditoria);
-                System.out.println("Auditoria!");                
-            }
         } else if (botaopressionado.equals("editar")) {
             obj.setNome(txfnome.getText());
             d.atualizar(obj);
