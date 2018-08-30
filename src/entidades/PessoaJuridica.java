@@ -123,7 +123,7 @@ public class PessoaJuridica implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.PessoaJuridica[ idpessoaJuridica=" + idpessoaJuridica + " ]";
+        return "Id Pessoa Jurídica:"+idpessoaJuridica+" CNPJ:"+cnpj+" Data Abertura:"+dataAbertura+" IE:"+inscricaoEstadual+" Cód Cliente:"+idcliente;
     }
     
 }

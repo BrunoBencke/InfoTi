@@ -159,7 +159,7 @@ public class Funcionario implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Funcionario[ idfuncionario=" + idfuncionario + " ]";
+        return "Id Funcionário:"+idfuncionario+" Ctps:"+ctps+" Pis:"+pis+" Salário:"+salario+" Cargo:"+cargo+" Id PessoaFísica:"+idpessoaFisica+" Id Usuário:"+idusuario;
     }
     
 }

@@ -130,7 +130,7 @@ public class Estado implements Serializable, Generica{
 
     @Override
     public String toString() {
-        return "entidades.Estado[ idestado=" + idestado + " ]";
+        return "Id Estado:"+idestado+" Nome:"+nome+" Uf:"+uf+" Código Uf:"+codigouf+" Código Região:"+regiao;
     }
 
     @Override

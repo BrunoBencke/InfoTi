@@ -108,7 +108,7 @@ public class MarcaProduto implements Serializable {
 
     @Override
     public String toString() {
-        return ""+idmarcaProduto+" "+nome+" "+situacao;
+        return "Id Marca:"+idmarcaProduto+" Nome:"+nome+" Situação:"+situacao;
     }
     
 }

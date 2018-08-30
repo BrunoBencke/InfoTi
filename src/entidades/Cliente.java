@@ -65,6 +65,16 @@ public class Cliente implements Serializable {
 
     public Cliente() {
     }
+    
+    public Cliente(Cliente c) {
+        this.idcliente = c.getIdcliente();
+        this.nome = c.getNome();
+        this.sexo = c.getSexo();
+        this.telefone = c.getTelefone();
+        this.situacao = c.getSituacao();
+        this.observacao = c.getObservacao();
+        this.idendereco = c.getIdendereco();
+    }
 
     public Cliente(Integer idcliente) {
         this.idcliente = idcliente;
@@ -181,7 +191,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Cliente[ idcliente=" + idcliente + " ]";
+        return "Id :"+idcliente+" Nome:"+nome+" Sexo:"+sexo+" Telefone:"+telefone+" Situação:"+situacao+" Observação:"+observacao+" Id Endereço:"+idendereco;
     }
     
 }

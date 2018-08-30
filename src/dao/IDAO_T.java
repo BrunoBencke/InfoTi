@@ -6,7 +6,7 @@ public interface IDAO_T <T> {
 
     public String salvar(T o);
 
-    public String atualizar(T o);
+    public String atualizar(T o, T o1);
 
     public String excluir(int id);
 

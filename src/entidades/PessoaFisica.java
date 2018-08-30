@@ -138,7 +138,7 @@ public class PessoaFisica implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.PessoaFisica[ idpessoaFisica=" + idpessoaFisica + " ]";
+        return "Id PessoaFísica:"+idpessoaFisica+" RG:"+rg+" Cpf:"+cpf+" Data Nascimento:"+dataNascimento+" Id Cliente:"+idcliente;
     }
     
 }

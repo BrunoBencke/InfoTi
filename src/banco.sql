@@ -74,8 +74,8 @@ VALUES (default,'1','xMpCOKC5I4INzFCab3WEmw==','1');
 create table auditoria(idAuditoria SERIAL NOT NULL,
                        		  idUsuario INT NOT NULL,
                        		  data_hora VARCHAR(45),
-                       		  dado_anterior VARCHAR(255),
-							  dado_novo VARCHAR(255),
+                       		  dado_anterior VARCHAR(500),
+							  dado_novo VARCHAR(500),
 							  operacao VARCHAR(45),
 constraint pk_auditoria PRIMARY KEY (idAuditoria),
 constraint fk_idAuditoria FOREIGN KEY (idUsuario) REFERENCES usuario);

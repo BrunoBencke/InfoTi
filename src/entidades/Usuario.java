@@ -142,7 +142,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Usuario[ idusuario=" + idusuario + " ]";
+        return "Id Usuário:"+idusuario+" Nome:"+nome+" Senha:"+senha+" Id Config:"+idconfig;
     }
     
 }

@@ -105,7 +105,7 @@ public class FormaPagamento implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.FormaPagamento[ idformaPagamento=" + idformaPagamento + " ]";
+        return "Id FormaPagamento:"+idformaPagamento+" Descrição:"+descricao;
     }
     
 }

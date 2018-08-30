@@ -27,8 +27,7 @@ public class Dao<T> {
     public T salvar(T object) {  
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {
-            Transaction t = sessao.beginTransaction();
-            sessao.save(object);
+            Transaction t = sessao.beginTransaction();            
             if (config.status_auditoria()) {
                 auditoria.setDadoAnterior("Novo Cadastro");
                 auditoria.setDadoNovo(object.toString());
@@ -37,6 +36,7 @@ public class Dao<T> {
                 auditoria.setOperacao("Insert");                
                 sessao.save(auditoria);
             }
+            sessao.save(object);
             t.commit();
         } catch (HibernateException he) {
             he.printStackTrace();
@@ -46,10 +46,18 @@ public class Dao<T> {
         return null;
     }
 
-    public T atualizar(T object) {
+    public T atualizar(T object, T object_old) {
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {            
             Transaction t = sessao.beginTransaction();
+            if (config.status_auditoria()) {
+                auditoria.setDadoAnterior(object_old.toString());
+                auditoria.setDadoNovo(object.toString());
+                auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
+                auditoria.setIdusuario(user);
+                auditoria.setOperacao("Update");
+                sessao.save(auditoria);
+            }
             sessao.update(object);
             t.commit();
         } catch (HibernateException he) {
