@@ -255,7 +255,9 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
 
             this.dispose();
 
-        } else {
+        } else if (botaopressionado.equals("editar")) {
+            
+            
 
         }
     }//GEN-LAST:event_dtnSalvarActionPerformed

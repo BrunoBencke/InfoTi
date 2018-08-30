@@ -5768,4 +5768,71 @@ Insert into Regiao (IdRegiao, Nome) values (2, 'Nordeste');
 Insert into Regiao (IdRegiao, Nome) values (3, 'Sudeste');
 Insert into Regiao (IdRegiao, Nome) values (4, 'Sul');
 Insert into Regiao (IdRegiao, Nome) values (5, 'Centro-Oeste');
+-------------------------------------------------------------------------------
+CREATE VIEW v_produto
+(cidproduto, cnome, cestoque, cdescricao, csituacao)
+AS
+SELECT p.idproduto, p.nome, p.estoque, p.descricao, p.situacao
 
+FROM produto p
+
+ORDER BY c.nome
+----------------------------------------------------------------------------------------
+CREATE FUNCTION produto_gatilho() RETURNS trigger AS $produto_gatilho$
+    BEGIN
+        IF NEW.nome IS NULL THEN
+            RAISE EXCEPTION 'O nome do produto não pode ser nulo';
+        END IF;
+        IF NEW.valor IS NULL THEN
+            RAISE EXCEPTION '% não pode ter um valor nulo', NEW.nome;
+        END IF;
+        
+		IF NEW.valor < 0 THEN
+            RAISE EXCEPTION '% não pode ter um valor negativo', NEW.nome;
+        END IF;
+        
+		RETURN NEW;
+    END;
+  $produto_gatilho$ LANGUAGE plpgsql;
+
+ CREATE TRIGGER produto_gatilho BEFORE INSERT OR UPDATE ON produto
+    FOR EACH ROW EXECUTE PROCEDURE produto_gatilho();
+-------------------------------------------------------------------------------------------
+CREATE FUNCTION cliente_gatilho() RETURNS trigger AS $cliente_gatilho$
+    BEGIN
+        IF NEW.nome IS NULL THEN
+            RAISE EXCEPTION 'O nome do cliente não pode ser nulo';
+        END IF;
+        IF NEW.telefone IS NULL THEN
+            RAISE EXCEPTION '% O telefone do cliente não pode ser nulo', NEW.telefone;
+        END IF;
+        
+		RETURN NEW;
+    END;
+  $cliente_gatilho$ LANGUAGE plpgsql;
+
+CREATE TRIGGER cliente_gatilho BEFORE INSERT OR UPDATE ON cliente
+    FOR EACH ROW EXECUTE PROCEDURE cliente_gatilho();
+---------------------------------------------------------------------------------------------
+CREATE VIEW v_cliente_fisico
+(cidcliente, cnome, csexo, ccpf, cdata_nascimento,csituacao)
+AS
+SELECT c.idcliente,c.nome,c.sexo,pf.cpf,pf.data_nascimento,c.situacao
+
+FROM cliente c, pessoa_fisica pf
+
+WHERE pf.idcliente = c.idcliente
+
+ORDER BY c.nome
+--------------------------------------------------------------------------------------------
+CREATE VIEW v_cliente_juridica
+(cidcliente, cnome, ccnpj, cdata_abertura,cinscricao_estadual,csituacao)
+AS
+SELECT c.idcliente,c.nome,pj.cnpj,pj.data_abertura,pj.inscricao_estadual,c.situacao
+
+FROM cliente c, pessoa_juridica pj
+
+WHERE pj.idcliente = c.idcliente
+
+ORDER BY c.nome
+----------------------------------------------------------------------------------------------
