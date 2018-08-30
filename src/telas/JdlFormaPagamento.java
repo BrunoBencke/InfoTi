@@ -204,8 +204,7 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
         txfnome.setEditable(true);
         btnSalvar.setEnabled(true);
         btnEditar.setEnabled(true);
-        btnExcluir.setEnabled(false);
-        
+        btnExcluir.setEnabled(false);        
         int linha = tblFormaPagamento.getSelectedRow();
         if (linha > -1) {
             botaopressionado = "editar";
@@ -225,8 +224,9 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Forma de Pagamento Cadastrada!");
             txfnome.setText("");
         } else if (botaopressionado.equals("editar")) {
+            String dado_antigo_fp = formaPagamento.toString();
             formaPagamento.setDescricao(txfnome.getText());
-            formaPagamentoDao.atualizar(formaPagamento);
+            formaPagamentoDao.atualizar(formaPagamento,dado_antigo_fp);
             JOptionPane.showMessageDialog(this, "Forma de Pagamento Editada!");
             txfnome.setText("");
         }
@@ -253,7 +253,7 @@ public class JdlFormaPagamento extends javax.swing.JDialog {
             resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
             if (resposta == JOptionPane.YES_OPTION) {
                 formaPagamento = formaPagamentoDao.procurarPorId(codUsuario);
-                d.excluir(formaPagamento);
+                d.excluir(formaPagamento, formaPagamento.toString());
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione uma Forma de Pagamento!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }

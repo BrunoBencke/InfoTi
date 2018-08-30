@@ -185,7 +185,7 @@ public class JdlClientes extends javax.swing.JDialog {
             resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
             if (resposta == JOptionPane.YES_OPTION) {
                 Cliente cliente = cDao.procurarPorId(codCli);
-                cDao.excluir(cliente);
+                cDao.excluir(cliente, cliente.toString());
                 cDao.populaClientes(tblClientes);
             }
         } else {

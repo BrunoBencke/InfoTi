@@ -180,8 +180,9 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             d.salvar(obj);
             JOptionPane.showMessageDialog(this, "Marca Cadastrada!");
         } else if (botaopressionado.equals("editar")) {
+            String dado_antigo_marca = obj.toString();
             obj.setNome(txfnome.getText());
-            d.atualizar(obj);
+            d.atualizar(obj,dado_antigo_marca);
             JOptionPane.showMessageDialog(this, "Marca Editada!");
             txfnome.setText("");
         }
@@ -226,7 +227,7 @@ public class JdlMarcasProdutos extends javax.swing.JDialog {
             resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
             if (resposta == JOptionPane.YES_OPTION) {
                 obj = d.procurarPorId(codUsuario);
-                d.excluir(obj);
+                d.excluir(obj, obj.toString());
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um Marca!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }

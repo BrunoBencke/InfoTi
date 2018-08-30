@@ -6,9 +6,9 @@ public interface IDAO_T <T> {
 
     public String salvar(T o);
 
-    public String atualizar(T o, T o1);
+    public String atualizar(T o, String dado_anterior);
 
-    public String excluir(int id);
+    public String excluir(int id, String dado_anterior);
 
     public ArrayList<T> consultarTodos();
 

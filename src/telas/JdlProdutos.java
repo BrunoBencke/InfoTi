@@ -194,7 +194,7 @@ public class JdlProdutos extends javax.swing.JDialog {
             resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
             if (resposta == JOptionPane.YES_OPTION) {
                 produto = produtosDao.procurarPorId(codProduto);
-                d.excluir(produto);
+                d.excluir(produto, produto.toString());
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }

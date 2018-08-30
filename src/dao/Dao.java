@@ -46,12 +46,12 @@ public class Dao<T> {
         return null;
     }
 
-    public T atualizar(T object, T object_old) {
+    public T atualizar(T object, String dado_anterior) {
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {            
             Transaction t = sessao.beginTransaction();
             if (config.status_auditoria()) {
-                auditoria.setDadoAnterior(object_old.toString());
+                auditoria.setDadoAnterior(dado_anterior);
                 auditoria.setDadoNovo(object.toString());
                 auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
                 auditoria.setIdusuario(user);
@@ -68,10 +68,18 @@ public class Dao<T> {
         return null;
     }
 
-    public T excluir(T object) {
+    public T excluir(T object, String dado_anterior) {
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             Transaction t = sessao.beginTransaction();
+            if (config.status_auditoria()) {
+                auditoria.setDadoAnterior(dado_anterior);
+                auditoria.setDadoNovo(" ");
+                auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
+                auditoria.setIdusuario(user);
+                auditoria.setOperacao("Delete");
+                sessao.save(auditoria);
+            }
             sessao.delete(object);
             t.commit();
             return object;

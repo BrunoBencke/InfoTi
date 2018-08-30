@@ -460,7 +460,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configActionPerformed
-        // TODO add your handling code here:
+        JdlPermissoes telaPermissoes = new JdlPermissoes(this,false);
+        telaPermissoes.setVisible(true);
     }//GEN-LAST:event_configActionPerformed
 
     /**

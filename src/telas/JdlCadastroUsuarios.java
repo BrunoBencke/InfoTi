@@ -212,9 +212,10 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
             if (txfLogin.getText().trim().isEmpty() || txfSenha.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Digite os Dados!");
             } else {
+                String dado_antigo_usuario = user.toString();
                 user.setNome(txfLogin.getText());
                 user.setSenha(c.criptografa(txfSenha.getText()));
-                d.atualizar(user);
+                d.atualizar(user,dado_antigo_usuario);
                 JOptionPane.showMessageDialog(this, "Usuário Editado!");
                 txfLogin.setText("");
                 txfSenha.setText("");
@@ -246,7 +247,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
             resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
             if (resposta == JOptionPane.YES_OPTION) {
                 user = d.procurarPorId(codUsuario);
-                d.excluir(user);
+                d.excluir(user,user.toString());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);

@@ -613,10 +613,10 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
             cDao.populaClientes(tblClientes);
         } else if (botaopressionado.equals("editar")) {     
             if (tipoCadastro.equals("fisica")) {
-                pf_old = pfAux;
-                endereco = new Endereco();
-                endereco_old = c.getIdendereco();
-                cliente_old = new Cliente(c);
+                endereco = c.getIdendereco();
+                String dado_antigo_cliente = c.toString();
+                String dado_antigo_pf = pfAux.toString();
+                String dado_antigo_endereco = endereco.toString();
                 if (cbStatus.isSelected()) {
                     c.setSituacao(true);
                 } else {
@@ -628,8 +628,6 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                     c.setNome(txfNome.getText());
                 }
                 c.setSexo(txfSexo.getText());
-                System.out.println("sexo old"+cliente_old.getSexo());
-                System.out.println("sexo atual"+c.getSexo());
                 c.setTelefone(txfTelefone.getText());
                 c.setObservacao(txfInformacao.getText());
                 pfAux.setCpf(txfCpf.getText());
@@ -654,17 +652,18 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                 item = (ComboItens) jcbEstado.getSelectedItem();                
                 endereco.setIdmunicipio(cidade);
                 endereco.setIdendereco(c.getIdendereco().getIdendereco());                
-                dao.atualizar(endereco,endereco_old);                
+                dao.atualizar(endereco,dado_antigo_endereco);                
                 c.setIdendereco(endereco);                
-                dao.atualizar(c, cliente_old);
+                dao.atualizar(c, dado_antigo_cliente);
                 pfAux.setIdcliente(c);
-                dao.atualizar(pfAux, pf_old);
+                dao.atualizar(pfAux, dado_antigo_pf);
                 JOptionPane.showMessageDialog(this, "Cliente Atualizado!");
                 this.dispose();
             } else if (tipoCadastro.equals("juridica")) { 
-                pj_old = pjAux;
-                endereco_old = c.getIdendereco();
-                cliente_old = c;
+                endereco = c.getIdendereco();
+                String dado_antigo_cliente = c.toString();
+                String dado_antigo_pj = pjAux.toString();
+                String dado_antigo_endereco = endereco.toString();
                 if (txfNome.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Campo Obrigatório Vazio");
                 } else {
@@ -700,11 +699,11 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
                     item = (ComboItens) jcbEstado.getSelectedItem();
                     endereco.setIdmunicipio(cidade);
                     endereco.setIdendereco(c.getIdendereco().getIdendereco());
-                    dao.atualizar(endereco,endereco_old);
+                    dao.atualizar(endereco,dado_antigo_endereco);
                     c.setIdendereco(endereco);
-                    dao.atualizar(c,cliente_old);
+                    dao.atualizar(c,dado_antigo_cliente);
                     pjAux.setIdcliente(c);
-                    dao.atualizar(pjAux,pj_old);
+                    dao.atualizar(pjAux,dado_antigo_pj);
                     JOptionPane.showMessageDialog(this, "Empresa Atualizada!");
                     this.dispose();
                 }                

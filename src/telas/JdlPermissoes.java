@@ -1,22 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
+import dao.ConfigDao;
 
-/**
- *
- * @author User
- */
 public class JdlPermissoes extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JdlPermissoes
-     */
+    ConfigDao cDao = new ConfigDao();
+    
     public JdlPermissoes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        if (cDao.status_auditoria()) {
+            jcbAuditoria.setSelected(true);
+        }
     }
 
     /**
@@ -31,7 +25,7 @@ public class JdlPermissoes extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
-        jCheckBox5 = new javax.swing.JCheckBox();
+        jcbAuditoria = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
@@ -50,7 +44,7 @@ public class JdlPermissoes extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jCheckBox5.setText("Auditoria");
+        jcbAuditoria.setText("Auditoria");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -58,14 +52,14 @@ public class JdlPermissoes extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox5)
+                .addComponent(jcbAuditoria)
                 .addContainerGap(303, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jCheckBox5)
+                .addComponent(jcbAuditoria)
                 .addContainerGap(203, Short.MAX_VALUE))
         );
 
@@ -227,6 +221,7 @@ public class JdlPermissoes extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -250,9 +245,12 @@ public class JdlPermissoes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void dtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtnSalvarActionPerformed
-
-
-            this.dispose();
+        if (jcbAuditoria.isSelected()) {
+            cDao.setar_status_auditoria(1);
+        } else {
+            cDao.setar_status_auditoria(0);
+        }
+        this.dispose();
     }//GEN-LAST:event_dtnSalvarActionPerformed
 
     /**
@@ -304,7 +302,6 @@ public class JdlPermissoes extends javax.swing.JDialog {
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -314,5 +311,6 @@ public class JdlPermissoes extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JCheckBox jcbAuditoria;
     // End of variables declaration//GEN-END:variables
 }

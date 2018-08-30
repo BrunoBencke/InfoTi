@@ -191,7 +191,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Id :"+idcliente+" Nome:"+nome+" Sexo:"+sexo+" Telefone:"+telefone+" Situação:"+situacao+" Observação:"+observacao+" Id Endereço:"+idendereco;
+        return "Id : "+idcliente+" Nome: "+nome+" Sexo: "+sexo+" Telefone: "+telefone+" Situação: "+situacao+" Observação: "+observacao+" Id Endereço: "+idendereco.getIdendereco();
     }
     
 }
