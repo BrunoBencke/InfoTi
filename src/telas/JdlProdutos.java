@@ -204,20 +204,16 @@ public class JdlProdutos extends javax.swing.JDialog {
     }//GEN-LAST:event_btexcluirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
         int linha = JtlProdutos.getSelectedRow();
         if (linha > -1) {
             String botaopressionado = "editar";
             int codProd = Integer.valueOf(String.valueOf(JtlProdutos.getValueAt(linha, 0)));
             Produto produto = produtosDao.procurarPorId(codProd);
-            JdlCadastroProdutos telaProdutos = null;
-            telaProdutos = new JdlCadastroProdutos(null, false, produto, JtlProdutos);
+            JdlCadastroProdutos telaProdutos = new JdlCadastroProdutos(null, false, produto, JtlProdutos);
             telaProdutos.setVisible(true);
-
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
-
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**

@@ -17,6 +17,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
     Produto produto = new Produto();
     String botaopressionado = "novo";
     Dao d = new Dao();
+    JTable tblProdutos;
 
     public JdlCadastroProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -24,51 +25,46 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         jcbProduto.removeAllItems();
         jcbProduto.setMaximumRowCount(15);
         new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
-
     }
 
-    JdlCadastroProdutos(Object object, JTable JtlProdutos, Produto c) {
+//    JdlCadastroProdutos(Object object, JTable JtlProdutos, Produto c) {
+//
+//        initComponents();
+//        jcbProduto.removeAllItems();
+//        jcbProduto.setMaximumRowCount(15);
+//        new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
+//        produtosDao.populaProduto(JtlProdutos);
+//
+//    }
 
+//    JdlCadastroProdutos(Object object, boolean b, Produto produto, JTable JtlProdutos, Produto c) {
+//
+//        initComponents();
+//        jcbProduto.removeAllItems();
+//        jcbProduto.setMaximumRowCount(15);
+//        new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
+//        produtosDao.populaProduto(JtlProdutos);
+//
+//    }
+
+    public JdlCadastroProdutos(java.awt.Frame parent, boolean modal, Produto produto, JTable JtlProdutos) {
+        super(parent, modal);
         initComponents();
-        jcbProduto.removeAllItems();
-        jcbProduto.setMaximumRowCount(15);
-        new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
-        produtosDao.populaProduto(JtlProdutos);
-
-    }
-
-    JdlCadastroProdutos(Object object, boolean b, Produto produto, JTable JtlProdutos, Produto c) {
-
-        initComponents();
-        jcbProduto.removeAllItems();
-        jcbProduto.setMaximumRowCount(15);
-        new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
-        produtosDao.populaProduto(JtlProdutos);
-
-    }
-
-    JdlCadastroProdutos(Object object, boolean b, Produto produto, JTable JtlProdutos) {
-
-        initComponents();
-        jcbProduto.removeAllItems();
-        jcbProduto.setMaximumRowCount(15);
-        new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
-        produtosDao.populaProduto(JtlProdutos);
         this.produto = produto;
+        this.tblProdutos = JtlProdutos;
+        jcbProduto.removeAllItems();
+        jcbProduto.setMaximumRowCount(15);
+        new CombosDAO().popularCombo("MarcaProduto", jcbProduto); 
         carregarDados(produto);
-
     }
 
 
     public void carregarDados(Produto p) {
-
         txfNome.setText(p.getNome());
         txfPrecoCusto.setText(p.getValor().toString());
         txfEstoque.setText(Integer.valueOf(p.getEstoque()).toString());
         txfDescricao.setText(p.getDescricao());
         new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
-        carregarDados(p);
-
     }
 
     @SuppressWarnings("unchecked")
@@ -256,9 +252,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
     }//GEN-LAST:event_jcbProdutoActionPerformed
 
     private void dtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtnSalvarActionPerformed
-
         MarcaProduto marcaProduto = new MarcaProduto();
-        Produto produto = new Produto();
         if (botaopressionado.equals("novo")) {
             produto.setNome(txfNome.getText());
             produto.setValor(BigDecimal.valueOf(Double.parseDouble(txfPrecoCusto.getText())));
@@ -269,17 +263,14 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
             marcaProduto.setNome(item.getDescricao());
             produto.setIdmarcaProduto(marcaProduto);
             produto.setSituacao(true);
-            produtosDao.salvar(produto);
-            JOptionPane.showMessageDialog(this, "Produto Cadastrada!");
+            d.salvar(produto);
+            JOptionPane.showMessageDialog(this, "Produto Cadastrado!");
             txfNome.setText("");
             txfEstoque.setText("");
             txfPrecoCusto.setText("");
-            txfDescricao.setText("");
-            
+            txfDescricao.setText("");            
             this.dispose();
-
         } else if (botaopressionado.equals("editar")) {
-
             produto.setNome(txfNome.getText());
             produto.setValor(BigDecimal.valueOf(Double.parseDouble(txfPrecoCusto.getText())));
             produto.setEstoque(Integer.parseInt(txfEstoque.getText()));
@@ -289,16 +280,16 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
             marcaProduto.setNome(item.getDescricao());
             produto.setIdmarcaProduto(marcaProduto);
             produto.setSituacao(true);
-            produtosDao.salvar(produto);
+            d.atualizar(produto, produto.toString());
             JOptionPane.showMessageDialog(this, "Produto Cadastrada!");
             txfNome.setText("");
             txfEstoque.setText("");
             txfPrecoCusto.setText("");
             txfDescricao.setText("");
-
             this.dispose();
 
         }
+        //produtosDao.populaProduto(tblProdutos);
     }//GEN-LAST:event_dtnSalvarActionPerformed
 
     /**

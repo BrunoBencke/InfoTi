@@ -114,16 +114,11 @@ public class MarcaProduto implements Serializable, Generica {
 
     @Override
     public int getId() {
-
         return idmarcaProduto;
-
     }
 
     @Override
     public String getnome() {
-
         return nome;
-
     }
-    
 }
