@@ -1,6 +1,7 @@
 package telas;
 import apoio.Criptografia;
 import dao.UsuarioDao;
+import entidades.Config;
 import entidades.Usuario;
 import javax.swing.JOptionPane;
 
@@ -10,6 +11,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
     Criptografia c = new Criptografia();
     String botaopressionado = "novo";
     Usuario user = new Usuario();
+    Config config = new Config();
 
     public JdlCadastroUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -200,6 +202,9 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                 if (d.procurarPorNome(txfLogin.getText())) {        
                 user.setNome(txfLogin.getText());
                 user.setSenha(c.criptografa(txfSenha.getText()));
+                config.setAuditoria(1);
+                d.salvar(config);
+                user.setIdconfig(config);
                 d.salvar(user);
                 JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
                 txfLogin.setText("");

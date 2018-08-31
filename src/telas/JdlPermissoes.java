@@ -246,8 +246,10 @@ public class JdlPermissoes extends javax.swing.JDialog {
 
     private void dtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtnSalvarActionPerformed
         if (jcbAuditoria.isSelected()) {
+            System.out.println("entrou para setar 1");
             cDao.setar_status_auditoria(1);
         } else {
+            System.out.println("entrou para setar 0");
             cDao.setar_status_auditoria(0);
         }
         this.dispose();

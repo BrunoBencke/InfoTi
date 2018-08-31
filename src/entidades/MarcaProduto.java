@@ -109,7 +109,7 @@ public class MarcaProduto implements Serializable, Generica {
 
     @Override
     public String toString() {
-        return "Id Marca:"+idmarcaProduto+" Nome:"+nome+" Situação:"+situacao;
+        return "Id Marca: "+idmarcaProduto+" Nome: "+nome+" Situação: "+situacao;
     }
 
     @Override

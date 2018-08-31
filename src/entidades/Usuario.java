@@ -142,7 +142,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Id Usuário:"+idusuario+" Nome:"+nome+" Senha:"+senha+" Id Config:"+idconfig;
+        return "Id Usuário:"+idusuario+" Nome:"+nome+" Senha:"+senha+" Id Config:"+idconfig.getIdconfig();
     }
     
 }

@@ -74,7 +74,7 @@ public class Dao<T> {
             Transaction t = sessao.beginTransaction();
             if (config.status_auditoria()) {
                 auditoria.setDadoAnterior(dado_anterior);
-                auditoria.setDadoNovo(" ");
+                auditoria.setDadoNovo("Delete");
                 auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
                 auditoria.setIdusuario(user);
                 auditoria.setOperacao("Delete");

@@ -156,7 +156,7 @@ public class Endereco implements Serializable{
 
     @Override
     public String toString() {
-        return "Id Endereço:"+idendereco+" Rua:"+rua+" Bairro:"+bairro+" Número:"+numero+" Complemento"+complemento+" Cep:"+cep+" Id Municipio:"+idmunicipio;
+        return "Id Endereço: "+idendereco+" Rua: "+rua+" Bairro: "+bairro+" Número: "+numero+" Complemento "+complemento+" Cep: "+cep+" Id Municipio: "+idmunicipio.getIdmunicipio();
     }
     
 }
