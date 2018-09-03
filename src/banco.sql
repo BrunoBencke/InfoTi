@@ -127,6 +127,14 @@ constraint fk_idCliente_cliente FOREIGN KEY (idCliente) REFERENCES cliente,
 constraint fk_idTipo_Pagamento_tipo_pagamento FOREIGN KEY (idTipo_Pagamento) REFERENCES tipo_pagamento,
 constraint fk_idForma_Pagamento_forma_pagamento FOREIGN KEY (idForma_Pagamento) REFERENCES forma_pagamento);
 
+create table conta_pagar(idConta_pagar SERIAL NOT NULL,
+                          nome VARCHAR(100),
+                          valor DECIMAL(10,2),             
+                          data_vencimento DATE,
+                          data_pagamento DATE,
+                          situacao BOOLEAN,
+constraint pk_conta_pagar PRIMARY KEY (idConta_pagar));
+
 create table produto_das_venda(idVenda INT NOT NULL,
                     			idProduto INT NOT NULL,
                     			quantidade INT NOT NULL,
