@@ -135,7 +135,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         menu.add(registros);
 
         jMenu1.setBackground(new java.awt.Color(255, 255, 255));
-        jMenu1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\iNFO-Ti\\InfoTi\\src\\icones\\produto.png")); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/OS.png"))); // NOI18N
         jMenu1.setText("Vendas");
         jMenu1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jMenu1.setMaximumSize(new java.awt.Dimension(150, 32767));
@@ -354,8 +354,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidosActionPerformed
-//        os = new dlServiceOrders(this, false);
-//        os.setVisible(true);
+        JdlPedidos pedidos = new JdlPedidos(this, false);
+        pedidos.setVisible(true);
     }//GEN-LAST:event_pedidosActionPerformed
 
     private void clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesActionPerformed
@@ -369,7 +369,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_funcionariosActionPerformed
 
     private void produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_produtosActionPerformed
-
         JdlProdutos jdlProdutos = new JdlProdutos(this, false);
         jdlProdutos.setVisible(true);
     }//GEN-LAST:event_produtosActionPerformed

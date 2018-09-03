@@ -148,4 +148,62 @@ public class ClienteDao extends Dao {
            he.printStackTrace();
         }
     }
+
+    public void populaClientesNome(JTable tblClientes, String nome) {
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query q = sessao.createQuery("from Cliente where nome = '" + nome + "'");
+            ArrayList<Cliente> resultado = new ArrayList<Cliente>();
+            resultado = (ArrayList<Cliente>) q.list();
+
+            Object[][] dadosTabela = null;
+            Object[] cabecalho = new Object[4];
+
+            cabecalho[0] = "Código";
+            cabecalho[1] = "Nome";
+            cabecalho[2] = "Telefone";
+            cabecalho[3] = "Endereço";
+
+            // cria matriz de acordo com nº de registros da tabela
+            dadosTabela = new Object[resultado.size()][4];
+
+            int lin = 0;
+            for (int i = 0; i < resultado.size(); i++) {
+                Cliente u = resultado.get(i);
+                dadosTabela[lin][0] = u.getIdcliente();
+                dadosTabela[lin][1] = u.getNome();
+                dadosTabela[lin][2] = u.getTelefone();
+                dadosTabela[lin][3] = retornaEndereco(u.getIdendereco().getIdendereco());
+                lin++;
+            }
+
+            // configuracoes adicionais no componente tabela
+            tblClientes.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
+                @Override
+                // quando retorno for FALSE, a tabela nao é editavel
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            });
+
+            // permite seleção de apenas uma linha da tabela
+            tblClientes.setSelectionMode(0);
+
+            // redimensiona as colunas de uma tabela
+            TableColumn column = null;
+            for (int i = 0; i < tblClientes.getColumnCount(); i++) {
+                column = tblClientes.getColumnModel().getColumn(i);
+                switch (i) {
+                    case 0:
+                        column.setPreferredWidth(17);
+                        break;
+                    case 1:
+                        column.setPreferredWidth(140);
+                        break;
+                }
+            }
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+    }
 }
