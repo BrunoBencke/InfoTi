@@ -65,5 +65,6 @@ Contributor(s):
     <mapping class="entidades.Venda"/>
     <mapping class="entidades.Config"/>
     <mapping class="entidades.Auditoria"/>
+    <mapping class="entidades.ContaPagar"/>
   </session-factory>
 </hibernate-configuration>
