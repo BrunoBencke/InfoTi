@@ -30,6 +30,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         pedidos = new javax.swing.JMenuItem();
         fianceiro = new javax.swing.JMenu();
         contasReceber = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         relatorios = new javax.swing.JMenu();
         relatorioClientes = new javax.swing.JMenu();
         miAllClients = new javax.swing.JMenuItem();
@@ -166,7 +167,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         contasReceber.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         contasReceber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Payment.png"))); // NOI18N
-        contasReceber.setText("Contas a receber");
+        contasReceber.setText("Contas a Receber");
         contasReceber.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         contasReceber.setPreferredSize(new java.awt.Dimension(200, 50));
         contasReceber.addActionListener(new java.awt.event.ActionListener() {
@@ -175,6 +176,17 @@ public class JfrPrincipal extends javax.swing.JFrame {
             }
         });
         fianceiro.add(contasReceber);
+
+        jMenuItem2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\iNFO-Ti\\InfoTi\\src\\icones\\Payment.png")); // NOI18N
+        jMenuItem2.setText("Contas a Pagar");
+        jMenuItem2.setPreferredSize(new java.awt.Dimension(200, 50));
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        fianceiro.add(jMenuItem2);
 
         menu.add(fianceiro);
 
@@ -463,6 +475,13 @@ public class JfrPrincipal extends javax.swing.JFrame {
         telaPermissoes.setVisible(true);
     }//GEN-LAST:event_configActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+
+        JdlContasPagar jdlContasPagar = new JdlContasPagar(this, false);
+        jdlContasPagar.setVisible(true);
+
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -512,6 +531,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem funcionarios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem marcasProdutos;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem miAllClients;

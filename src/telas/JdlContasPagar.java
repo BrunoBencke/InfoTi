@@ -5,18 +5,25 @@
  */
 package telas;
 
+import dao.ContaPagarDao;
+import dao.Dao;
+import entidades.ContaPagar;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Christian
  */
 public class JdlContasPagar extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JdlContasPagar
-     */
+    ContaPagar contaPagar = new ContaPagar();
+    ContaPagarDao contaPagarDao = new ContaPagarDao();
+    Dao d = new Dao();
+
     public JdlContasPagar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        contaPagarDao.populaContaPagar(tblContasPagar);
     }
 
     /**
@@ -173,13 +180,25 @@ public class JdlContasPagar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        
+
         JdlCadastroContasPagar jdlCadastroContasPagar = new JdlCadastroContasPagar(null, false);
         jdlCadastroContasPagar.setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexcluirActionPerformed
-
+        int linha = tblContasPagar.getSelectedRow();
+        if (linha > -1) {
+            int resposta = 0;
+            int codContaPagar = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(tblContasPagar.getSelectedRow(), 0)));
+            resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
+            if (resposta == JOptionPane.YES_OPTION) {
+                contaPagar = contaPagarDao.procurarPorId(codContaPagar);
+                d.excluir(contaPagar, contaPagar.toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione uma Conta!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            }
+            contaPagarDao.populaContaPagar(tblContasPagar);
+        }
     }//GEN-LAST:event_btexcluirActionPerformed
 
     private void BtnpagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnpagamentoActionPerformed
