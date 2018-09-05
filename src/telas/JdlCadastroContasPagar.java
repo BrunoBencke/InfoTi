@@ -5,15 +5,30 @@
  */
 package telas;
 
+import dao.ContaPagarDao;
+import dao.Dao;
+import entidades.ContaPagar;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
 /**
  *
  * @author Christian
  */
 public class JdlCadastroContasPagar extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JdlCadastroContasPagar
-     */
+    String botaopressionado = "novo";
+    Dao d = new Dao();
+    JTable tblProdutos;
+    ContaPagar contaPagar = new ContaPagar();
+    ContaPagarDao contaPagarDao = new ContaPagarDao();
+
     public JdlCadastroContasPagar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -131,6 +146,35 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
     }//GEN-LAST:event_txtnomeActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date dataAtual = null;
+
+        if (botaopressionado.equals("novo")) {
+            contaPagar.setNome(txtnome.getText());
+            contaPagar.setValor(BigDecimal.valueOf(Double.parseDouble(txtvalor.getText())));
+            contaPagar.setSituacao(true);
+            d.salvar(contaPagar);
+            JOptionPane.showMessageDialog(this, "Conta Cadastrado!");
+            txtnome.setText("");
+            txtvalor.setText("");
+            txtdataVencimento.setText("");
+            this.dispose();
+            contaPagarDao.populaContaPagar(tblProdutos);
+
+        } else if (botaopressionado.equals("editar")) {
+
+            contaPagar.setNome(txtnome.getText());
+            contaPagar.setValor(BigDecimal.valueOf(Double.parseDouble(txtvalor.getText())));
+            contaPagar.setDataPagamento(dataAtual);
+            contaPagar.setSituacao(true);
+            d.salvar(contaPagar);
+            JOptionPane.showMessageDialog(this, "Conta Cadastrado!");
+            txtnome.setText("");
+            txtvalor.setText("");
+            txtdataVencimento.setText("");
+            this.dispose();
+            contaPagarDao.populaContaPagar(tblProdutos);
+        }
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 

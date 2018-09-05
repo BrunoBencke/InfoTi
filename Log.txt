@@ -4,3 +4,6 @@ Erro: java.lang.IllegalArgumentException: node to traverse cannot be null!
 Data: Thu Aug 30 19:27:18 BRT 2018
 Erro: org.hibernate.hql.internal.ast.QuerySyntaxException: liente is not mapped [from liente]
 
+Data: Tue Sep 04 20:54:36 BRT 2018
+Erro: org.hibernate.exception.DataException: could not execute query
+

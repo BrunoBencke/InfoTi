@@ -270,6 +270,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
             txfPrecoCusto.setText("");
             txfDescricao.setText("");            
             this.dispose();
+            
         } else if (botaopressionado.equals("editar")) {
             produto.setNome(txfNome.getText());
             produto.setValor(BigDecimal.valueOf(Double.parseDouble(txfPrecoCusto.getText())));
