@@ -6,6 +6,7 @@ import apoio.HibernateUtil;
 import dao.ClienteDao;
 import dao.EnderecoDao;
 import entidades.Cliente;
+import entidades.ContaPagar;
 import entidades.Endereco;
 import entidades.Estado;
 import entidades.Municipio;
@@ -70,6 +71,7 @@ public class JdlCadastroClientes extends javax.swing.JDialog {
         new CombosDAO().popularComboComComplemento("Municipio", "Uf", jcbEstado.getSelectedItem().toString(), jcbCidade);
         carregarDados(c);
     }
+
 
     public void mascaraEmpresa(){
         lblNome.setText("Razão Social :");

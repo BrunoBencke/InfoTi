@@ -4,6 +4,7 @@ import apoio.ComboItens;
 import apoio.CombosDAO;
 import dao.Dao;
 import dao.ProdutosDao;
+import entidades.ContaPagar;
 import entidades.MarcaProduto;
 import entidades.Produto;
 import java.math.BigDecimal;
@@ -57,6 +58,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         new CombosDAO().popularCombo("MarcaProduto", jcbProduto); 
         carregarDados(produto);
     }
+
 
 
     public void carregarDados(Produto p) {

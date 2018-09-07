@@ -7,7 +7,11 @@ package telas;
 
 import dao.ContaPagarDao;
 import dao.Dao;
+import entidades.Cliente;
 import entidades.ContaPagar;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +23,7 @@ public class JdlContasPagar extends javax.swing.JDialog {
     ContaPagar contaPagar = new ContaPagar();
     ContaPagarDao contaPagarDao = new ContaPagarDao();
     Dao d = new Dao();
+    String botaopressionado = "novo";
 
     public JdlContasPagar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -177,6 +182,21 @@ public class JdlContasPagar extends javax.swing.JDialog {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
+        int linha = tblContasPagar.getSelectedRow();
+        if (linha > -1) {
+            String botaopressionado = "editar";
+            int codCont = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
+            ContaPagar contaPagar = contaPagarDao.procurarPorId(codCont);
+            JdlCadastroContasPagar telaContasPagar = null;
+            try {
+                telaContasPagar = new JdlCadastroContasPagar(null, false, tblContasPagar);
+            } catch (ParseException ex) {
+                Logger.getLogger(JdlContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            telaContasPagar.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed

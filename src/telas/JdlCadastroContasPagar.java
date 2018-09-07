@@ -5,9 +5,11 @@
  */
 package telas;
 
+import apoio.CombosDAO;
 import dao.ContaPagarDao;
 import dao.Dao;
 import entidades.ContaPagar;
+import entidades.Produto;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.ParseException;
@@ -25,13 +27,30 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
 
     String botaopressionado = "novo";
     Dao d = new Dao();
-    JTable tblProdutos;
+    JTable tblContasPagar;
     ContaPagar contaPagar = new ContaPagar();
     ContaPagarDao contaPagarDao = new ContaPagarDao();
 
     public JdlCadastroContasPagar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    public JdlCadastroContasPagar(java.awt.Frame parent, boolean modal,JTable tblContasPagar) throws ParseException {
+        super(parent, modal);
+        initComponents();
+        this.contaPagar = contaPagar;
+        this.tblContasPagar = tblContasPagar;
+        carregarDados(contaPagar);
+    }
+
+
+    public void carregarDados(ContaPagar cp) throws ParseException {
+
+        txtnome.setText(cp.getNome());
+        txtvalor.setText(cp.getValor().toString());
+        txtdataVencimento.setText(contaPagarDao.data_sistema(cp.getDataVencimento().toString()));
+
     }
 
     /**
@@ -152,6 +171,16 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
         if (botaopressionado.equals("novo")) {
             contaPagar.setNome(txtnome.getText());
             contaPagar.setValor(BigDecimal.valueOf(Double.parseDouble(txtvalor.getText())));
+            if (txtdataVencimento.getText().equals("  /  /    ")) {
+                contaPagar.setDataVencimento(new java.sql.Date(0000, 00, 00));
+            } else {
+                try {
+                    dataAtual = sdf.parse(txtdataVencimento.getText());
+                } catch (ParseException ex) {
+                    Logger.getLogger(JdlCadastroContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                contaPagar.setDataVencimento(dataAtual);
+            }
             contaPagar.setSituacao(true);
             d.salvar(contaPagar);
             JOptionPane.showMessageDialog(this, "Conta Cadastrado!");
@@ -159,13 +188,22 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
             txtvalor.setText("");
             txtdataVencimento.setText("");
             this.dispose();
-            contaPagarDao.populaContaPagar(tblProdutos);
+            // contaPagarDao.populaContaPagar(tblContasPagar);
 
         } else if (botaopressionado.equals("editar")) {
 
             contaPagar.setNome(txtnome.getText());
             contaPagar.setValor(BigDecimal.valueOf(Double.parseDouble(txtvalor.getText())));
-            contaPagar.setDataPagamento(dataAtual);
+            if (txtdataVencimento.getText().equals("  /  /    ")) {
+                contaPagar.setDataVencimento(new java.sql.Date(0000, 00, 00));
+            } else {
+                try {
+                    dataAtual = sdf.parse(txtdataVencimento.getText());
+                } catch (ParseException ex) {
+                    Logger.getLogger(JdlCadastroContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                contaPagar.setDataVencimento(dataAtual);
+            }
             contaPagar.setSituacao(true);
             d.salvar(contaPagar);
             JOptionPane.showMessageDialog(this, "Conta Cadastrado!");
@@ -173,7 +211,7 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
             txtvalor.setText("");
             txtdataVencimento.setText("");
             this.dispose();
-            contaPagarDao.populaContaPagar(tblProdutos);
+            //contaPagarDao.populaContaPagar(tblContasPagar);
         }
 
     }//GEN-LAST:event_btnSalvarActionPerformed
