@@ -1,29 +1,67 @@
 package telas;
 
 import dao.ClienteDao;
+import dao.Dao;
 import entidades.Cliente;
+import entidades.Venda;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import static telas.JfrPrincipal.user;
 
 public class JdlNovoPedido extends javax.swing.JDialog {
 
+    JTable tblPedidos = new JTable();
+    Dao dao = new Dao();
     ClienteDao cDao = new ClienteDao();
     Cliente cliente = new Cliente();
+    String cancelar = null;
+    String editar = null;
+    Venda venda = new Venda();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    Date dataAtual = new Date(); 
+            
+    //sdf.parse(txfDataAtual.getText());
     
     /**
      * Creates new form JdlNovoPedido
      */
-    public JdlNovoPedido(java.awt.Frame parent, boolean modal) {
+    public JdlNovoPedido(java.awt.Frame parent, boolean modal,JTable tblPedidos) throws ParseException {
         super(parent, modal);
         initComponents();
+        this.cancelar = "deletar";
+        this.editar = "novo";
+        this.tblPedidos = tblPedidos;
+        cliente.setIdcliente(-1);
+        txfDataAtual.setText(sdf.format(dataAtual));
+        venda.setIdusuario(user);
+        venda.setData(sdf.parse(txfDataAtual.getText()));
+        venda.setIdcliente(cliente);
+        dao.salvar(venda);
     }
     
+    public JdlNovoPedido(java.awt.Frame parent, boolean modal, JTable tblPedidos, int codPedido) {
+        super(parent, modal);
+        initComponents();
+        this.cancelar = "sair";
+        this.editar = "editar"; 
+        this.tblPedidos = tblPedidos;
+    }
+
     public void limpaCampos() {
         txfNome.setText(null);
         txfTelefone.setText(null);
     }
-    
-        public void carregarDados(Cliente c){     
+
+    public void carregarDados(Cliente c) {
         txfNome.setText(cliente.getNome());
         txfTelefone.setText(cliente.getTelefone());
+        venda.setIdcliente(c);
     }
 
 
@@ -132,11 +170,11 @@ public class JdlNovoPedido extends javax.swing.JDialog {
 
         jLabel9.setText("Data da Venda :");
         jpnCliente.add(jLabel9);
-        jLabel9.setBounds(570, 10, 78, 20);
+        jLabel9.setBounds(570, 10, 130, 20);
 
         txfDataAtual.setEditable(false);
         jpnCliente.add(txfDataAtual);
-        txfDataAtual.setBounds(660, 10, 140, 20);
+        txfDataAtual.setBounds(710, 10, 90, 20);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -343,9 +381,12 @@ public class JdlNovoPedido extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         limpaCampos();
         JdlBuscaCliente buscaCliente = new JdlBuscaCliente(null, false);
+        buscaCliente.setModal(true);
         buscaCliente.setVisible(true);
-        this.cliente = cDao.procurarPorId(buscaCliente.getCodCli());
-        carregarDados(cliente);
+        cliente = cDao.procurarPorId(buscaCliente.getCodCli());
+        if (cliente.getIdcliente() > 0) {
+           carregarDados(cliente); 
+        }                
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
@@ -402,7 +443,6 @@ public class JdlNovoPedido extends javax.swing.JDialog {
 //            }
 //            this.editar = "editar";
 //        }
-
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
@@ -420,15 +460,12 @@ public class JdlNovoPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-//        if (cancelar == "deletar") {
-//            pDao.deleteTodosItensDoPedido(pedido.getCod_pedido());
-//            pDao.delete(pedido.getCod_pedido());
-//            pDao.popularTabelaPedidos(tblPedidos, 0);
-//            this.dispose();
-//        }
-//        if (cancelar == "sair") {
-//            this.dispose();
-//        }
+        if (cancelar == "deletar") {
+            this.dispose();
+        }
+        if (cancelar == "sair") {
+            this.dispose();
+        }
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnFaturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFaturarActionPerformed
@@ -447,31 +484,19 @@ public class JdlNovoPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFaturarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-//        if (pedido.getCod_cliente() == -1 || jcbVendedor.getItemCount() == 0) {
-//            JOptionPane.showMessageDialog(this, "Verifique os campos Cliente/Vendedor");
-//        } else {
-//            pedido.setCod_cliente(cliente.getCod());
-//            pedido.setMetodo_pag(jcbFormaPagamento.getSelectedIndex() + 1);
-//            pedido.setFrete(jcbFrete.getSelectedIndex() + 1);
-//            pedido.setCod_vendedor(jcbVendedor.getSelectedIndex() + 1);
-//            pedido.setStatus(0);
-//            pedido.setTotal(totalPedido);
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//            try {
-//                Date dataAtual = sdf.parse(txfDataAtual.getText());
-//                Timestamp t = new Timestamp(dataAtual.getTime());
-//                pedido.setData_previsao(t);
-//            } catch (ParseException ex) {
-//                Logger.getLogger(JfrPedidos.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        if (txfInformações.getText().isEmpty()) {
-//            pedido.setDescricao(" ");
-//        } else {
-//            pedido.setDescricao(txfInformações.getText());
-//        }
-//        pDao.update(pedido);
-//        pDao.popularTabelaPedidos(tblPedidos, 0);
+        if (venda.getIdcliente().getIdcliente() == -1) {
+            JOptionPane.showMessageDialog(this, "Escolha um Cliente!");
+        } else {
+            venda.setIdcliente(cliente);
+            venda.setIdusuario(user);        
+            try {
+                venda.setData(sdf.parse(txfDataAtual.getText()));
+            } catch (ParseException ex) {
+                Logger.getLogger(JdlNovoPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        dao.salvar(venda);
+        //pDao.popularTabelaPedidos(tblPedidos, 0);
         this.dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -505,7 +530,13 @@ public class JdlNovoPedido extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JdlNovoPedido dialog = new JdlNovoPedido(new javax.swing.JFrame(), true);
+                JTable tabela = new JTable();
+                JdlNovoPedido dialog = null;
+                try {
+                    dialog = new JdlNovoPedido(new javax.swing.JFrame(), true, tabela);
+                } catch (ParseException ex) {
+                    Logger.getLogger(JdlNovoPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

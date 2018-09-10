@@ -4,10 +4,12 @@ import entidades.Usuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 public class JfrPrincipal extends javax.swing.JFrame {
     
     public static Usuario user;
+    JTable tblPedidos = new JTable();
 
     public JfrPrincipal(Usuario user) {
         initComponents();
@@ -28,6 +30,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         pedidos = new javax.swing.JMenuItem();
+        todosPedidos = new javax.swing.JMenuItem();
         fianceiro = new javax.swing.JMenu();
         contasReceber = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -145,7 +148,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         pedidos.setBackground(new java.awt.Color(255, 255, 255));
         pedidos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         pedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/OS.png"))); // NOI18N
-        pedidos.setText("Pedidos");
+        pedidos.setText("Nova");
         pedidos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         pedidos.setPreferredSize(new java.awt.Dimension(200, 50));
         pedidos.addActionListener(new java.awt.event.ActionListener() {
@@ -154,6 +157,20 @@ public class JfrPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(pedidos);
+
+        todosPedidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        todosPedidos.setBackground(new java.awt.Color(255, 255, 255));
+        todosPedidos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        todosPedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/OS.png"))); // NOI18N
+        todosPedidos.setText("Visualizar");
+        todosPedidos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        todosPedidos.setPreferredSize(new java.awt.Dimension(200, 50));
+        todosPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                todosPedidosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(todosPedidos);
 
         menu.add(jMenu1);
 
@@ -178,7 +195,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
         fianceiro.add(contasReceber);
 
         jMenuItem2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jMenuItem2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\iNFO-Ti\\InfoTi\\src\\icones\\Payment.png")); // NOI18N
         jMenuItem2.setText("Contas a Pagar");
         jMenuItem2.setPreferredSize(new java.awt.Dimension(200, 50));
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -366,8 +382,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidosActionPerformed
-        JdlPedidos pedidos = new JdlPedidos(this, false);
-        pedidos.setVisible(true);
+        JdlNovoPedido novoPedido = new JdlNovoPedido(null, false,tblPedidos);
+        novoPedido.setVisible(true);
     }//GEN-LAST:event_pedidosActionPerformed
 
     private void clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesActionPerformed
@@ -482,6 +498,11 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void todosPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todosPedidosActionPerformed
+        JdlPedidos pedidos = new JdlPedidos(this, false);
+        pedidos.setVisible(true);
+    }//GEN-LAST:event_todosPedidosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -548,6 +569,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu relatorios;
     private javax.swing.JMenuItem sair;
     private javax.swing.JMenu sistema;
+    private javax.swing.JMenuItem todosPedidos;
     private javax.swing.JMenuItem usuario;
     // End of variables declaration//GEN-END:variables
 }

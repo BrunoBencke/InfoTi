@@ -6,6 +6,9 @@
 package telas;
 
 import static java.awt.event.KeyEvent.VK_ENTER;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -288,8 +291,13 @@ public class JdlPedidos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        JdlNovoPedido novoPedido = new JdlNovoPedido(null, false);
-        novoPedido.setVisible(true);
+        JdlNovoPedido novoPedido;
+        try {
+            novoPedido = new JdlNovoPedido(null, false, tblPedidos);
+            novoPedido.setVisible(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(JdlPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }        
         //pDao.popularTabelaPedidos(tblPedidos, jcbStatus.getSelectedIndex());
     }//GEN-LAST:event_btnNovoActionPerformed
 

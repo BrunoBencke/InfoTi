@@ -8,9 +8,7 @@ package entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,16 +18,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bruno.bencke
+ * @author Bruno Bencke
  */
 @Entity
 @Table(name = "venda")
@@ -41,9 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Venda.findByData", query = "SELECT v FROM Venda v WHERE v.data = :data")})
 public class Venda implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idvenda")
-    private List<ProdutoVenda> produtoVendaList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,23 +44,20 @@ public class Venda implements Serializable {
     @Column(name = "idvenda")
     private Integer idvenda;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
     @Column(name = "valor_total")
     private BigDecimal valorTotal;
     @Basic(optional = false)
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idvenda")
-    private List<Titulo> tituloList;
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false)
     private Cliente idcliente;
     @JoinColumn(name = "idforma_pagamento", referencedColumnName = "idforma_pagamento")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private FormaPagamento idformaPagamento;
     @JoinColumn(name = "idtipo_pagamento", referencedColumnName = "idtipo_pagamento")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private TipoPagamento idtipoPagamento;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
@@ -80,9 +70,8 @@ public class Venda implements Serializable {
         this.idvenda = idvenda;
     }
 
-    public Venda(Integer idvenda, BigDecimal valorTotal, Date data) {
+    public Venda(Integer idvenda, Date data) {
         this.idvenda = idvenda;
-        this.valorTotal = valorTotal;
         this.data = data;
     }
 
@@ -108,15 +97,6 @@ public class Venda implements Serializable {
 
     public void setData(Date data) {
         this.data = data;
-    }
-
-    @XmlTransient
-    public List<Titulo> getTituloList() {
-        return tituloList;
-    }
-
-    public void setTituloList(List<Titulo> tituloList) {
-        this.tituloList = tituloList;
     }
 
     public Cliente getIdcliente() {
@@ -174,15 +154,6 @@ public class Venda implements Serializable {
     @Override
     public String toString() {
         return "entidades.Venda[ idvenda=" + idvenda + " ]";
-    }
-
-    @XmlTransient
-    public List<ProdutoVenda> getProdutoVendaList() {
-        return produtoVendaList;
-    }
-
-    public void setProdutoVendaList(List<ProdutoVenda> produtoVendaList) {
-        this.produtoVendaList = produtoVendaList;
     }
     
 }

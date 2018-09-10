@@ -10,7 +10,7 @@ public class JdlBuscaCliente extends javax.swing.JDialog {
     int codCli = 0;
 
     public JdlBuscaCliente(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super(parent, modal);        
         initComponents();
         cDao.populaClientes(tblClientes);
     }
