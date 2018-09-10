@@ -9,12 +9,15 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class ContaPagarDao extends Dao {
-    
+
     ArquivoLog arquivoLog = new ArquivoLog();
+
+    Dao d = new Dao();
 
     public ContaPagar procurarPorId(Integer id) {
         sessao = HibernateUtil.getSessionFactory().openSession();
@@ -111,7 +114,34 @@ public class ContaPagarDao extends Dao {
         } catch (HibernateException he) {
             he.printStackTrace();
             arquivoLog.gravaErro(he.toString());
-            
+
         }
     }
+
+    public Query pagamentoQuitar(int id, String data) {
+
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            sessao.beginTransaction();
+            org.hibernate.Query q = sessao.createSQLQuery("Update conta_pagar SET data_pagamento = '" + data + "', situacao = 'false' WHERE idconta_pagar = " + id);
+            ArrayList<ContaPagar> resultado = new ArrayList<ContaPagar>();
+            resultado = (ArrayList<ContaPagar>) q.list();
+
+            sessao.getTransaction().commit();
+            sessao.saveOrUpdate(q);
+
+            
+            return q;
+        } catch (Exception e) {
+
+            System.out.println("Erro ao Localizar Objeto!" + e.toString());
+            arquivoLog.gravaErro(e.toString());
+
+        } finally {
+            sessao.close();
+        }
+        
+        return null;
+    }
+
 }

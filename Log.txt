@@ -7,3 +7,57 @@ Erro: org.hibernate.hql.internal.ast.QuerySyntaxException: liente is not mapped 
 Data: Tue Sep 04 20:54:36 BRT 2018
 Erro: org.hibernate.exception.DataException: could not execute query
 
+Data: Sun Sep 09 18:55:45 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 19:02:07 BRT 2018
+Erro: org.hibernate.hql.internal.ast.QuerySyntaxException: conta_pagar is not mapped [Update conta_pagar SET data_pagamento = '09/09/2018', situacao = 'f' WHERE idconta_pagar = 1]
+
+Data: Sun Sep 09 19:08:50 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 19:09:47 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 20:06:41 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 20:08:19 BRT 2018
+Erro: org.hibernate.hql.internal.ast.QuerySyntaxException: conta_pagar is not mapped [Update conta_pagar SET data_pagamento = '09/09/2018', situacao = 'false' WHERE idconta_pagar = 7]
+
+Data: Sun Sep 09 20:09:36 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 20:41:03 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:16:38 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:23:22 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:29:03 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:40:54 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:41:02 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:41:14 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:41:56 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:42:48 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:42:52 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
+Data: Sun Sep 09 21:45:11 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+

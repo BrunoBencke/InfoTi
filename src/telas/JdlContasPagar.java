@@ -5,11 +5,13 @@
  */
 package telas;
 
+import apoio.Calendario;
 import dao.ContaPagarDao;
 import dao.Dao;
 import entidades.Cliente;
 import entidades.ContaPagar;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -222,7 +224,11 @@ public class JdlContasPagar extends javax.swing.JDialog {
     }//GEN-LAST:event_btexcluirActionPerformed
 
     private void BtnpagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnpagamentoActionPerformed
-        // TODO add your handling code here:
+
+        Calendario c = new Calendario();
+        contaPagarDao.pagamentoQuitar(Integer.parseInt(tblContasPagar.getValueAt(tblContasPagar.getSelectedRow(), 0).toString()),c.obterDataAtualDMA());
+        JOptionPane.showMessageDialog(null, "Conta Paga com Sucesso!!!");
+        contaPagarDao.populaContaPagar(tblContasPagar);
     }//GEN-LAST:event_BtnpagamentoActionPerformed
 
     /**
