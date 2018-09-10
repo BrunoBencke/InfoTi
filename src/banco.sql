@@ -138,7 +138,7 @@ constraint pk_conta_pagar PRIMARY KEY (idConta_pagar));
 create table produto_venda(idProdutoVenda INT NOT NULL,
 								idVenda INT NOT NULL,
                     			idProduto INT NOT NULL,
-                    			quantidade INT NOT NULL,
+                    			quantidade FLOAT NOT NULL,
                     			valor_unitario DECIMAL(10,2) NOT NULL,
 constraint pk_produto_venda PRIMARY KEY (idProdutoVenda),
 constraint fk_idVenda_venda FOREIGN KEY (idVenda) REFERENCES venda,

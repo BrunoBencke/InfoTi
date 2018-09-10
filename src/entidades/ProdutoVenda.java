@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "produto_venda")
@@ -39,7 +39,7 @@ public class ProdutoVenda implements Serializable {
     private Integer idprodutovenda;
     @Basic(optional = false)
     @Column(name = "quantidade")
-    private int quantidade;
+    private double quantidade;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @Column(name = "valor_unitario")
@@ -58,7 +58,7 @@ public class ProdutoVenda implements Serializable {
         this.idprodutovenda = idprodutovenda;
     }
 
-    public ProdutoVenda(Integer idprodutovenda, int quantidade, BigDecimal valorUnitario) {
+    public ProdutoVenda(Integer idprodutovenda, double quantidade, BigDecimal valorUnitario) {
         this.idprodutovenda = idprodutovenda;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
@@ -72,11 +72,11 @@ public class ProdutoVenda implements Serializable {
         this.idprodutovenda = idprodutovenda;
     }
 
-    public int getQuantidade() {
+    public double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
     }
 

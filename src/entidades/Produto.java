@@ -7,7 +7,9 @@ package entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +19,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +40,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Produto.findByDescricao", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao")
     , @NamedQuery(name = "Produto.findBySituacao", query = "SELECT p FROM Produto p WHERE p.situacao = :situacao")})
 public class Produto implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduto")
+    private List<ProdutoVenda> produtoVendaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -158,6 +165,15 @@ public class Produto implements Serializable {
     @Override
     public String toString() {
         return "Id Produto:"+idproduto+" Nome:"+nome+" Valor:"+valor+" Estoque:"+estoque+" Descrição:"+descricao+" Id MarcaProduto:"+idmarcaProduto;
+    }
+
+    @XmlTransient
+    public List<ProdutoVenda> getProdutoVendaList() {
+        return produtoVendaList;
+    }
+
+    public void setProdutoVendaList(List<ProdutoVenda> produtoVendaList) {
+        this.produtoVendaList = produtoVendaList;
     }
     
 }

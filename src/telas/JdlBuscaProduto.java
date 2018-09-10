@@ -1,6 +1,9 @@
 package telas;
 import dao.Dao;
 import dao.ProdutosDao;
+import entidades.Produto;
+import entidades.ProdutoVenda;
+import entidades.Venda;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -21,14 +24,17 @@ public class JdlBuscaProduto extends javax.swing.JDialog {
     private String unidade;
     Dao dao = new Dao();
     ProdutosDao produtoDao = new ProdutosDao();
-
+    ProdutoVenda item = new ProdutoVenda();
+    Venda venda = new Venda();
+    Produto p = new Produto();
     
-    public JdlBuscaProduto(java.awt.Frame parent, boolean modal, int codPedido) {
+    public JdlBuscaProduto(java.awt.Frame parent, boolean modal, Venda venda) {
         super(parent, modal);
         initComponents();
-        this.codPedido = codPedido;
+        this.venda = venda;
+        item.setIdvenda(venda);
         this.produtoExistente = 0;
-        //new ProdutoDao().popularTabela(tblProdutos, "");
+        produtoDao.populaProduto(tblProdutos);
     }
     
     public double getTotalItem(){
@@ -41,7 +47,7 @@ public class JdlBuscaProduto extends javax.swing.JDialog {
         txfPrecoVenda.setText("");
         txfQtd.setText("");
         txfTotal.setText("");
-        //new ProdutoDao().popularTabela(tblProdutos, "");
+        produtoDao.populaProduto(tblProdutos);
     }
     
     
@@ -281,13 +287,14 @@ public class JdlBuscaProduto extends javax.swing.JDialog {
         int linha = tblProdutos.getSelectedRow();
         if (linha > -1) {
             this.codProd = Integer.valueOf(String.valueOf(tblProdutos.getValueAt(linha, 0)));
-            if (verificaProdutoExistente()) {                
-                descricao = String.valueOf(tblProdutos.getValueAt(linha, 1));                
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Produto já Pertence ao Pedido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
-                limpaSelecao();
-            }
+            p = produtoDao.procurarPorId(codProd);
+//            if (verificaProdutoExistente()) {                
+//                descricao = String.valueOf(tblProdutos.getValueAt(linha, 1));                
+//                this.dispose();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Produto já Pertence ao Pedido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+//                limpaSelecao();
+//            }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -404,7 +411,7 @@ public class JdlBuscaProduto extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JdlBuscaProduto dialog = new JdlBuscaProduto(new javax.swing.JFrame(), true,0);
+                JdlBuscaProduto dialog = new JdlBuscaProduto(new javax.swing.JFrame(), true, new Venda());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -434,19 +441,19 @@ public class JdlBuscaProduto extends javax.swing.JDialog {
     private javax.swing.JTextField txfTotal;
     // End of variables declaration//GEN-END:variables
 
-    public int getCodPedido() {
-        return codPedido;
+    public Venda getIdVenda() {
+        return venda;
     }
 
-    public int getCodProd() {
-        return this.codProd;
+    public Produto getIdProd() {
+        return p;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public double getPrecoVenda() {
+    public double getPrecoUnitario() {
         return precoVenda;
     }
 

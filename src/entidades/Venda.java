@@ -8,7 +8,9 @@ package entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +20,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +40,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Venda.findByValorTotal", query = "SELECT v FROM Venda v WHERE v.valorTotal = :valorTotal")
     , @NamedQuery(name = "Venda.findByData", query = "SELECT v FROM Venda v WHERE v.data = :data")})
 public class Venda implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idvenda")
+    private List<ProdutoVenda> produtoVendaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -154,6 +161,15 @@ public class Venda implements Serializable {
     @Override
     public String toString() {
         return "entidades.Venda[ idvenda=" + idvenda + " ]";
+    }
+
+    @XmlTransient
+    public List<ProdutoVenda> getProdutoVendaList() {
+        return produtoVendaList;
+    }
+
+    public void setProdutoVendaList(List<ProdutoVenda> produtoVendaList) {
+        this.produtoVendaList = produtoVendaList;
     }
     
 }

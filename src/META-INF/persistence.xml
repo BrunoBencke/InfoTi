@@ -22,6 +22,7 @@
     <class>entidades.Config</class>
     <class>entidades.MarcaProduto</class>
     <class>entidades.ContaPagar</class>
+    <class>entidades.ProdutoVenda</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/iNFO-Ti"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
