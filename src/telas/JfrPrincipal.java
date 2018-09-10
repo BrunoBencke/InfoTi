@@ -1,6 +1,7 @@
 package telas;
 import dao.AuditoriaDao;
 import entidades.Usuario;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -382,8 +383,13 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidosActionPerformed
-        JdlNovoPedido novoPedido = new JdlNovoPedido(null, false,tblPedidos);
-        novoPedido.setVisible(true);
+        JdlNovoPedido novoPedido;
+        try {
+            novoPedido = new JdlNovoPedido(null, false,tblPedidos);
+            novoPedido.setVisible(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(JfrPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }//GEN-LAST:event_pedidosActionPerformed
 
     private void clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesActionPerformed
