@@ -414,27 +414,27 @@ public class JdlNovoPedido extends javax.swing.JDialog {
         if (editar.equalsIgnoreCase("novo")) {
             if (venda.getIdcliente().getIdcliente() == 0) {
                 JOptionPane.showMessageDialog(this, "Verifique os campos Cliente/Vendedor");
-            } else {
-                venda.setIdcliente(cliente);
-                lblNPedido.setText(" Nº: " + Integer.toString(venda.getIdvenda()));
-                JdlBuscaProduto telaProdutos = new JdlBuscaProduto(null, rootPaneCheckingEnabled, venda);
-                telaProdutos.setModal(true);
-                telaProdutos.setVisible(true);                
-                if (telaProdutos.getProdutoExistente() == 0) {
-                    item.setCod_pedido(pedido.getCod_pedido());
-                    item.setCod_produto(telaProdutos.getCodProd());
-                    item.setDescricao(telaProdutos.getDescricao());
-                    item.setPrecoTotal(telaProdutos.getPrecoTotal());
-                    item.setPrecoVenda(telaProdutos.getPrecoVenda());
-                    item.setQuantidade(telaProdutos.getQuantidade());
-                    item.setUnidade(telaProdutos.getUnidade());
-                    itemPedido.insert(item);
-                    totalPedido = totalPedido + item.getPrecoTotal();
-                    pedido.setTotal(totalPedido);
-                    pDao.update(pedido);
-                    txfTotal.setText(""+totalPedido);
-                    pDao.populaProdutosVenda(tblPedidos, venda);
-                }
+//            } else {
+//                venda.setIdcliente(cliente);
+//                lblNPedido.setText(" Nº: " + Integer.toString(venda.getIdvenda()));
+//                JdlBuscaProduto telaProdutos = new JdlBuscaProduto(null, rootPaneCheckingEnabled, venda);
+//                telaProdutos.setModal(true);
+//                telaProdutos.setVisible(true);                
+//                if (telaProdutos.getProdutoExistente() == 0) {
+//                    item.setCod_pedido(pedido.getCod_pedido());
+//                    item.setCod_produto(telaProdutos.getCodProd());
+//                    item.setDescricao(telaProdutos.getDescricao());
+//                    item.setPrecoTotal(telaProdutos.getPrecoTotal());
+//                    item.setPrecoVenda(telaProdutos.getPrecoVenda());
+//                    item.setQuantidade(telaProdutos.getQuantidade());
+//                    item.setUnidade(telaProdutos.getUnidade());
+//                    itemPedido.insert(item);
+//                    totalPedido = totalPedido + item.getPrecoTotal();
+//                    pedido.setTotal(totalPedido);
+//                    pDao.update(pedido);
+//                    txfTotal.setText(""+totalPedido);
+//                    pDao.populaProdutosVenda(tblPedidos, venda);
+//                }
             }
             this.editar = "editar";
         }
