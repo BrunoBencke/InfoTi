@@ -36,17 +36,23 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
         initComponents();
     }
 
-    public JdlCadastroContasPagar(java.awt.Frame parent, boolean modal,JTable tblContasPagar) throws ParseException {
+    public JdlCadastroContasPagar(java.awt.Frame parent, boolean modal, JTable tblContasPagar, ContaPagar contaPagar) throws ParseException {
         super(parent, modal);
         initComponents();
-        this.contaPagar = contaPagar;
         this.tblContasPagar = tblContasPagar;
         carregarDados(contaPagar);
     }
 
+    JdlCadastroContasPagar(Object object, boolean b, ContaPagar contaPagar, JTable tblContasPagar) throws ParseException {
+
+        initComponents();
+        botaopressionado = "editar";
+        carregarDados(contaPagar);
+    }
 
     public void carregarDados(ContaPagar cp) throws ParseException {
 
+        this.contaPagar = cp;
         txtnome.setText(cp.getNome());
         txtvalor.setText(cp.getValor().toString());
         txtdataVencimento.setText(contaPagarDao.data_sistema(cp.getDataVencimento().toString()));
@@ -62,6 +68,8 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtnome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -70,6 +78,10 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
         txtdataVencimento = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+
+        jLabel4.setText("jLabel4");
+
+        jLabel5.setText("jLabel5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,10 +124,6 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtdataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,7 +136,11 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtvalor, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtdataVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -191,27 +203,27 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
             // contaPagarDao.populaContaPagar(tblContasPagar);
 
         } else if (botaopressionado.equals("editar")) {
-
-            contaPagar.setNome(txtnome.getText());
-            contaPagar.setValor(BigDecimal.valueOf(Double.parseDouble(txtvalor.getText())));
-            if (txtdataVencimento.getText().equals("  /  /    ")) {
-                contaPagar.setDataVencimento(new java.sql.Date(0000, 00, 00));
-            } else {
-                try {
-                    dataAtual = sdf.parse(txtdataVencimento.getText());
-                } catch (ParseException ex) {
-                    Logger.getLogger(JdlCadastroContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+                contaPagar.setNome(txtnome.getText());
+                contaPagar.setValor(BigDecimal.valueOf(Double.parseDouble(txtvalor.getText())));
+                if (txtdataVencimento.getText().equals("  /  /    ")) {
+                    contaPagar.setDataVencimento(new java.sql.Date(0000, 00, 00));
+                } else {
+                    try {
+                        dataAtual = sdf.parse(txtdataVencimento.getText());
+                    } catch (ParseException ex) {
+                        Logger.getLogger(JdlCadastroContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    contaPagar.setDataVencimento(dataAtual);
                 }
-                contaPagar.setDataVencimento(dataAtual);
-            }
-            contaPagar.setSituacao(true);
-            d.salvar(contaPagar);
-            JOptionPane.showMessageDialog(this, "Conta Cadastrado!");
-            txtnome.setText("");
-            txtvalor.setText("");
-            txtdataVencimento.setText("");
-            this.dispose();
-            //contaPagarDao.populaContaPagar(tblContasPagar);
+                contaPagar.setSituacao(true);
+                d.atualizar(contaPagar, contaPagar.toString());
+                JOptionPane.showMessageDialog(this, "Conta Alterada!");
+                txtnome.setText("");
+                txtvalor.setText("");
+                txtdataVencimento.setText("");
+                this.dispose();
+
+
         }
 
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -268,6 +280,8 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JFormattedTextField txtdataVencimento;
     private javax.swing.JTextField txtnome;
     private javax.swing.JTextField txtvalor;

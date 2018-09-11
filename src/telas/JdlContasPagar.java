@@ -10,10 +10,12 @@ import dao.ContaPagarDao;
 import dao.Dao;
 import entidades.Cliente;
 import entidades.ContaPagar;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.chart.PieChart;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,6 +33,7 @@ public class JdlContasPagar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         contaPagarDao.populaContaPagar(tblContasPagar);
+        
     }
 
     /**
@@ -52,7 +55,6 @@ public class JdlContasPagar extends javax.swing.JDialog {
         Btnbuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblContasPagar = new javax.swing.JTable();
-        Btnpagamento = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Contas Pagar");
@@ -129,31 +131,21 @@ public class JdlContasPagar extends javax.swing.JDialog {
         ));
         jScrollPane2.setViewportView(tblContasPagar);
 
-        Btnpagamento.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\iNFO-Ti\\InfoTi\\src\\icones\\Payment.png")); // NOI18N
-        Btnpagamento.setText("Pagamento");
-        Btnpagamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnpagamentoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Btnpagamento)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(Botoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txfBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane2)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(Botoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txfBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -169,9 +161,7 @@ public class JdlContasPagar extends javax.swing.JDialog {
                         .addComponent(txfBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Btnpagamento)
-                .addGap(31, 31, 31))
+                .addGap(83, 83, 83))
         );
 
         setSize(new java.awt.Dimension(697, 527));
@@ -186,12 +176,12 @@ public class JdlContasPagar extends javax.swing.JDialog {
 
         int linha = tblContasPagar.getSelectedRow();
         if (linha > -1) {
-            String botaopressionado = "editar";
+            botaopressionado = "editar";
             int codCont = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
             ContaPagar contaPagar = contaPagarDao.procurarPorId(codCont);
             JdlCadastroContasPagar telaContasPagar = null;
             try {
-                telaContasPagar = new JdlCadastroContasPagar(null, false, tblContasPagar);
+                telaContasPagar = new JdlCadastroContasPagar(null, false, contaPagar, tblContasPagar);
             } catch (ParseException ex) {
                 Logger.getLogger(JdlContasPagar.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -222,14 +212,6 @@ public class JdlContasPagar extends javax.swing.JDialog {
             contaPagarDao.populaContaPagar(tblContasPagar);
         }
     }//GEN-LAST:event_btexcluirActionPerformed
-
-    private void BtnpagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnpagamentoActionPerformed
-
-        Calendario c = new Calendario();
-        contaPagarDao.pagamentoQuitar(Integer.parseInt(tblContasPagar.getValueAt(tblContasPagar.getSelectedRow(), 0).toString()),c.obterDataAtualDMA());
-        JOptionPane.showMessageDialog(null, "Conta Paga com Sucesso!!!");
-        contaPagarDao.populaContaPagar(tblContasPagar);
-    }//GEN-LAST:event_BtnpagamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,7 +258,6 @@ public class JdlContasPagar extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Botoes;
     private javax.swing.JButton Btnbuscar;
-    private javax.swing.JButton Btnpagamento;
     private javax.swing.JButton btexcluir;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNovo;
