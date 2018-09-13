@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ContaPagar.findByIdcontaPagar", query = "SELECT c FROM ContaPagar c WHERE c.idcontaPagar = :idcontaPagar")
     , @NamedQuery(name = "ContaPagar.findByNome", query = "SELECT c FROM ContaPagar c WHERE c.nome = :nome")
     , @NamedQuery(name = "ContaPagar.findByValor", query = "SELECT c FROM ContaPagar c WHERE c.valor = :valor")
+    , @NamedQuery(name = "ContaPagar.findByValorpago", query = "SELECT c FROM ContaPagar c WHERE c.valorpago = :valorpago")
     , @NamedQuery(name = "ContaPagar.findByDataVencimento", query = "SELECT c FROM ContaPagar c WHERE c.dataVencimento = :dataVencimento")
     , @NamedQuery(name = "ContaPagar.findByDataPagamento", query = "SELECT c FROM ContaPagar c WHERE c.dataPagamento = :dataPagamento")
     , @NamedQuery(name = "ContaPagar.findBySituacao", query = "SELECT c FROM ContaPagar c WHERE c.situacao = :situacao")})
@@ -49,6 +50,8 @@ public class ContaPagar implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valor")
     private BigDecimal valor;
+    @Column(name = "valorpago")
+    private BigDecimal valorpago;
     @Column(name = "data_vencimento")
     @Temporal(TemporalType.DATE)
     private Date dataVencimento;
@@ -87,6 +90,14 @@ public class ContaPagar implements Serializable {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public BigDecimal getValorpago() {
+        return valorpago;
+    }
+
+    public void setValorpago(BigDecimal valorpago) {
+        this.valorpago = valorpago;
     }
 
     public Date getDataVencimento() {
