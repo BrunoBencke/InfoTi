@@ -128,7 +128,7 @@ public class ProdutosDao extends Dao {
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createQuery("from produto_venda where idVenda = '" + v.getIdvenda() + "'");
+            org.hibernate.Query q = sessao.createQuery("from ProdutoVenda where idVenda = '" + v.getIdvenda() + "'");
             ArrayList<ProdutoVenda> resultado = new ArrayList<ProdutoVenda>();
             resultado = (ArrayList<ProdutoVenda>) q.list();
 

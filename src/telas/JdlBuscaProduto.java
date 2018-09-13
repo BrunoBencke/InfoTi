@@ -288,6 +288,7 @@ public class JdlBuscaProduto extends javax.swing.JDialog {
         if (linha > -1) {
             this.codProd = Integer.valueOf(String.valueOf(tblProdutos.getValueAt(linha, 0)));
             p = produtoDao.procurarPorId(codProd);
+            this.dispose();
 //            if (verificaProdutoExistente()) {                
 //                descricao = String.valueOf(tblProdutos.getValueAt(linha, 1));                
 //                this.dispose();
@@ -312,7 +313,7 @@ public class JdlBuscaProduto extends javax.swing.JDialog {
     private void txfPrecoVendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPrecoVendaKeyPressed
         if (evt.getKeyChar() == VK_ENTER) {
             if (txfPrecoVenda.getText().length() < 1) {
-                JOptionPane.showMessageDialog(this, "Informe o Preço de Venda!");    
+                //JOptionPane.showMessageDialog(this, "Informe o Preço de Venda!");    
             } else {
                 precoVenda = Double.parseDouble(txfPrecoVenda.getText());
                 txfQtd.requestFocus();
@@ -372,7 +373,7 @@ public class JdlBuscaProduto extends javax.swing.JDialog {
             //unidade = p.getUnidade();
             //txfPrecoVenda.setText("" + p.getPrecoVenda());
             if (txfPrecoVenda.getText().length() < 1) {
-                JOptionPane.showMessageDialog(this, "Informe o Preço de Venda!");
+                //JOptionPane.showMessageDialog(this, "Informe o Preço de Venda!");
             } else {
                 precoVenda = Double.parseDouble(txfPrecoVenda.getText());
                 txfQtd.requestFocus();

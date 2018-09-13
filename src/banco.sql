@@ -110,9 +110,15 @@ create table tipo_pagamento(idTipo_Pagamento SERIAL NOT NULL,
                        		 quantidade INT NOT NULL,
 constraint pk_tipo_pagamento PRIMARY KEY (idTipo_Pagamento));
 
+INSERT INTO tipo_pagamento
+VALUES (default,'A Vista','1');
+
 create table forma_pagamento(idForma_Pagamento SERIAL NOT NULL,
                        		 descricao VARCHAR(60) NOT NULL,
 constraint pk_forma_pagamento PRIMARY KEY (idForma_Pagamento));
+
+INSERT INTO forma_pagamento
+VALUES (default,'A Vista');
 
 create table venda(idVenda SERIAL NOT NULL,
                     valor_total DECIMAL(10,2),
@@ -129,14 +135,13 @@ constraint fk_idForma_Pagamento_forma_pagamento FOREIGN KEY (idForma_Pagamento) 
 
 create table conta_pagar(idConta_pagar SERIAL NOT NULL,
                           nome VARCHAR(100),
-                          valor DECIMAL(10,2),
-                          valorPago DECIMAL(10,2),
+                          valor DECIMAL(10,2),             
                           data_vencimento DATE,
                           data_pagamento DATE,
                           situacao BOOLEAN,
 constraint pk_conta_pagar PRIMARY KEY (idConta_pagar));
 
-create table produto_venda(idProdutoVenda INT NOT NULL,
+create table produto_venda(idProdutoVenda SERIAL NOT NULL,
 								idVenda INT NOT NULL,
                     			idProduto INT NOT NULL,
                     			quantidade FLOAT NOT NULL,

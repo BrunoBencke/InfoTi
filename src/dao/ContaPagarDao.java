@@ -1,7 +1,6 @@
 package dao;
 
 import apoio.ArquivoLog;
-import apoio.Calendario;
 import apoio.HibernateUtil;
 import entidades.ContaPagar;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import org.hibernate.Transaction;
 public class ContaPagarDao extends Dao {
 
     ArquivoLog arquivoLog = new ArquivoLog();
-    Calendario c = new Calendario();
+
     Dao d = new Dao();
 
     public ContaPagar procurarPorId(Integer id) {
@@ -120,32 +119,28 @@ public class ContaPagarDao extends Dao {
     }
 
     public Query pagamentoQuitar(int id, String data) {
-        sessao = HibernateUtil.getSessionFactory().openSession();
-        Transaction t = sessao.beginTransaction();
-        //T object = null;
-        try {
-            org.hibernate.Query q = sessao.createSQLQuery("select cp.data_pagamento cp.situacao from conta_pagar cp");
-            //q.setResultTransformer(Transformers.aliasToBean(Usuario.class));
-            //ArrayList<Usuario> resultado = new ArrayList<Usuario>();
-            //resultado = (ArrayList<Usuario>) q.list();
-            ArrayList<ContaPagar> resultado = (ArrayList<ContaPagar>) q.list();
 
-            int lin = 0;
-            for (int i = 0; i < resultado.size(); i++) {
-                ContaPagar u = resultado.get(i);
-                if (Objects.equals(u.getDataPagamento(), id)) {
-                    return (Query) u;
-                } else {
-                    
-                }
-                lin++;
-            }
-            return null;
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            sessao.beginTransaction();
+            org.hibernate.Query q = sessao.createSQLQuery("Update conta_pagar SET data_pagamento = '" + data + "', situacao = 'false' WHERE idconta_pagar = " + id);
+            ArrayList<ContaPagar> resultado = new ArrayList<ContaPagar>();
+            resultado = (ArrayList<ContaPagar>) q.list();
+
+            sessao.getTransaction().commit();
+            sessao.saveOrUpdate(q);
+
+            
+            return q;
         } catch (Exception e) {
+
             System.out.println("Erro ao Localizar Objeto!" + e.toString());
+            arquivoLog.gravaErro(e.toString());
+
         } finally {
             sessao.close();
         }
+        
         return null;
     }
 

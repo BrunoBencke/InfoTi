@@ -2,9 +2,13 @@ package telas;
 
 import dao.ClienteDao;
 import dao.Dao;
+import dao.ProdutoVendaDao;
 import dao.ProdutosDao;
+import dao.VendaDao;
 import entidades.Cliente;
+import entidades.FormaPagamento;
 import entidades.ProdutoVenda;
+import entidades.TipoPagamento;
 import entidades.Venda;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -25,11 +29,14 @@ public class JdlNovoPedido extends javax.swing.JDialog {
     ProdutosDao pDao = new ProdutosDao();
     Cliente cliente = new Cliente();
     ProdutoVenda item = new ProdutoVenda();
+    ProdutoVendaDao pvDao = new ProdutoVendaDao();
     String cancelar = null;
     String editar = null;
     Venda venda = new Venda();
+    VendaDao vDao = new VendaDao();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     Date dataAtual = new Date(); 
+    private BigDecimal totalPedido = BigDecimal.ZERO;    
             
     //sdf.parse(txfDataAtual.getText());
     
@@ -42,20 +49,35 @@ public class JdlNovoPedido extends javax.swing.JDialog {
         this.cancelar = "deletar";
         this.editar = "novo";
         this.tblPedidos = tblPedidos;
-        cliente.setIdcliente(-1);
+        txfNome.setEditable(false);
+        txfTelefone.setEditable(false);
+        cliente.setIdcliente(1);
         txfDataAtual.setText(sdf.format(dataAtual));
         venda.setIdusuario(user);
         venda.setData(sdf.parse(txfDataAtual.getText()));
         venda.setIdcliente(cliente);
+        //forma de pagamento padrao
+        FormaPagamento fp = new FormaPagamento();
+        fp.setIdformaPagamento(1);
+        TipoPagamento tp = new TipoPagamento();
+        tp.setIdtipoPagamento(1);
+        venda.setIdformaPagamento(fp);
+        venda.setIdtipoPagamento(tp);
         dao.salvar(venda);
     }
     
-    public JdlNovoPedido(java.awt.Frame parent, boolean modal, JTable tblPedidos, int codPedido) {
+    public JdlNovoPedido(java.awt.Frame parent, boolean modal, JTable tblPedidos, Venda venda) {
         super(parent, modal);
         initComponents();
+        txfNome.setEditable(false);
+        txfTelefone.setEditable(false);
         this.cancelar = "sair";
         this.editar = "editar"; 
         this.tblPedidos = tblPedidos;
+        this.cliente = venda.getIdcliente();
+        carregarDados(venda.getIdcliente());
+        //txfDataAtual.setText(venda.getData());
+        pDao.populaProdutosVenda(tblProdutos, venda);        
     }
 
     public void limpaCampos() {
@@ -64,9 +86,9 @@ public class JdlNovoPedido extends javax.swing.JDialog {
     }
 
     public void carregarDados(Cliente c) {
-        txfNome.setText(cliente.getNome());
-        txfTelefone.setText(cliente.getTelefone());
         venda.setIdcliente(c);
+        txfNome.setText(cliente.getNome());
+        txfTelefone.setText(cliente.getTelefone());        
     }
 
 
@@ -400,58 +422,61 @@ public class JdlNovoPedido extends javax.swing.JDialog {
             telaProdutos.setModal(true);
             telaProdutos.setVisible(true);
             item.setIdvenda(venda);
+            System.out.println("id venda"+venda.getIdvenda());
             item.setIdproduto(telaProdutos.getIdProd());
             item.setQuantidade(telaProdutos.getQuantidade());
             BigDecimal b = new BigDecimal(telaProdutos.getPrecoUnitario());
             item.setValorUnitario(b);
             dao.salvar(item);
-            //totalPedido = totalPedido + item.getPrecoTotal();
+            BigDecimal c = new BigDecimal(telaProdutos.getQuantidade());
+            totalPedido = totalPedido.add(c.multiply(b));
             //pedido.setTotal(totalPedido);
             //pDao.update(pedido);
-            //txfTotal.setText("" + totalPedido);
+            txfTotal.setText("" + totalPedido);
             //pDao.popularTabela(tblProdutos, (Integer.toString(pedido.getCod_pedido())));
         }
         if (editar.equalsIgnoreCase("novo")) {
             if (venda.getIdcliente().getIdcliente() == 0) {
                 JOptionPane.showMessageDialog(this, "Verifique os campos Cliente/Vendedor");
-//            } else {
-//                venda.setIdcliente(cliente);
-//                lblNPedido.setText(" Nº: " + Integer.toString(venda.getIdvenda()));
-//                JdlBuscaProduto telaProdutos = new JdlBuscaProduto(null, rootPaneCheckingEnabled, venda);
-//                telaProdutos.setModal(true);
-//                telaProdutos.setVisible(true);                
-//                if (telaProdutos.getProdutoExistente() == 0) {
-//                    item.setCod_pedido(pedido.getCod_pedido());
-//                    item.setCod_produto(telaProdutos.getCodProd());
-//                    item.setDescricao(telaProdutos.getDescricao());
-//                    item.setPrecoTotal(telaProdutos.getPrecoTotal());
-//                    item.setPrecoVenda(telaProdutos.getPrecoVenda());
-//                    item.setQuantidade(telaProdutos.getQuantidade());
-//                    item.setUnidade(telaProdutos.getUnidade());
-//                    itemPedido.insert(item);
-//                    totalPedido = totalPedido + item.getPrecoTotal();
-//                    pedido.setTotal(totalPedido);
-//                    pDao.update(pedido);
-//                    txfTotal.setText(""+totalPedido);
-//                    pDao.populaProdutosVenda(tblPedidos, venda);
-//                }
+            } else {
+                venda.setIdcliente(cliente);
+                lblNPedido.setText(" Nº: " + Integer.toString(venda.getIdvenda()));
+                JdlBuscaProduto telaProdutos = new JdlBuscaProduto(null, rootPaneCheckingEnabled, venda);
+                telaProdutos.setModal(true);
+                telaProdutos.setVisible(true);                
+                if (telaProdutos.getProdutoExistente() == 0) {
+                    item.setIdvenda(venda);
+                    item.setIdproduto(telaProdutos.getIdProd());
+                    item.setQuantidade(telaProdutos.getQuantidade());
+                    BigDecimal b = new BigDecimal(telaProdutos.getPrecoUnitario());
+                    item.setValorUnitario(b);
+                    dao.salvar(item);
+                    //totalPedido = totalPedido + item.getPrecoTotal();
+                    //pedido.setTotal(totalPedido);
+                    dao.atualizar(venda, venda.toString());
+                    //txfTotal.setText(""+totalPedido);
+                    pDao.populaProdutosVenda(tblProdutos, venda);
+                }
             }
             this.editar = "editar";
         }
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-//        int linha = tblProdutos.getSelectedRow();
-//        if (linha > -1) {
-//            int codItem = Integer.valueOf(String.valueOf(tblProdutos.getValueAt(linha, 0)));
-//            pDao.deleteItemPedido(codItem);
-//            totalPedido = totalPedido - item.getPrecoTotal();
-//            txfTotal.setText("" + totalPedido);
-//            pDao.popularTabela(tblProdutos, (Integer.toString(pedido.getCod_pedido())));
-//            //aumentar estoque novamente
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
-//        }
+        int linha = tblProdutos.getSelectedRow();
+        if (linha > -1) {
+            int codItem = Integer.valueOf(String.valueOf(tblProdutos.getValueAt(linha, 0)));
+            pvDao.excluirPorId(codItem);
+            BigDecimal b = new BigDecimal(item.getQuantidade());
+            totalPedido = totalPedido.subtract(b.multiply(item.getValorUnitario()));
+            txfTotal.setText("" + totalPedido);
+            pDao.populaProdutosVenda(tblProdutos, venda);
+            //aumentar estoque novamente
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+        this.editar = "editar";
+        pDao.populaProdutosVenda(tblProdutos, venda);
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
@@ -483,16 +508,19 @@ public class JdlNovoPedido extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Escolha um Cliente!");
         } else {
             venda.setIdcliente(cliente);
-            venda.setIdusuario(user);        
+            venda.setIdusuario(user);
             try {
                 venda.setData(sdf.parse(txfDataAtual.getText()));
             } catch (ParseException ex) {
                 Logger.getLogger(JdlNovoPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
+            if (vDao.vendaSemProdutos(venda.getIdvenda())) {
+                dao.excluir(venda, venda.toString());
+                this.dispose();
+            } else {
+                dao.salvar(venda);
+            }
         }
-        dao.salvar(venda);
-        //pDao.popularTabelaPedidos(tblPedidos, 0);
-        this.dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
