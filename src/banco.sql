@@ -135,7 +135,8 @@ constraint fk_idForma_Pagamento_forma_pagamento FOREIGN KEY (idForma_Pagamento) 
 
 create table conta_pagar(idConta_pagar SERIAL NOT NULL,
                           nome VARCHAR(100),
-                          valor DECIMAL(10,2),             
+                          valor DECIMAL(10,2),
+                          valorPago DECIMAL(10,2),
                           data_vencimento DATE,
                           data_pagamento DATE,
                           situacao BOOLEAN,
