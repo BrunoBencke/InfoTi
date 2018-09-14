@@ -71,6 +71,25 @@ constraint fk_id_config FOREIGN KEY (idConfig) REFERENCES config);
 INSERT INTO usuario
 VALUES (default,'1','xMpCOKC5I4INzFCab3WEmw==','1');
 
+create table permissao(idPerm SERIAL NOT NULL,
+					   idUsuario INT NOT NULL,
+constraint pk_permissao PRIMARY KEY (idPerm),
+constraint fk_id_usuario FOREIGN KEY (idUsuario) REFERENCES usuario);
+
+create table tela(idTela SERIAL NOT NULL,
+                  nome VARCHAR(100),
+				  ativo BOOLEAN NOT NULL,
+				  idPermissao INT NOT NULL,
+constraint pk_tela PRIMARY KEY (idTela),
+constraint fk_id_permissao FOREIGN KEY (idPermissao) REFERENCES permissao);
+
+create table botao(idBotao SERIAL NOT NULL,
+                   nome VARCHAR(100),
+				   ativo BOOLEAN NOT NULL,
+				   idTela INT NOT NULL,
+constraint pk_botao PRIMARY KEY (idBotao),
+constraint fk_id_tela FOREIGN KEY (idTela) REFERENCES tela);
+
 create table auditoria(idAuditoria SERIAL NOT NULL,
                        		  idUsuario INT NOT NULL,
                        		  data_hora VARCHAR(45),
