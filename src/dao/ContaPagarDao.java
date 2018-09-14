@@ -58,17 +58,18 @@ public class ContaPagarDao extends Dao {
             resultado = (ArrayList<ContaPagar>) q.list();
 
             Object[][] dadosTabela = null;
-            Object[] cabecalho = new Object[6];
+            Object[] cabecalho = new Object[7];
 
             cabecalho[0] = "Id";
             cabecalho[1] = "Nome";
             cabecalho[2] = "Valor";
-            cabecalho[3] = "Data Vencimento";
-            cabecalho[4] = "Data Pagamento";
-            cabecalho[5] = "Situação";
+            cabecalho[3] = "Valor Pago";
+            cabecalho[4] = "Data Vencimento";
+            cabecalho[5] = "Data Pagamento";
+            cabecalho[6] = "Situação";
 
             // cria matriz de acordo com nº de registros da tabela
-            dadosTabela = new Object[resultado.size()][6];
+            dadosTabela = new Object[resultado.size()][7];
 
             int lin = 0;
             for (int i = 0; i < resultado.size(); i++) {
@@ -76,12 +77,13 @@ public class ContaPagarDao extends Dao {
                 dadosTabela[lin][0] = m.getIdcontaPagar();
                 dadosTabela[lin][1] = m.getNome();
                 dadosTabela[lin][2] = m.getValor();
-                dadosTabela[lin][3] = m.getDataVencimento();
-                dadosTabela[lin][4] = m.getDataPagamento();
+                dadosTabela[lin][3] = m.getValorpago();
+                dadosTabela[lin][4] = m.getDataVencimento();
+                dadosTabela[lin][5] = m.getDataPagamento();
                 if (resultado.get(i).getSituacao()) {
-                    dadosTabela[lin][5] = "Aberta";
+                    dadosTabela[lin][6] = "Aberta";
                 } else {
-                    dadosTabela[lin][5] = "Fechada";
+                    dadosTabela[lin][6] = "Fechada";
                 }
                 lin++;
             }

@@ -36,21 +36,26 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
         initComponents();
     }
 
-    public JdlCadastroContasPagar(java.awt.Frame parent, boolean modal,JTable tblContasPagar) throws ParseException {
+    public JdlCadastroContasPagar(java.awt.Frame parent, boolean modal, JTable tblContasPagar) throws ParseException {
         super(parent, modal);
         initComponents();
-        this.contaPagar = contaPagar;
         this.tblContasPagar = tblContasPagar;
         carregarDados(contaPagar);
     }
 
+    JdlCadastroContasPagar(Object object, boolean b, ContaPagar contaPagar, JTable tblContasPagar) throws ParseException {
+
+        initComponents();
+        botaopressionado = "editar";
+        carregarDados(contaPagar);
+    }
 
     public void carregarDados(ContaPagar cp) throws ParseException {
 
+        this.contaPagar = cp;
         txtnome.setText(cp.getNome());
         txtvalor.setText(cp.getValor().toString());
         txtdataVencimento.setText(contaPagarDao.data_sistema(cp.getDataVencimento().toString()));
-
     }
 
     /**
@@ -205,13 +210,12 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
                 contaPagar.setDataVencimento(dataAtual);
             }
             contaPagar.setSituacao(true);
-            d.salvar(contaPagar);
-            JOptionPane.showMessageDialog(this, "Conta Cadastrado!");
+            d.atualizar(contaPagar, contaPagar.toString());
+            JOptionPane.showMessageDialog(this, "Conta Alterada!");
             txtnome.setText("");
             txtvalor.setText("");
             txtdataVencimento.setText("");
             this.dispose();
-            //contaPagarDao.populaContaPagar(tblContasPagar);
         }
 
     }//GEN-LAST:event_btnSalvarActionPerformed

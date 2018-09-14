@@ -186,12 +186,12 @@ public class JdlContasPagar extends javax.swing.JDialog {
 
         int linha = tblContasPagar.getSelectedRow();
         if (linha > -1) {
-            String botaopressionado = "editar";
+            botaopressionado = "editar";
             int codCont = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
             ContaPagar contaPagar = contaPagarDao.procurarPorId(codCont);
             JdlCadastroContasPagar telaContasPagar = null;
             try {
-                telaContasPagar = new JdlCadastroContasPagar(null, false, tblContasPagar);
+                telaContasPagar = new JdlCadastroContasPagar(null, false, contaPagar, tblContasPagar);
             } catch (ParseException ex) {
                 Logger.getLogger(JdlContasPagar.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -225,10 +225,18 @@ public class JdlContasPagar extends javax.swing.JDialog {
 
     private void BtnpagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnpagamentoActionPerformed
 
-        Calendario c = new Calendario();
-        contaPagarDao.pagamentoQuitar(Integer.parseInt(tblContasPagar.getValueAt(tblContasPagar.getSelectedRow(), 0).toString()),c.obterDataAtualDMA());
-        JOptionPane.showMessageDialog(null, "Conta Paga com Sucesso!!!");
-        contaPagarDao.populaContaPagar(tblContasPagar);
+       int linha = tblContasPagar.getSelectedRow();
+        if (linha > -1) {
+            botaopressionado = "editar";
+            int codCont = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
+            ContaPagar contaPagar = contaPagarDao.procurarPorId(codCont);
+            JdlPagarConta jdlPagarConta = new JdlPagarConta(null, false);
+            jdlPagarConta.setVisible(true);
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }//GEN-LAST:event_BtnpagamentoActionPerformed
 
     /**

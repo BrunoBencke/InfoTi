@@ -196,6 +196,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         fianceiro.add(contasReceber);
 
         jMenuItem2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\iNFO-Ti\\InfoTi\\src\\icones\\Payment.png")); // NOI18N
         jMenuItem2.setText("Contas a Pagar");
         jMenuItem2.setPreferredSize(new java.awt.Dimension(200, 50));
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
