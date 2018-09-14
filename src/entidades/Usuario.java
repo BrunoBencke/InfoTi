@@ -37,6 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
 public class Usuario implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
+    private List<Permissao> permissaoList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -143,6 +146,15 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "Id Usuário:"+idusuario+" Nome:"+nome+" Senha:"+senha+" Id Config:"+idconfig.getIdconfig();
+    }
+
+    @XmlTransient
+    public List<Permissao> getPermissaoList() {
+        return permissaoList;
+    }
+
+    public void setPermissaoList(List<Permissao> permissaoList) {
+        this.permissaoList = permissaoList;
     }
     
 }

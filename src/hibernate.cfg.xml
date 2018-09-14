@@ -67,5 +67,9 @@ Contributor(s):
     <mapping class="entidades.Auditoria"/>
     <mapping class="entidades.ContaPagar"/>
     <mapping class="entidades.ProdutoVenda"/>
+    <mapping class="entidades.Botao"/>
+    <mapping class="entidades.Permissao"/>
+    <mapping class="entidades.Tela"/>
+    <mapping class="entidades.TelaBotao"/>
   </session-factory>
 </hibernate-configuration>

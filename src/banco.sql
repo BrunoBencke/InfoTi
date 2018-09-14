@@ -71,24 +71,52 @@ constraint fk_id_config FOREIGN KEY (idConfig) REFERENCES config);
 INSERT INTO usuario
 VALUES (default,'1','xMpCOKC5I4INzFCab3WEmw==','1');
 
-create table permissao(idPerm SERIAL NOT NULL,
-					   idUsuario INT NOT NULL,
-constraint pk_permissao PRIMARY KEY (idPerm),
-constraint fk_id_usuario FOREIGN KEY (idUsuario) REFERENCES usuario);
-
 create table tela(idTela SERIAL NOT NULL,
                   nome VARCHAR(100),
-				  ativo BOOLEAN NOT NULL,
-				  idPermissao INT NOT NULL,
-constraint pk_tela PRIMARY KEY (idTela),
-constraint fk_id_permissao FOREIGN KEY (idPermissao) REFERENCES permissao);
+constraint pk_tela PRIMARY KEY (idTela));
+
+INSERT INTO tela
+VALUES (default,'JfrPrincipal'),
+(default,'JdlProdutos'),
+(default,'JdlPermissoes'),
+(default,'JdlPedidos'),
+(default,'JdlPagarConta'),
+(default,'JdlNovoPedido'),
+(default,'JdlMarcasProdutos'),
+(default,'JdlFuncionarios'),
+(default,'JdlFormaPagamento'),
+(default,'JdlContasPagar'),
+(default,'JdlClientes'),
+(default,'JdlCadastroUsuarios'),
+(default,'JdlCadastroProdutos'),
+(default,'JdlCadastroContasPagar'),
+(default,'JdlCadastroClientes');
 
 create table botao(idBotao SERIAL NOT NULL,
                    nome VARCHAR(100),
-				   ativo BOOLEAN NOT NULL,
-				   idTela INT NOT NULL,
-constraint pk_botao PRIMARY KEY (idBotao),
-constraint fk_id_tela FOREIGN KEY (idTela) REFERENCES tela);
+constraint pk_botao PRIMARY KEY (idBotao));
+
+INSERT INTO botao
+VALUES (default,'JfrPrincipal'),
+
+create table tela_botao(idTelaBotao SERIAL NOT NULL,
+					   idTela INT NOT NULL,
+					   idBotao INT NOT NULL,
+constraint pk_tela_botao PRIMARY KEY (idTelaBotao),
+constraint fk_id_tela FOREIGN KEY (idTela) REFERENCES tela,
+constraint fk_id_botao FOREIGN KEY (idBotao) REFERENCES botao);
+
+create table permissao(idPermissao SERIAL NOT NULL,
+					   idUsuario INT NOT NULL,
+					   idTelaBotao INT NOT NULL,
+					   idTela INT NOT NULL,
+					   idBotao INT NOT NULL,
+					   situacao BOOLEAN NOT NULL,
+constraint pk_permissao PRIMARY KEY (idPermissao),
+constraint fk_id_usuario FOREIGN KEY (idUsuario) REFERENCES usuario,
+constraint fk_tela_botao FOREIGN KEY (idTelaBotao) REFERENCES tela_botao,
+constraint fk_id_tela FOREIGN KEY (idTela) REFERENCES tela,
+constraint fk_id_botao FOREIGN KEY (idBotao) REFERENCES botao);
 
 create table auditoria(idAuditoria SERIAL NOT NULL,
                        		  idUsuario INT NOT NULL,

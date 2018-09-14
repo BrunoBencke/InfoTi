@@ -23,6 +23,10 @@
     <class>entidades.MarcaProduto</class>
     <class>entidades.ContaPagar</class>
     <class>entidades.ProdutoVenda</class>
+    <class>entidades.TelaBotao</class>
+    <class>entidades.Botao</class>
+    <class>entidades.Permissao</class>
+    <class>entidades.Tela</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/iNFO-Ti"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
