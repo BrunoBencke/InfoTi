@@ -1,20 +1,28 @@
 package telas;
 import dao.AuditoriaDao;
+import dao.PermissaoDao;
+import entidades.Permissao;
 import entidades.Usuario;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class JfrPrincipal extends javax.swing.JFrame {
     
     public static Usuario user;
+    public static Permissao permissao;
+    public static PermissaoDao permissaoDao = new PermissaoDao();
     JTable tblPedidos = new JTable();
+    ArrayList<JButton> botoes;  
 
-    public JfrPrincipal(Usuario user) {
+    public JfrPrincipal(Usuario user, Permissao permissao) {
         initComponents();
         this.user = user;
+        this.permissao = permissao;
     }
 
     @SuppressWarnings("unchecked")
@@ -382,7 +390,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void pedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pedidosActionPerformed
         JdlNovoPedido novoPedido;
         try {
@@ -544,7 +552,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Usuario user = null;
-                new JfrPrincipal(user).setVisible(true);
+                Permissao permissao = null;
+                new JfrPrincipal(user,permissao).setVisible(true);
             }
         });
     }

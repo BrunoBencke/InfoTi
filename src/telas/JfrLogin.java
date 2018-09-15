@@ -2,6 +2,8 @@ package telas;
 
 import apoio.Criptografia;
 import apoio.HibernateUtil;
+import dao.PermissaoDao;
+import entidades.Permissao;
 import entidades.Usuario;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.awt.event.KeyEvent.VK_TAB;
@@ -17,6 +19,8 @@ public class JfrLogin extends javax.swing.JFrame {
     List resultado = null;
     Criptografia c = new Criptografia();
     Usuario user;
+    PermissaoDao permDao = new PermissaoDao();
+    Permissao perm;
 
     public JfrLogin() throws ClassNotFoundException {
         initComponents();
@@ -27,7 +31,8 @@ public class JfrLogin extends javax.swing.JFrame {
             resultado = q.list();
             for (Object o : resultado) {
                 user = (Usuario) o;
-                if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {                  
+                if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {
+                    perm = permDao.retornaPermissao(user);
                     return true;
                 }
             }
@@ -119,7 +124,7 @@ public class JfrLogin extends javax.swing.JFrame {
     private void btnAcessarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarActionPerformed
         if (login()) {
             this.setVisible(false);
-            JfrPrincipal telaPrincipal = new JfrPrincipal(user);
+            JfrPrincipal telaPrincipal = new JfrPrincipal(user, perm);
             telaPrincipal.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");
@@ -155,7 +160,7 @@ public class JfrLogin extends javax.swing.JFrame {
         if (evt.getKeyChar() == VK_ENTER) {
             if (login()) {
                 this.setVisible(false);
-                JfrPrincipal telaPrincipal = new JfrPrincipal(user);
+                JfrPrincipal telaPrincipal = new JfrPrincipal(user, perm);
                 telaPrincipal.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");

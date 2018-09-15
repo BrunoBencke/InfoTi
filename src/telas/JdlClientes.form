@@ -68,7 +68,7 @@
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Component id="btnEditar" min="-2" pref="46" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btexcluir" min="-2" pref="46" max="-2" attributes="0"/>
+                  <Component id="btnExcluir" min="-2" pref="46" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="btnSair" min="-2" pref="46" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -80,7 +80,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btexcluir" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnExcluir" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnEditar" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnNovo" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSair" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -106,6 +106,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icones/editar.png"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="editar" noResource="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarActionPerformed"/>
@@ -116,19 +117,21 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icones/adicionar.png"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="novo" noResource="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btexcluir">
+        <Component class="javax.swing.JButton" name="btnExcluir">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icones/cancelar.png"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="excluir" noResource="true"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btexcluirActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -153,7 +156,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txfBuscar1" min="-2" pref="592" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" pref="34" max="-2" attributes="0"/>
+                          <Component id="btnBuscar" min="-2" pref="34" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane2" alignment="0" min="-2" pref="713" max="-2" attributes="0"/>
                   </Group>
@@ -170,7 +173,7 @@
                           <Component id="txfBuscar1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jButton2" alignment="0" min="-2" pref="21" max="-2" attributes="0"/>
+                      <Component id="btnBuscar" alignment="0" min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" pref="454" max="32767" attributes="0"/>
@@ -190,11 +193,12 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txfBuscar1">
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="btnBuscar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icones/Search.png"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="pesquisar" noResource="true"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">

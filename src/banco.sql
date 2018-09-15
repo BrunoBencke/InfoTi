@@ -76,8 +76,7 @@ create table tela(idTela SERIAL NOT NULL,
 constraint pk_tela PRIMARY KEY (idTela));
 
 INSERT INTO tela
-VALUES (default,'JfrPrincipal'),
-(default,'JdlProdutos'),
+VALUES (default,'JdlProdutos'),
 (default,'JdlPermissoes'),
 (default,'JdlPedidos'),
 (default,'JdlPagarConta'),
@@ -100,9 +99,7 @@ INSERT INTO botao
 VALUES (default,'novo'),
 (default,'editar'),
 (default,'excluir'),
-(default,'pesquisar'),
-(default,'clientes'),
-(default,'produtos');
+(default,'pesquisar');
 
 create table tela_botao(idTelaBotao SERIAL NOT NULL,
 					   idTela INT NOT NULL,

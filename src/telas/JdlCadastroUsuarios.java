@@ -4,6 +4,7 @@ import dao.UsuarioDao;
 import entidades.Config;
 import entidades.Usuario;
 import javax.swing.JOptionPane;
+import static telas.JfrPrincipal.permissaoDao;
 
 public class JdlCadastroUsuarios extends javax.swing.JDialog {
     
@@ -206,6 +207,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                 d.salvar(config);
                 user.setIdconfig(config);
                 d.salvar(user);
+                permissaoDao.setPermissaoDefault(user);
                 JOptionPane.showMessageDialog(this, "Usuário Cadastrado!");
                 txfLogin.setText("");
                 txfSenha.setText("");
