@@ -97,7 +97,12 @@ create table botao(idBotao SERIAL NOT NULL,
 constraint pk_botao PRIMARY KEY (idBotao));
 
 INSERT INTO botao
-VALUES (default,'JfrPrincipal'),
+VALUES (default,'novo'),
+(default,'editar'),
+(default,'excluir'),
+(default,'pesquisar'),
+(default,'clientes'),
+(default,'produtos');
 
 create table tela_botao(idTelaBotao SERIAL NOT NULL,
 					   idTela INT NOT NULL,
