@@ -14,12 +14,12 @@ import javax.swing.JTable;
 public class JfrPrincipal extends javax.swing.JFrame {
     
     public static Usuario user;
-    public static Permissao permissao;
+    public static ArrayList<Permissao> permissao;
     public static PermissaoDao permissaoDao = new PermissaoDao();
     JTable tblPedidos = new JTable();
     ArrayList<JButton> botoes;  
 
-    public JfrPrincipal(Usuario user, Permissao permissao) {
+    public JfrPrincipal(Usuario user, ArrayList<Permissao> permissao) {
         initComponents();
         this.user = user;
         this.permissao = permissao;
@@ -552,7 +552,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Usuario user = null;
-                Permissao permissao = null;
+                ArrayList<Permissao> permissao = null;
                 new JfrPrincipal(user,permissao).setVisible(true);
             }
         });

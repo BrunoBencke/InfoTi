@@ -1,6 +1,7 @@
 package telas;
 
 import dao.ClienteDao;
+import dao.PermissaoDao;
 import entidades.Cliente;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -14,13 +15,13 @@ public class JdlClientes extends javax.swing.JDialog {
     
     ClienteDao cDao = new ClienteDao();
     String botaopressionado = "novo";
-
+    PermissaoDao permissaoDao = new PermissaoDao();
 
     public JdlClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         cDao.populaClientes(tblClientes);  
-        JfrPrincipal.permissaoDao.aplicaPermissao(this, permissao, botoes());
+        permissaoDao.aplicaPermissao(this, permissao, botoes());
     }
 
     @SuppressWarnings("unchecked")

@@ -21,21 +21,13 @@ public class PermissaoDao extends Dao{
     ArrayList<JButton> botoes; 
     Permissao permissao = new Permissao();
     
-    public Permissao retornaPermissao(Usuario c){
+    public ArrayList<Permissao> retornaPermissao(Usuario c){
         Permissao perm = new Permissao();
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             org.hibernate.Query q = sessao.createQuery("from Permissao where idUsuario = '" + c.getIdusuario() + "'");
             resultado = (ArrayList<Permissao>) q.list();
-            int lin = 0;
-            for (int i = 0; i < resultado.size(); i++) {
-                Permissao u = resultado.get(i);
-                if (Objects.equals(u.getIdusuario().getIdusuario(), c.getIdusuario())) {
-                    return u;
-                }
-                lin++;
-            }
-            return null;
+            return resultado;
         } catch (Exception e) {
             System.out.println("Erro ao Localizar Objeto!" + e.toString());
         } finally {
@@ -44,40 +36,43 @@ public class PermissaoDao extends Dao{
         return null;
     }
     
-    public void aplicaPermissao(JDialog tela, Permissao permissao, ArrayList<JButton> botoes){
-        if (permissao.getIdpermissao() == null) {
-            setPermissaoDefault(user);
-        }
-        if ((permissao.getIdbotao().getIdbotao() == 1)) {
-            if (permissao.getSituacao() == true) {
-                botoes.get(0).setEnabled(true);
-            } else {
-                botoes.get(0).setEnabled(false);
+    public void aplicaPermissao(JDialog tela, ArrayList<Permissao> permissao, ArrayList<JButton> botoes) {
+//        if (permissao.getIdpermissao() == null) {
+//            setPermissaoDefault(user);
+//        }
+        for (int i = 0; i < permissao.size(); i++) {
+            Permissao u = permissao.get(i);
+            if ((u.getIdbotao().getIdbotao() == 1)) {
+                if (u.getSituacao() == true) {
+                    botoes.get(0).setEnabled(true);
+                } else {
+                    botoes.get(0).setEnabled(false);
+                }
             }
-        }
-        if ((permissao.getIdbotao().getIdbotao() == 2)) {
-            if (permissao.getSituacao() == true) {
-                botoes.get(1).setEnabled(true);
-            } else {
-                botoes.get(1).setEnabled(false);
+            if ((u.getIdbotao().getIdbotao() == 2)) {
+                if (u.getSituacao() == true) {
+                    botoes.get(1).setEnabled(true);
+                } else {
+                    botoes.get(1).setEnabled(false);
+                }
             }
-        }
-        if ((permissao.getIdbotao().getIdbotao() == 3)) {
-            if (permissao.getSituacao() == true) {
-                botoes.get(2).setEnabled(true);
-            } else {
-                botoes.get(2).setEnabled(false);
+            if ((u.getIdbotao().getIdbotao() == 3)) {
+                if (u.getSituacao() == true) {
+                    botoes.get(2).setEnabled(true);
+                } else {
+                    botoes.get(2).setEnabled(false);
+                }
             }
-        }
-        if ((permissao.getIdbotao().getIdbotao() == 4)) {
-            if (permissao.getSituacao() == true) {
-                botoes.get(3).setEnabled(true);
-            } else {
-                botoes.get(3).setEnabled(false);
+            if ((u.getIdbotao().getIdbotao() == 4)) {
+                if (u.getSituacao() == true) {
+                    botoes.get(3).setEnabled(true);
+                } else {
+                    botoes.get(3).setEnabled(false);
+                }
             }
         }
     }
-    
+
     public void setPermissaoDefault(Usuario usuario){
         try {
             Transaction t = sessao.beginTransaction();
