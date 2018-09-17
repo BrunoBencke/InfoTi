@@ -5842,7 +5842,7 @@ SELECT p.idproduto, p.nome, p.estoque, p.descricao, p.situacao
 
 FROM produto p
 
-ORDER BY c.nome
+ORDER BY p.nome
 ----------------------------------------------------------------------------------------
 CREATE FUNCTION produto_gatilho() RETURNS trigger AS $produto_gatilho$
     BEGIN

@@ -73,3 +73,6 @@ Erro: java.lang.ClassCastException: entidades.Cliente cannot be cast to entidade
 Data: Mon Sep 10 21:54:49 BRT 2018
 Erro: java.lang.ClassCastException: entidades.Cliente cannot be cast to entidades.Venda
 
+Data: Sun Sep 16 14:37:17 BRT 2018
+Erro: org.hibernate.exception.GenericJDBCException: could not extract ResultSet
+
