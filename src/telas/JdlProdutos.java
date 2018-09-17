@@ -1,21 +1,27 @@
 package telas;
 
 import dao.Dao;
+import dao.PermissaoDao;
 import dao.ProdutosDao;
 import entidades.Produto;
+import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import static telas.JfrPrincipal.permissao;
 
 public class JdlProdutos extends javax.swing.JDialog {
 
     ProdutosDao produtosDao = new ProdutosDao();
     Produto produto = new Produto();
     Dao d = new Dao();
+    PermissaoDao permissaoDao = new PermissaoDao();
 
     public JdlProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         String botaopressionado = "novo";
         produtosDao.populaProduto(JtlProdutos);
+        permissaoDao.aplicaPermissao(this, permissao, botoes());
     }
 
     JdlProdutos() {
@@ -23,6 +29,14 @@ public class JdlProdutos extends javax.swing.JDialog {
         String botaopressionado = "novo";
         produtosDao.populaProduto(JtlProdutos);
 
+    }
+    public ArrayList<JButton> botoes(){
+        ArrayList<JButton> botoes = new ArrayList<JButton>();
+        botoes.add(btnNovo);
+        botoes.add(btnEditar);
+        botoes.add(btexcluir);
+        botoes.add(btnBuscar);
+        return botoes;
     }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +51,7 @@ public class JdlProdutos extends javax.swing.JDialog {
         Cadastro1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txfBuscar1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         JtlProdutos = new javax.swing.JTable();
 
@@ -106,7 +120,7 @@ public class JdlProdutos extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel2.setText("Buscar :");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Search.png"))); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Search.png"))); // NOI18N
 
         JtlProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -130,7 +144,7 @@ public class JdlProdutos extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(txfBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -142,7 +156,7 @@ public class JdlProdutos extends javax.swing.JDialog {
                     .addGroup(Cadastro1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txfBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
@@ -263,10 +277,10 @@ public class JdlProdutos extends javax.swing.JDialog {
     private javax.swing.JPanel Cadastro1;
     private javax.swing.JTable JtlProdutos;
     private javax.swing.JButton btexcluir;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField txfBuscar1;

@@ -5,6 +5,7 @@
  */
 package entidades;
 
+import dao.Generica;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -39,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Produto.findByEstoque", query = "SELECT p FROM Produto p WHERE p.estoque = :estoque")
     , @NamedQuery(name = "Produto.findByDescricao", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao")
     , @NamedQuery(name = "Produto.findBySituacao", query = "SELECT p FROM Produto p WHERE p.situacao = :situacao")})
-public class Produto implements Serializable {
+public class Produto implements Serializable, Generica {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduto")
     private List<ProdutoVenda> produtoVendaList;
@@ -174,6 +175,16 @@ public class Produto implements Serializable {
 
     public void setProdutoVendaList(List<ProdutoVenda> produtoVendaList) {
         this.produtoVendaList = produtoVendaList;
+    }
+
+    @Override
+    public int getId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getnome() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

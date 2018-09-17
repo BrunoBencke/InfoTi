@@ -5,6 +5,7 @@
  */
 package entidades;
 
+import dao.Generica;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -35,8 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario")
     , @NamedQuery(name = "Usuario.findByNome", query = "SELECT u FROM Usuario u WHERE u.nome = :nome")
     , @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, Generica {
 
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
     private List<Permissao> permissaoList;
 
@@ -155,6 +157,20 @@ public class Usuario implements Serializable {
 
     public void setPermissaoList(List<Permissao> permissaoList) {
         this.permissaoList = permissaoList;
+    }
+
+    @Override
+    public int getId() {
+
+        return this.getIdusuario();
+
+    }
+
+    @Override
+    public String getnome() {
+        
+        return this.getNome();
+        
     }
     
 }
