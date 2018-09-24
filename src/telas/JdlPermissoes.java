@@ -1,15 +1,18 @@
 package telas;
+import apoio.ComboItens;
 import apoio.CombosDAO;
 import dao.ConfigDao;
+import dao.PermissaoDao;
 
 public class JdlPermissoes extends javax.swing.JDialog {
 
     ConfigDao cDao = new ConfigDao();
+    PermissaoDao permDao = new PermissaoDao();
     
     public JdlPermissoes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-         new CombosDAO().popularCombo("Usuario", JCusuario);
+        new CombosDAO().popularCombo("Usuario", jcbUsuario);
         if (cDao.status_auditoria()) {
             jcbAuditoria.setSelected(true);
         }
@@ -28,30 +31,32 @@ public class JdlPermissoes extends javax.swing.JDialog {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jcbAuditoria = new javax.swing.JCheckBox();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        JProdCasdastro = new javax.swing.JCheckBox();
-        jLabel7 = new javax.swing.JLabel();
-        JProdEditar = new javax.swing.JCheckBox();
-        jLabel8 = new javax.swing.JLabel();
-        JProdExcluir = new javax.swing.JCheckBox();
-        jLabel9 = new javax.swing.JLabel();
-        JProdBuscar = new javax.swing.JCheckBox();
-        canvas2 = new java.awt.Canvas();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jcbTelaClientes = new javax.swing.JCheckBox();
+        jcbTelaProdutos = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        JClientCasdastro = new javax.swing.JCheckBox();
+        jcbClientesCadastrar = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
-        JClientEditar = new javax.swing.JCheckBox();
+        jcbClientesEditar = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
-        JClientExcluir = new javax.swing.JCheckBox();
+        jcbClientesExcluir = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
-        JClientBuscar = new javax.swing.JCheckBox();
-        canvas1 = new java.awt.Canvas();
+        jcbClientesBuscar = new javax.swing.JCheckBox();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jcbProdutosCadastrar = new javax.swing.JCheckBox();
+        jcbProdutosEditar = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jcbProdutosExcluir = new javax.swing.JCheckBox();
+        jcbProdutosBuscar = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
         btnExcluir = new javax.swing.JButton();
         dtnSalvar = new javax.swing.JButton();
-        JCusuario = new javax.swing.JComboBox<>();
+        jcbUsuario = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -59,7 +64,11 @@ public class JdlPermissoes extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jcbAuditoria.setText("Auditoria");
+        jLabel10.setText("Auditoria");
+
+        jLabel11.setText("Tela Clientes");
+
+        jLabel12.setText("Tela Produtos");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -67,153 +76,66 @@ public class JdlPermissoes extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jcbAuditoria)
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbAuditoria)
+                    .addComponent(jcbTelaClientes)
+                    .addComponent(jcbTelaProdutos))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jcbAuditoria)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbAuditoria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbTelaClientes))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbTelaProdutos))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Geral", jPanel4);
 
-        JProdCasdastro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JProdCasdastroActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Editar");
-
-        JProdEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JProdEditarActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setText("Excluir");
-
-        JProdExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JProdExcluirActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setText("Buscar");
-
-        JProdBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JProdBuscarActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Cadastrar");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(JProdEditar)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(JProdBuscar))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(canvas2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JProdExcluir))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                .addGap(76, 76, 76)
-                                .addComponent(JProdCasdastro)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(284, Short.MAX_VALUE))))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JProdCasdastro))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JProdEditar))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(canvas2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JProdExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JProdBuscar))
-                .addContainerGap(65, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 20, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Produtos", jPanel3);
-
         jLabel1.setText("Cadastrar");
 
-        JClientCasdastro.addActionListener(new java.awt.event.ActionListener() {
+        jcbClientesCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JClientCasdastroActionPerformed(evt);
+                jcbClientesCadastrarActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Editar");
 
-        JClientEditar.addActionListener(new java.awt.event.ActionListener() {
+        jcbClientesEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JClientEditarActionPerformed(evt);
+                jcbClientesEditarActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Excluir");
 
-        JClientExcluir.addActionListener(new java.awt.event.ActionListener() {
+        jcbClientesExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JClientExcluirActionPerformed(evt);
+                jcbClientesExcluirActionPerformed(evt);
             }
         });
 
         jLabel6.setText("Buscar");
 
-        JClientBuscar.addActionListener(new java.awt.event.ActionListener() {
+        jcbClientesBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JClientBuscarActionPerformed(evt);
+                jcbClientesBuscarActionPerformed(evt);
             }
         });
 
@@ -223,47 +145,129 @@ public class JdlPermissoes extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JClientCasdastro)
-                    .addComponent(JClientEditar)
-                    .addComponent(JClientBuscar)
-                    .addComponent(JClientExcluir))
-                .addContainerGap())
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jcbClientesBuscar))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jcbClientesExcluir))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jcbClientesEditar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jcbClientesCadastrar)))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(56, 56, 56)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JClientCasdastro))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JClientEditar))
+                    .addComponent(jcbClientesCadastrar)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JClientExcluir))
+                    .addComponent(jcbClientesEditar)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbClientesExcluir)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JClientBuscar))
-                .addContainerGap(80, Short.MAX_VALUE))
+                    .addComponent(jcbClientesBuscar)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Clientes", jPanel2);
+
+        jLabel4.setText("Cadastrar");
+
+        jcbProdutosCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProdutosCadastrarActionPerformed(evt);
+            }
+        });
+
+        jcbProdutosEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProdutosEditarActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Editar");
+
+        jLabel8.setText("Excluir");
+
+        jcbProdutosExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProdutosExcluirActionPerformed(evt);
+            }
+        });
+
+        jcbProdutosBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProdutosBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Buscar");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jcbProdutosBuscar))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jcbProdutosExcluir))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jcbProdutosEditar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jcbProdutosCadastrar)))
+                .addContainerGap(288, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(60, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbProdutosCadastrar)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbProdutosEditar)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbProdutosExcluir)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbProdutosBuscar)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39))
+        );
+
+        jTabbedPane1.addTab("Produtos", jPanel3);
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -288,6 +292,9 @@ public class JdlPermissoes extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTabbedPane1)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(dtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -297,16 +304,15 @@ public class JdlPermissoes extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addComponent(JCusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTabbedPane1)))
+                        .addComponent(jcbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JCusuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,52 +344,76 @@ public class JdlPermissoes extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JClientCasdastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JClientCasdastroActionPerformed
+    private void jcbClientesCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbClientesCadastrarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JClientCasdastroActionPerformed
+    }//GEN-LAST:event_jcbClientesCadastrarActionPerformed
 
-    private void JClientEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JClientEditarActionPerformed
+    private void jcbClientesEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbClientesEditarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JClientEditarActionPerformed
+    }//GEN-LAST:event_jcbClientesEditarActionPerformed
 
-    private void JClientExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JClientExcluirActionPerformed
+    private void jcbClientesExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbClientesExcluirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JClientExcluirActionPerformed
+    }//GEN-LAST:event_jcbClientesExcluirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void dtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtnSalvarActionPerformed
+        ComboItens item = (ComboItens) jcbUsuario.getSelectedItem();
         if (jcbAuditoria.isSelected()) {
-            System.out.println("entrou para setar 1");
             cDao.setar_status_auditoria(1);
         } else {
-            System.out.println("entrou para setar 0");
             cDao.setar_status_auditoria(0);
+        }
+        if (jcbTelaClientes.isSelected()) {            
+            permDao.setar_status_permissao(1, 10, 5, item.getCodigo());
+        } else {
+            permDao.setar_status_permissao(0, 10, 5, item.getCodigo());
+        }       
+        if (jcbTelaProdutos.isSelected()) {
+            permDao.setar_status_permissao(1, 1, 6, item.getCodigo());
+        } else {
+            permDao.setar_status_permissao(0, 1, 6, item.getCodigo());
+        }
+        if (jcbClientesCadastrar.isSelected()) {
+            permDao.setar_status_permissao(1, 10, 1, item.getCodigo());
+        } else {
+            permDao.setar_status_permissao(0, 10, 1, item.getCodigo());
+        }
+        if (jcbClientesEditar.isSelected()) {
+            permDao.setar_status_permissao(1, 10, 2, item.getCodigo());
+        } else {
+            permDao.setar_status_permissao(0, 10, 2, item.getCodigo());
+        }
+        if (jcbClientesExcluir.isSelected()) {
+            permDao.setar_status_permissao(1, 10, 3, item.getCodigo());
+        } else {
+            permDao.setar_status_permissao(0, 10, 3, item.getCodigo());
         }
         this.dispose();
     }//GEN-LAST:event_dtnSalvarActionPerformed
 
-    private void JClientBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JClientBuscarActionPerformed
+    private void jcbClientesBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbClientesBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JClientBuscarActionPerformed
+    }//GEN-LAST:event_jcbClientesBuscarActionPerformed
 
-    private void JProdCasdastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JProdCasdastroActionPerformed
+    private void jcbProdutosCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProdutosCadastrarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JProdCasdastroActionPerformed
+    }//GEN-LAST:event_jcbProdutosCadastrarActionPerformed
 
-    private void JProdEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JProdEditarActionPerformed
+    private void jcbProdutosEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProdutosEditarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JProdEditarActionPerformed
+    }//GEN-LAST:event_jcbProdutosEditarActionPerformed
 
-    private void JProdExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JProdExcluirActionPerformed
+    private void jcbProdutosExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProdutosExcluirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JProdExcluirActionPerformed
+    }//GEN-LAST:event_jcbProdutosExcluirActionPerformed
 
-    private void JProdBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JProdBuscarActionPerformed
+    private void jcbProdutosBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProdutosBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JProdBuscarActionPerformed
+    }//GEN-LAST:event_jcbProdutosBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -428,20 +458,12 @@ public class JdlPermissoes extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox JClientBuscar;
-    private javax.swing.JCheckBox JClientCasdastro;
-    private javax.swing.JCheckBox JClientEditar;
-    private javax.swing.JCheckBox JClientExcluir;
-    private javax.swing.JComboBox<String> JCusuario;
-    private javax.swing.JCheckBox JProdBuscar;
-    private javax.swing.JCheckBox JProdCasdastro;
-    private javax.swing.JCheckBox JProdEditar;
-    private javax.swing.JCheckBox JProdExcluir;
     private javax.swing.JButton btnExcluir;
-    private java.awt.Canvas canvas1;
-    private java.awt.Canvas canvas2;
     private javax.swing.JButton dtnSalvar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -454,8 +476,18 @@ public class JdlPermissoes extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JCheckBox jcbAuditoria;
+    private javax.swing.JCheckBox jcbClientesBuscar;
+    private javax.swing.JCheckBox jcbClientesCadastrar;
+    private javax.swing.JCheckBox jcbClientesEditar;
+    private javax.swing.JCheckBox jcbClientesExcluir;
+    private javax.swing.JCheckBox jcbProdutosBuscar;
+    private javax.swing.JCheckBox jcbProdutosCadastrar;
+    private javax.swing.JCheckBox jcbProdutosEditar;
+    private javax.swing.JCheckBox jcbProdutosExcluir;
+    private javax.swing.JCheckBox jcbTelaClientes;
+    private javax.swing.JCheckBox jcbTelaProdutos;
+    private javax.swing.JComboBox<String> jcbUsuario;
     // End of variables declaration//GEN-END:variables
 }

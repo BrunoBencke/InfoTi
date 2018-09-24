@@ -21,7 +21,7 @@ public class JdlClientes extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         cDao.populaClientes(tblClientes);  
-        permissaoDao.aplicaPermissao(this, permissao, botoes());
+        permissaoDao.aplicaPermissao(this, permissao, botoes(),10);
     }
 
     @SuppressWarnings("unchecked")

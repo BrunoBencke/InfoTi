@@ -38,7 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
 public class Usuario implements Serializable, Generica {
 
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
     private List<Permissao> permissaoList;
 
@@ -161,16 +160,11 @@ public class Usuario implements Serializable, Generica {
 
     @Override
     public int getId() {
-
         return this.getIdusuario();
-
     }
 
     @Override
     public String getnome() {
-        
         return this.getNome();
-        
-    }
-    
+    }    
 }

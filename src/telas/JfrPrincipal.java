@@ -1,5 +1,4 @@
 package telas;
-import dao.AuditoriaDao;
 import dao.PermissaoDao;
 import entidades.Permissao;
 import entidades.Usuario;
@@ -8,6 +7,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -17,12 +17,20 @@ public class JfrPrincipal extends javax.swing.JFrame {
     public static ArrayList<Permissao> permissao;
     public static PermissaoDao permissaoDao = new PermissaoDao();
     JTable tblPedidos = new JTable();
-    ArrayList<JButton> botoes;  
+    ArrayList<JButton> botoes;
 
     public JfrPrincipal(Usuario user, ArrayList<Permissao> permissao) {
         initComponents();
         this.user = user;
         this.permissao = permissao;
+        permissaoDao.aplicaPermissaoTelaPrincipal(this, permissao, itensMenu());
+    }
+    
+    public ArrayList<JMenuItem> itensMenu() {
+        ArrayList<JMenuItem> menus = new ArrayList<JMenuItem>();
+        menus.add(clientes);
+        menus.add(produtos);
+        return menus;
     }
 
     @SuppressWarnings("unchecked")
@@ -402,7 +410,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_pedidosActionPerformed
 
     private void clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesActionPerformed
-        JdlClientes clientes = new JdlClientes(this, false);
+        JdlClientes clientes = new JdlClientes(this, false);        
         clientes.setVisible(true);
     }//GEN-LAST:event_clientesActionPerformed
 

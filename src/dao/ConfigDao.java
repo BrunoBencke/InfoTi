@@ -34,11 +34,11 @@ public class ConfigDao{
         }       
         return false;
     }
-    
-        public void setar_status_auditoria(int status) {          
-            try {
+
+    public void setar_status_auditoria(int status) {
+        try {
             sessao = HibernateUtil.getSessionFactory().openSession();
-            Transaction t = sessao.beginTransaction();            
+            Transaction t = sessao.beginTransaction();
             org.hibernate.Query q = sessao.createQuery("from Config");
             List lista = q.list();
             Config a = (Config) lista.get(0);
@@ -60,12 +60,12 @@ public class ConfigDao{
                 auditoria.setOperacao("Update");
                 sessao.save(auditoria);
                 sessao.saveOrUpdate(a);
-            } 
+            }
             t.commit();
         } catch (HibernateException he) {
             he.printStackTrace();
         } finally {
             sessao.close();
-        }       
+        }
     }
 }

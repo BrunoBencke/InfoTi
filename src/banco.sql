@@ -99,7 +99,9 @@ INSERT INTO botao
 VALUES (default,'novo'),
 (default,'editar'),
 (default,'excluir'),
-(default,'pesquisar');
+(default,'pesquisar'),
+(default,'telaClientes'),
+(default,'telaProdutos');
 
 create table tela_botao(idTelaBotao SERIAL NOT NULL,
 					   idTela INT NOT NULL,
@@ -5842,7 +5844,7 @@ SELECT p.idproduto, p.nome, p.estoque, p.descricao, p.situacao
 
 FROM produto p
 
-ORDER BY p.nome
+ORDER BY c.nome
 ----------------------------------------------------------------------------------------
 CREATE FUNCTION produto_gatilho() RETURNS trigger AS $produto_gatilho$
     BEGIN
