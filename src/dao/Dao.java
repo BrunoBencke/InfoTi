@@ -31,7 +31,8 @@ public class Dao<T> {
             if (config.status_auditoria()) {
                 auditoria.setDadoAnterior("Novo Cadastro");
                 auditoria.setDadoNovo(object.toString());
-                auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
+                auditoria.setData(calendario.obterDataAtualDMA());
+                auditoria.setHora(calendario.obterHoraAtual());
                 auditoria.setIdusuario(user);
                 auditoria.setOperacao("Insert");                
                 sessao.save(auditoria);
@@ -53,7 +54,8 @@ public class Dao<T> {
             if (config.status_auditoria()) {
                 auditoria.setDadoAnterior(dado_anterior);
                 auditoria.setDadoNovo(object.toString());
-                auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
+                auditoria.setData(calendario.obterDataAtualDMA());
+                auditoria.setHora(calendario.obterHoraAtual());
                 auditoria.setIdusuario(user);
                 auditoria.setOperacao("Update");
                 sessao.save(auditoria);
@@ -75,7 +77,8 @@ public class Dao<T> {
             if (config.status_auditoria()) {
                 auditoria.setDadoAnterior(dado_anterior);
                 auditoria.setDadoNovo("Delete");
-                auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
+                auditoria.setData(calendario.obterDataAtualDMA());
+                auditoria.setHora(calendario.obterHoraAtual());
                 auditoria.setIdusuario(user);
                 auditoria.setOperacao("Delete");
                 sessao.save(auditoria);

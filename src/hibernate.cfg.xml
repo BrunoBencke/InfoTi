@@ -71,5 +71,6 @@ Contributor(s):
     <mapping class="entidades.Permissao"/>
     <mapping class="entidades.Tela"/>
     <mapping class="entidades.TelaBotao"/>
+    <mapping class="entidades.Arquivada"/>
   </session-factory>
 </hibernate-configuration>

@@ -60,6 +60,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         relatorioPedidos = new javax.swing.JMenu();
         miAllOrders = new javax.swing.JMenuItem();
         miOrdersPeriod = new javax.swing.JMenuItem();
+        auditoria = new javax.swing.JMenuItem();
         sistema = new javax.swing.JMenu();
         usuario = new javax.swing.JMenuItem();
         desconectar = new javax.swing.JMenuItem();
@@ -212,7 +213,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
         fianceiro.add(contasReceber);
 
         jMenuItem2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jMenuItem2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\iNFO-Ti\\InfoTi\\src\\icones\\Payment.png")); // NOI18N
         jMenuItem2.setText("Contas a Pagar");
         jMenuItem2.setPreferredSize(new java.awt.Dimension(200, 50));
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -231,6 +231,11 @@ public class JfrPrincipal extends javax.swing.JFrame {
         relatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         relatorios.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         relatorios.setPreferredSize(new java.awt.Dimension(170, 50));
+        relatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                relatoriosActionPerformed(evt);
+            }
+        });
 
         relatorioClientes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         relatorioClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Client.png"))); // NOI18N
@@ -318,6 +323,18 @@ public class JfrPrincipal extends javax.swing.JFrame {
         relatorioPedidos.add(miOrdersPeriod);
 
         relatorios.add(relatorioPedidos);
+
+        auditoria.setBackground(new java.awt.Color(255, 255, 255));
+        auditoria.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        auditoria.setText("Auditoria");
+        auditoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        auditoria.setPreferredSize(new java.awt.Dimension(200, 50));
+        auditoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                auditoriaActionPerformed(evt);
+            }
+        });
+        relatorios.add(auditoria);
 
         menu.add(relatorios);
 
@@ -503,10 +520,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_marcasProdutosActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-
         JdlFormaPagamento formaPagamento = new JdlFormaPagamento(this, false);
         formaPagamento.setVisible(true);
-
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configActionPerformed
@@ -525,6 +540,15 @@ public class JfrPrincipal extends javax.swing.JFrame {
         JdlPedidos pedidos = new JdlPedidos(this, false);
         pedidos.setVisible(true);
     }//GEN-LAST:event_todosPedidosActionPerformed
+
+    private void auditoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_auditoriaActionPerformed
+        JdlAuditoria auditoria = new JdlAuditoria(this, false);
+        auditoria.setVisible(true);
+    }//GEN-LAST:event_auditoriaActionPerformed
+
+    private void relatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatoriosActionPerformed
+
+    }//GEN-LAST:event_relatoriosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -568,6 +592,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu adicionais;
+    private javax.swing.JMenuItem auditoria;
     private javax.swing.JMenuItem clientes;
     private javax.swing.JMenuItem config;
     private javax.swing.JMenuItem contasReceber;

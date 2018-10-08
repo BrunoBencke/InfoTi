@@ -124,12 +124,26 @@ constraint fk_id_botao FOREIGN KEY (idBotao) REFERENCES botao);
 
 create table auditoria(idAuditoria SERIAL NOT NULL,
                        		  idUsuario INT NOT NULL,
-                       		  data_hora VARCHAR(45),
+                       		  data VARCHAR(45),
+							  hora VARCHAR(45),
                        		  dado_anterior VARCHAR(500),
 							  dado_novo VARCHAR(500),
 							  operacao VARCHAR(45),
 constraint pk_auditoria PRIMARY KEY (idAuditoria),
 constraint fk_idAuditoria FOREIGN KEY (idUsuario) REFERENCES usuario);
+
+create table arquivada(idArquivada SERIAL NOT NULL,
+                       		  idAuditoria INT NOT NULL,
+							  idUsuario INT NOT NULL,
+                       		  data VARCHAR(45),
+							  hora VARCHAR(45),
+                       		  dado_anterior VARCHAR(500),
+							  dado_novo VARCHAR(500),
+							  operacao VARCHAR(45),
+constraint pk_arquivada PRIMARY KEY (idArquivada),
+constraint fk_idAuditoria FOREIGN KEY (idAuditoria) REFERENCES auditoria,
+constraint fk_idUsuario FOREIGN KEY (idUsuario) REFERENCES usuario);
+
 
 create table funcionario(idFuncionario SERIAL NOT NULL,
                        		  CTPS VARCHAR(20) NOT NULL,

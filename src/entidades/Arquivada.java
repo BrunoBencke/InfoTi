@@ -24,24 +24,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author atendimento
  */
 @Entity
-@Table(name = "auditoria")
+@Table(name = "arquivada")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Auditoria.findAll", query = "SELECT a FROM Auditoria a")
-    , @NamedQuery(name = "Auditoria.findByIdauditoria", query = "SELECT a FROM Auditoria a WHERE a.idauditoria = :idauditoria")
-    , @NamedQuery(name = "Auditoria.findByData", query = "SELECT a FROM Auditoria a WHERE a.data = :data")
-    , @NamedQuery(name = "Auditoria.findByHora", query = "SELECT a FROM Auditoria a WHERE a.hora = :hora")
-    , @NamedQuery(name = "Auditoria.findByDadoAnterior", query = "SELECT a FROM Auditoria a WHERE a.dadoAnterior = :dadoAnterior")
-    , @NamedQuery(name = "Auditoria.findByDadoNovo", query = "SELECT a FROM Auditoria a WHERE a.dadoNovo = :dadoNovo")
-    , @NamedQuery(name = "Auditoria.findByOperacao", query = "SELECT a FROM Auditoria a WHERE a.operacao = :operacao")})
-public class Auditoria implements Serializable {
+    @NamedQuery(name = "Arquivada.findAll", query = "SELECT a FROM Arquivada a")
+    , @NamedQuery(name = "Arquivada.findByIdarquivada", query = "SELECT a FROM Arquivada a WHERE a.idarquivada = :idarquivada")
+    , @NamedQuery(name = "Arquivada.findByData", query = "SELECT a FROM Arquivada a WHERE a.data = :data")
+    , @NamedQuery(name = "Arquivada.findByHora", query = "SELECT a FROM Arquivada a WHERE a.hora = :hora")
+    , @NamedQuery(name = "Arquivada.findByDadoAnterior", query = "SELECT a FROM Arquivada a WHERE a.dadoAnterior = :dadoAnterior")
+    , @NamedQuery(name = "Arquivada.findByDadoNovo", query = "SELECT a FROM Arquivada a WHERE a.dadoNovo = :dadoNovo")
+    , @NamedQuery(name = "Arquivada.findByOperacao", query = "SELECT a FROM Arquivada a WHERE a.operacao = :operacao")})
+public class Arquivada implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idauditoria")
-    private Integer idauditoria;
+    @Column(name = "idarquivada")
+    private Integer idarquivada;
     @Column(name = "data")
     private String data;
     @Column(name = "hora")
@@ -52,23 +52,26 @@ public class Auditoria implements Serializable {
     private String dadoNovo;
     @Column(name = "operacao")
     private String operacao;
+    @JoinColumn(name = "idauditoria", referencedColumnName = "idauditoria")
+    @ManyToOne(optional = false)
+    private Auditoria idauditoria;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario idusuario;
 
-    public Auditoria() {
+    public Arquivada() {
     }
 
-    public Auditoria(Integer idauditoria) {
-        this.idauditoria = idauditoria;
+    public Arquivada(Integer idarquivada) {
+        this.idarquivada = idarquivada;
     }
 
-    public Integer getIdauditoria() {
-        return idauditoria;
+    public Integer getIdarquivada() {
+        return idarquivada;
     }
 
-    public void setIdauditoria(Integer idauditoria) {
-        this.idauditoria = idauditoria;
+    public void setIdarquivada(Integer idarquivada) {
+        this.idarquivada = idarquivada;
     }
 
     public String getData() {
@@ -111,6 +114,14 @@ public class Auditoria implements Serializable {
         this.operacao = operacao;
     }
 
+    public Auditoria getIdauditoria() {
+        return idauditoria;
+    }
+
+    public void setIdauditoria(Auditoria idauditoria) {
+        this.idauditoria = idauditoria;
+    }
+
     public Usuario getIdusuario() {
         return idusuario;
     }
@@ -122,18 +133,18 @@ public class Auditoria implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idauditoria != null ? idauditoria.hashCode() : 0);
+        hash += (idarquivada != null ? idarquivada.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Auditoria)) {
+        if (!(object instanceof Arquivada)) {
             return false;
         }
-        Auditoria other = (Auditoria) object;
-        if ((this.idauditoria == null && other.idauditoria != null) || (this.idauditoria != null && !this.idauditoria.equals(other.idauditoria))) {
+        Arquivada other = (Arquivada) object;
+        if ((this.idarquivada == null && other.idarquivada != null) || (this.idarquivada != null && !this.idarquivada.equals(other.idarquivada))) {
             return false;
         }
         return true;
@@ -141,7 +152,7 @@ public class Auditoria implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Auditoria[ idauditoria=" + idauditoria + " ]";
+        return "entidades.Arquivada[ idarquivada=" + idarquivada + " ]";
     }
     
 }

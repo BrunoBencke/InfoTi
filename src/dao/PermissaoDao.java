@@ -127,7 +127,8 @@ public class PermissaoDao extends Dao{
             if (config.status_auditoria()) {
                 auditoria.setDadoAnterior("Setadas Permissões Default");
                 auditoria.setDadoNovo("Para o Usuário: "+usuario.toString());
-                auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
+                auditoria.setData(calendario.obterDataAtualDMA());
+                auditoria.setHora(calendario.obterHoraAtual());
                 auditoria.setIdusuario(user);
                 auditoria.setOperacao("Insert");
                 sessao.save(auditoria);

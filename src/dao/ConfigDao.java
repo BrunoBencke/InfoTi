@@ -46,7 +46,8 @@ public class ConfigDao{
                 a.setAuditoria(1);
                 auditoria.setDadoAnterior("Auditoria Desligada");
                 auditoria.setDadoNovo("Auditoria Ligada");
-                auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
+                auditoria.setData(calendario.obterDataAtualDMA());
+                auditoria.setHora(calendario.obterHoraAtual());
                 auditoria.setIdusuario(user);
                 auditoria.setOperacao("Update");
                 sessao.save(auditoria);
@@ -55,7 +56,8 @@ public class ConfigDao{
                 a.setAuditoria(0);
                 auditoria.setDadoAnterior("Auditoria Ligada");
                 auditoria.setDadoNovo("Auditoria Desligada");
-                auditoria.setDataHora(calendario.obterDataAtualDMA() + " " + calendario.obterHoraAtual());
+                auditoria.setData(calendario.obterDataAtualDMA());
+                auditoria.setHora(calendario.obterHoraAtual());
                 auditoria.setIdusuario(user);
                 auditoria.setOperacao("Update");
                 sessao.save(auditoria);

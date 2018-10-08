@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Usuario implements Serializable, Generica {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
+    private List<Arquivada> arquivadaList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
     private List<Permissao> permissaoList;
 
     private static final long serialVersionUID = 1L;
@@ -167,4 +170,13 @@ public class Usuario implements Serializable, Generica {
     public String getnome() {
         return this.getNome();
     }    
+
+    @XmlTransient
+    public List<Arquivada> getArquivadaList() {
+        return arquivadaList;
+    }
+
+    public void setArquivadaList(List<Arquivada> arquivadaList) {
+        this.arquivadaList = arquivadaList;
+    }
 }
