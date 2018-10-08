@@ -5904,3 +5904,83 @@ WHERE pj.idcliente = c.idcliente
 
 ORDER BY c.nome
 ----------------------------------------------------------------------------------------------
+CREATE FUNCTION produto_estoque_gatilho() RETURNS trigger AS $produto_estoque_gatilho$
+    BEGIN
+        IF NEW.estoque IS NULL THEN
+            RAISE EXCEPTION 'O estoque do produto não pode ser nulo';
+        END IF;
+        IF NEW.estoque >= 1  THEN
+            RAISE EXCEPTION '% o estoque do produto está baixo', NEW.estoque;
+        END IF;
+        
+		IF NEW.estoque < 0 THEN
+            RAISE EXCEPTION '% não pode ter um valor negativo', NEW.estoque;
+        END IF;
+        
+		RETURN NEW;
+    END;
+  $produto_estoque_gatilho$ LANGUAGE plpgsql;
+
+ CREATE TRIGGER produto_estoque_gatilho BEFORE INSERT OR UPDATE ON produto
+    FOR EACH ROW EXECUTE PROCEDURE produto_estoque_gatilho();
+-----------------------------------------------------------------------------------------------------
+CREATE FUNCTION venda_gatilho() RETURNS trigger AS $venda_gatilho$
+    BEGIN
+        IF NEW.valor_total IS NULL THEN
+            RAISE EXCEPTION 'o valor total da venda não pode ser nulo';
+        END IF;
+        IF NEW.data IS NULL THEN
+            RAISE EXCEPTION '% a data da venda não pode ser nula', NEW.data;
+        END IF;
+        
+		IF NEW.valor_total < 0 THEN
+            RAISE EXCEPTION '% o valor da venda não pode ser negativo', NEW.valor_total;
+        END IF;
+        
+		RETURN NEW;
+    END;
+  $venda_gatilho$ LANGUAGE plpgsql;
+
+ CREATE TRIGGER venda_gatilho BEFORE INSERT OR UPDATE ON venda
+    FOR EACH ROW EXECUTE PROCEDURE venda_gatilho();
+-------------------------------------------------------------------------------------------------------------
+CREATE FUNCTION conta_pagar_gatilho() RETURNS trigger AS $conta_pagar_gatilho$
+    BEGIN
+        IF NEW.valor IS NULL THEN
+            RAISE EXCEPTION 'o valor não pode ser nulo';
+        END IF;
+        IF NEW.data_vencimento IS NULL THEN
+            RAISE EXCEPTION '% a data de vencimento não pode ser nula', NEW.data_vencimento;
+        END IF;
+        
+		IF NEW.valorpago < 0 THEN
+            RAISE EXCEPTION '% o valor pago deve não pode ser negativo', NEW.valorpago;
+        END IF;
+        
+		RETURN NEW;
+    END;
+  $conta_pagar_gatilho$ LANGUAGE plpgsql;
+
+ CREATE TRIGGER conta_pagar_gatilho BEFORE INSERT OR UPDATE ON conta_pagar
+    FOR EACH ROW EXECUTE PROCEDURE conta_pagar_gatilho();
+-----------------------------------------------------------------------------------------------------------
+CREATE VIEW v_conta_pagar
+(cidconta_pagar, cnome, cvalor, cvalorpago,cdata_vencimento,data_pagamento, csituacao)
+AS
+SELECT cp.idconta_pagar, cp.nome, cp.valor, cp.valorpago, cp.data_vencimento, cp.data_pagamento, cp.situacao
+
+FROM conta_pagar cp
+
+ORDER BY cp.nome
+------------------------------------------------------------------------------------------------------------
+CREATE VIEW v_venda
+(cidvenda,cnome,cvalor_total,cdata,cunome)
+AS
+SELECT v.idvenda, c.nome, v.valor_total, v.data, u.nome
+
+FROM venda v, usuario u, cliente c
+
+WHERE v.idcliente = c.idcliente AND v.idusuario = u.idusuario
+
+ORDER BY v.idvenda
+--------------------------------------------------------------------------------------------------
