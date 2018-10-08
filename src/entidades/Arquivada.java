@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author atendimento
+ * @author bruno.bencke
  */
 @Entity
 @Table(name = "arquivada")
@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Arquivada.findAll", query = "SELECT a FROM Arquivada a")
     , @NamedQuery(name = "Arquivada.findByIdarquivada", query = "SELECT a FROM Arquivada a WHERE a.idarquivada = :idarquivada")
+    , @NamedQuery(name = "Arquivada.findByIdauditoria", query = "SELECT a FROM Arquivada a WHERE a.idauditoria = :idauditoria")
     , @NamedQuery(name = "Arquivada.findByData", query = "SELECT a FROM Arquivada a WHERE a.data = :data")
     , @NamedQuery(name = "Arquivada.findByHora", query = "SELECT a FROM Arquivada a WHERE a.hora = :hora")
     , @NamedQuery(name = "Arquivada.findByDadoAnterior", query = "SELECT a FROM Arquivada a WHERE a.dadoAnterior = :dadoAnterior")
@@ -42,6 +43,9 @@ public class Arquivada implements Serializable {
     @Basic(optional = false)
     @Column(name = "idarquivada")
     private Integer idarquivada;
+    @Basic(optional = false)
+    @Column(name = "idauditoria")
+    private int idauditoria;
     @Column(name = "data")
     private String data;
     @Column(name = "hora")
@@ -52,9 +56,6 @@ public class Arquivada implements Serializable {
     private String dadoNovo;
     @Column(name = "operacao")
     private String operacao;
-    @JoinColumn(name = "idauditoria", referencedColumnName = "idauditoria")
-    @ManyToOne(optional = false)
-    private Auditoria idauditoria;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario idusuario;
@@ -66,12 +67,25 @@ public class Arquivada implements Serializable {
         this.idarquivada = idarquivada;
     }
 
+    public Arquivada(Integer idarquivada, int idauditoria) {
+        this.idarquivada = idarquivada;
+        this.idauditoria = idauditoria;
+    }
+
     public Integer getIdarquivada() {
         return idarquivada;
     }
 
     public void setIdarquivada(Integer idarquivada) {
         this.idarquivada = idarquivada;
+    }
+
+    public int getIdauditoria() {
+        return idauditoria;
+    }
+
+    public void setIdauditoria(int idauditoria) {
+        this.idauditoria = idauditoria;
     }
 
     public String getData() {
@@ -112,14 +126,6 @@ public class Arquivada implements Serializable {
 
     public void setOperacao(String operacao) {
         this.operacao = operacao;
-    }
-
-    public Auditoria getIdauditoria() {
-        return idauditoria;
-    }
-
-    public void setIdauditoria(Auditoria idauditoria) {
-        this.idauditoria = idauditoria;
     }
 
     public Usuario getIdusuario() {

@@ -141,9 +141,7 @@ create table arquivada(idArquivada SERIAL NOT NULL,
 							  dado_novo VARCHAR(500),
 							  operacao VARCHAR(45),
 constraint pk_arquivada PRIMARY KEY (idArquivada),
-constraint fk_idAuditoria FOREIGN KEY (idAuditoria) REFERENCES auditoria,
 constraint fk_idUsuario FOREIGN KEY (idUsuario) REFERENCES usuario);
-
 
 create table funcionario(idFuncionario SERIAL NOT NULL,
                        		  CTPS VARCHAR(20) NOT NULL,

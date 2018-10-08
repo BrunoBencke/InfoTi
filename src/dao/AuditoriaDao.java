@@ -1,6 +1,7 @@
 package dao;
 
 import apoio.HibernateUtil;
+import entidades.Arquivada;
 import entidades.Auditoria;
 import entidades.Usuario;
 import java.util.ArrayList;
@@ -14,6 +15,43 @@ import org.hibernate.transform.Transformers;
 public class AuditoriaDao extends Dao {
     
     UsuarioDao uDao = new UsuarioDao();
+    Dao dao = new Dao();
+    
+    public void arquivarAuditoria(JTable tblAuditoria, String dataInicial, String dataFinal) {
+         try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query q = sessao.createSQLQuery("SELECT * FROM Auditoria WHERE data >= '" + dataInicial + "' AND data <= '"+ dataFinal+"'");
+            //q.setResultTransformer(Transformers.aliasToBean(Auditoria.class));
+
+            List<Object[]> objs = q.list();
+            //List<Auditoria> relList = new ArrayList<Auditoria>();
+            for (Object[] o : objs) {
+                Object[] aux = o;
+                Auditoria r = new Auditoria();
+                r.setIdauditoria((Integer) aux[0]);
+                Usuario u = uDao.procurarPorId((Integer)aux[1]);
+                r.setIdusuario(u) ;
+                r.setData((String) aux[2]);
+                r.setHora((String) aux[3]);
+                r.setDadoAnterior((String) aux[4]);
+                r.setDadoNovo((String) aux[5]);
+                r.setOperacao((String) aux[6]);
+                Arquivada arq = new Arquivada();
+                arq.setIdauditoria(r.getIdauditoria());
+                arq.setIdusuario(r.getIdusuario());
+                arq.setData(r.getData());
+                arq.setHora(r.getHora());
+                arq.setDadoAnterior(r.getDadoAnterior());
+                arq.setDadoNovo(r.getDadoNovo());
+                arq.setOperacao(r.getOperacao());
+                dao.salvar_semAuditoria(arq);
+                dao.excluirSemAuditoria(r);
+            }
+            } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+    }
+    
 
     public void populaAuditoriaData(JTable tblAuditoria, String dataInicial, String dataFinal) {
         try {

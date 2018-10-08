@@ -219,7 +219,8 @@ public class JdlAuditoria extends javax.swing.JDialog {
     }//GEN-LAST:event_txfDataInicialKeyPressed
 
     private void btnArquivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivarActionPerformed
-
+        aDao.arquivarAuditoria(tblAuditoria,txfDataInicial.getText(),txfDataFinal.getText());
+        aDao.populaAuditoria(tblAuditoria);
     }//GEN-LAST:event_btnArquivarActionPerformed
 
     /**

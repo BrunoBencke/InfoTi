@@ -46,6 +46,20 @@ public class Dao<T> {
         }
         return null;
     }
+    
+    public T salvar_semAuditoria(T object) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Transaction t = sessao.beginTransaction();
+            sessao.save(object);
+            t.commit();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return null;
+    }
 
     public T atualizar(T object, String dado_anterior) {
         sessao = HibernateUtil.getSessionFactory().openSession();
@@ -83,6 +97,21 @@ public class Dao<T> {
                 auditoria.setOperacao("Delete");
                 sessao.save(auditoria);
             }
+            sessao.delete(object);
+            t.commit();
+            return object;
+        } catch (Exception e) {
+            System.out.println("Erro ao Excluir Registro!" + e.toString());
+        } finally {
+            sessao.close();
+        }
+        return null;
+    }
+    
+    public T excluirSemAuditoria(T object) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Transaction t = sessao.beginTransaction();
             sessao.delete(object);
             t.commit();
             return object;
