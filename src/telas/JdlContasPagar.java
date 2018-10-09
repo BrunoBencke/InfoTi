@@ -6,15 +6,25 @@
 package telas;
 
 import apoio.Calendario;
+import com.mchange.io.FileUtils;
+import dao.ArquivoDao;
 import dao.ContaPagarDao;
 import dao.Dao;
+import entidades.Arquivo;
 import entidades.Cliente;
 import entidades.ContaPagar;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import org.postgresql.core.Oid;
 
 /**
  *
@@ -23,9 +33,12 @@ import javax.swing.JOptionPane;
 public class JdlContasPagar extends javax.swing.JDialog {
 
     ContaPagar contaPagar = new ContaPagar();
+    ArquivoDao arqDao = new ArquivoDao();
     ContaPagarDao contaPagarDao = new ContaPagarDao();
     Dao d = new Dao();
     String botaopressionado = "novo";
+    File arquivo;
+    private JTextField filename = new JTextField(), dir = new JTextField();
 
     public JdlContasPagar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -47,6 +60,8 @@ public class JdlContasPagar extends javax.swing.JDialog {
         btnEditar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btexcluir = new javax.swing.JButton();
+        btnAnexar = new javax.swing.JButton();
+        btnBaixar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txfBuscar1 = new javax.swing.JTextField();
         Btnbuscar = new javax.swing.JButton();
@@ -87,6 +102,20 @@ public class JdlContasPagar extends javax.swing.JDialog {
             }
         });
 
+        btnAnexar.setText("Anexar");
+        btnAnexar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnexarActionPerformed(evt);
+            }
+        });
+
+        btnBaixar.setText("Baixar");
+        btnBaixar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBaixarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout BotoesLayout = new javax.swing.GroupLayout(Botoes);
         Botoes.setLayout(BotoesLayout);
         BotoesLayout.setHorizontalGroup(
@@ -98,6 +127,10 @@ public class JdlContasPagar extends javax.swing.JDialog {
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btexcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAnexar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBaixar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -106,11 +139,14 @@ public class JdlContasPagar extends javax.swing.JDialog {
             BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BotoesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btexcluir)
-                    .addComponent(btnEditar)
-                    .addComponent(btnNovo)
-                    .addComponent(btnSair))
+                .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBaixar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btexcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAnexar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -129,7 +165,6 @@ public class JdlContasPagar extends javax.swing.JDialog {
         ));
         jScrollPane2.setViewportView(tblContasPagar);
 
-        Btnpagamento.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\iNFO-Ti\\InfoTi\\src\\icones\\Payment.png")); // NOI18N
         Btnpagamento.setText("Pagamento");
         Btnpagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +274,49 @@ public class JdlContasPagar extends javax.swing.JDialog {
         
     }//GEN-LAST:event_BtnpagamentoActionPerformed
 
+    private void btnAnexarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnexarActionPerformed
+        int linha = tblContasPagar.getSelectedRow();
+        if (linha > -1) {
+            int codContaPagar = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
+            ContaPagar contaPagar = contaPagarDao.procurarPorId(codContaPagar);
+            JFileChooser fc = new JFileChooser();
+            int res = fc.showOpenDialog(null);
+            byte[] conteudo = null;
+            Arquivo arq = new Arquivo();
+            if (res == JFileChooser.APPROVE_OPTION) {
+                arquivo = fc.getSelectedFile();    
+                try {
+                    arq.setArquivo(FileUtils.getBytes(arquivo));
+                } catch (IOException ex) {
+                    Logger.getLogger(JdlContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                arq.setIdcontapagar(contaPagar);
+                d.salvar(arq);
+                JOptionPane.showMessageDialog(rootPane, "Anexo Enviado!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Nenhum Arquivo Selecionado!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma Conta!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAnexarActionPerformed
+
+    private void btnBaixarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaixarActionPerformed
+        int linha = tblContasPagar.getSelectedRow();
+        if (linha > -1) {
+            int codContaPagar = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
+            ContaPagar contaPagar = contaPagarDao.procurarPorId(codContaPagar);
+            Arquivo arq = arqDao.buscarPorId(codContaPagar);
+            JFileChooser fileChooser = new JFileChooser();
+            if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                //File file = fileChooser.getSelectedFile();
+                dir.setText(fileChooser.getSelectedFile().getName());                
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma Conta!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBaixarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -286,6 +364,8 @@ public class JdlContasPagar extends javax.swing.JDialog {
     private javax.swing.JButton Btnbuscar;
     private javax.swing.JButton Btnpagamento;
     private javax.swing.JButton btexcluir;
+    private javax.swing.JButton btnAnexar;
+    private javax.swing.JButton btnBaixar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;

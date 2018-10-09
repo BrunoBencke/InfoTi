@@ -88,6 +88,10 @@
                   <Component id="btnEditar" min="-2" pref="46" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btexcluir" min="-2" pref="46" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnAnexar" min="-2" pref="80" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnBaixar" min="-2" pref="82" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="btnSair" min="-2" pref="46" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -98,11 +102,15 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btexcluir" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnEditar" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnNovo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnSair" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnBaixar" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btexcluir" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnEditar" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnNovo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnSair" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnAnexar" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -150,6 +158,22 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btexcluirActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="btnAnexar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Anexar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAnexarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnBaixar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Baixar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBaixarActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -187,9 +211,6 @@
     </Container>
     <Component class="javax.swing.JButton" name="Btnpagamento">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Christian\Documents\GitHub\iNFO-Ti\InfoTi\src\icones\Payment.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Pagamento"/>
       </Properties>
       <Events>
