@@ -16,11 +16,9 @@ import org.hibernate.Session;
 
 public class JfrLogin extends javax.swing.JFrame {
 
-    Session sessao = HibernateUtil.getSessionFactory().openSession();
     List resultado = null;
     Criptografia c = new Criptografia();
     Usuario user;
-    PermissaoDao permDao = new PermissaoDao();
     ArrayList<Permissao> perm;
 
     public JfrLogin() throws ClassNotFoundException {
@@ -28,19 +26,23 @@ public class JfrLogin extends javax.swing.JFrame {
     }
 
     public boolean login() {
-            org.hibernate.Query q = sessao.createQuery("from Usuario");
-            resultado = q.list();
-            for (Object o : resultado) {
-                user = (Usuario) o;
-                if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {
-                    perm = permDao.retornaPermissao(user);
-                    return true;
-                }
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        PermissaoDao permDao = new PermissaoDao();
+        org.hibernate.Query q = sessao.createQuery("from Usuario");
+        resultado = q.list();
+        for (Object o : resultado) {
+            user = (Usuario) o;
+            if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {
+                perm = permDao.retornaPermissao(user);
+                return true;
             }
-            return false;
+        }
+        return false;
     }
-    
+
     public void fazLogin() {
+        // salvar IP em objeto global
+
         if (login()) {
             this.setVisible(false);
             JfrPrincipal telaPrincipal = new JfrPrincipal(user, perm);
