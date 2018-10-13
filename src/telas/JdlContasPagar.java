@@ -1,35 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
-import apoio.Calendario;
-import com.mchange.io.FileUtils;
+import apoio.ManipularImagem;
 import dao.ArquivoDao;
 import dao.ContaPagarDao;
 import dao.Dao;
 import entidades.Arquivo;
-import entidades.Cliente;
 import entidades.ContaPagar;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.FileInputStream;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import org.postgresql.core.Oid;
 
-/**
- *
- * @author Christian
- */
 public class JdlContasPagar extends javax.swing.JDialog {
 
     ContaPagar contaPagar = new ContaPagar();
@@ -39,6 +26,7 @@ public class JdlContasPagar extends javax.swing.JDialog {
     String botaopressionado = "novo";
     File arquivo;
     private JTextField filename = new JTextField(), dir = new JTextField();
+    BufferedImage imagem;
 
     public JdlContasPagar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -61,7 +49,8 @@ public class JdlContasPagar extends javax.swing.JDialog {
         btnNovo = new javax.swing.JButton();
         btexcluir = new javax.swing.JButton();
         btnAnexar = new javax.swing.JButton();
-        btnBaixar = new javax.swing.JButton();
+        btnExibirAnexo = new javax.swing.JButton();
+        btnRemoverAnexo = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txfBuscar1 = new javax.swing.JTextField();
         Btnbuscar = new javax.swing.JButton();
@@ -102,17 +91,24 @@ public class JdlContasPagar extends javax.swing.JDialog {
             }
         });
 
-        btnAnexar.setText("Anexar");
+        btnAnexar.setText("Anexar Imagem");
         btnAnexar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnexarActionPerformed(evt);
             }
         });
 
-        btnBaixar.setText("Baixar");
-        btnBaixar.addActionListener(new java.awt.event.ActionListener() {
+        btnExibirAnexo.setText("Exibir Anexo");
+        btnExibirAnexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBaixarActionPerformed(evt);
+                btnExibirAnexoActionPerformed(evt);
+            }
+        });
+
+        btnRemoverAnexo.setText("Remover Anexo");
+        btnRemoverAnexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverAnexoActionPerformed(evt);
             }
         });
 
@@ -128,9 +124,11 @@ public class JdlContasPagar extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btexcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnAnexar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBaixar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAnexar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExibirAnexo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRemoverAnexo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -139,14 +137,16 @@ public class JdlContasPagar extends javax.swing.JDialog {
             BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BotoesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnBaixar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btexcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAnexar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnExibirAnexo)
+                        .addComponent(btnAnexar)
+                        .addComponent(btnRemoverAnexo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -189,14 +189,14 @@ public class JdlContasPagar extends javax.swing.JDialog {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(Btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane2)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Botoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Botoes, javax.swing.GroupLayout.PREFERRED_SIZE, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(Btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -206,10 +206,10 @@ public class JdlContasPagar extends javax.swing.JDialog {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Btnpagamento)
-                .addGap(31, 31, 31))
+                .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(697, 527));
+        setSize(new java.awt.Dimension(692, 500));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -278,44 +278,65 @@ public class JdlContasPagar extends javax.swing.JDialog {
         int linha = tblContasPagar.getSelectedRow();
         if (linha > -1) {
             int codContaPagar = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
+            if (!arqDao.possuiAnexo(codContaPagar)) {               
             ContaPagar contaPagar = contaPagarDao.procurarPorId(codContaPagar);
             JFileChooser fc = new JFileChooser();
             int res = fc.showOpenDialog(null);
-            byte[] conteudo = null;
-            Arquivo arq = new Arquivo();
             if (res == JFileChooser.APPROVE_OPTION) {
-                arquivo = fc.getSelectedFile();    
+                File arquivo = fc.getSelectedFile();
+                imagem = ManipularImagem.setImagemDimensao(arquivo.getAbsolutePath(), 1000, 700);
                 try {
-                    arq.setArquivo(FileUtils.getBytes(arquivo));
-                } catch (IOException ex) {
-                    Logger.getLogger(JdlContasPagar.class.getName()).log(Level.SEVERE, null, ex);
+                    Arquivo arq = new Arquivo();
+                    arq.setArquivo(ManipularImagem.getImgBytes(imagem));
+                    arq.setIdcontapagar(contaPagar);
+                    d.salvar(arq);
+                    JOptionPane.showMessageDialog(rootPane, "Anexo Enviado");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(rootPane, "Anexo não Enviado");
                 }
-                arq.setIdcontapagar(contaPagar);
-                d.salvar(arq);
-                JOptionPane.showMessageDialog(rootPane, "Anexo Enviado!");
             } else {
-                JOptionPane.showMessageDialog(null, "Nenhum Arquivo Selecionado!");
+                JOptionPane.showMessageDialog(null, "Voce nao selecionou nenhum arquivo.");
+            }
+            } else{
+                JOptionPane.showMessageDialog(null, "Essa Conta Já Possui Anexo!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma Conta!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnAnexarActionPerformed
 
-    private void btnBaixarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaixarActionPerformed
+    private void btnExibirAnexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExibirAnexoActionPerformed
         int linha = tblContasPagar.getSelectedRow();
         if (linha > -1) {
             int codContaPagar = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
-            ContaPagar contaPagar = contaPagarDao.procurarPorId(codContaPagar);
-            Arquivo arq = arqDao.buscarPorId(codContaPagar);
-            JFileChooser fileChooser = new JFileChooser();
-            if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-                //File file = fileChooser.getSelectedFile();
-                dir.setText(fileChooser.getSelectedFile().getName());                
+            if (arqDao.possuiAnexo(codContaPagar)) {
+                ContaPagar contaPagar = contaPagarDao.procurarPorId(codContaPagar);
+                JdlExibirAnexo telaAnexo = new JdlExibirAnexo(null, rootPaneCheckingEnabled, contaPagar.getIdcontaPagar());
+                telaAnexo.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Essa Conta Não Possui Anexo!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma Conta!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
-    }//GEN-LAST:event_btnBaixarActionPerformed
+    }//GEN-LAST:event_btnExibirAnexoActionPerformed
+
+    private void btnRemoverAnexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverAnexoActionPerformed
+        int linha = tblContasPagar.getSelectedRow();
+        if (linha > -1) {
+            int codContaPagar = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
+            if (arqDao.possuiAnexo(codContaPagar)) {
+                ContaPagar contaPagar = contaPagarDao.procurarPorId(codContaPagar);
+                Arquivo arq = arqDao.buscarPorId(codContaPagar);
+                d.excluir(arq, "Anexo Excluido!");
+                JOptionPane.showMessageDialog(rootPane, "Anexo Excluído");
+            } else {
+                JOptionPane.showMessageDialog(null, "Essa Conta Não Possui Anexo!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma Conta!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRemoverAnexoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -365,9 +386,10 @@ public class JdlContasPagar extends javax.swing.JDialog {
     private javax.swing.JButton Btnpagamento;
     private javax.swing.JButton btexcluir;
     private javax.swing.JButton btnAnexar;
-    private javax.swing.JButton btnBaixar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExibirAnexo;
     private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnRemoverAnexo;
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;

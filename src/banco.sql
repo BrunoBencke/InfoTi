@@ -28,13 +28,6 @@ create table endereco(idEndereco SERIAL NOT NULL,
 constraint pk_endereco PRIMARY KEY (idEndereco),
 constraint fk_idMunicipio FOREIGN KEY (idMunicipio) REFERENCES municipio);
 
-CREATE TABLE arquivo(
-	IdArquivo SERIAL NOT NULL,
-	IdContaPagar INT NOT NULL,
-	arquivo bytea,
-constraint pk_arquivo PRIMARY KEY (IdArquivo),
-constraint fk_Id_conta_pagar FOREIGN KEY (IdContaPagar) REFERENCES conta_pagar);
-
 create table cliente(idCliente SERIAL NOT NULL,
                        nome VARCHAR(100) NOT NULL,
                        sexo VARCHAR(45),
@@ -211,6 +204,13 @@ create table conta_pagar(idConta_pagar SERIAL NOT NULL,
                           data_pagamento DATE,
                           situacao BOOLEAN,
 constraint pk_conta_pagar PRIMARY KEY (idConta_pagar));
+
+CREATE TABLE arquivo(
+	IdArquivo SERIAL NOT NULL,
+	IdContaPagar INT NOT NULL,
+	arquivo bytea,
+constraint pk_arquivo PRIMARY KEY (IdArquivo),
+constraint fk_Id_conta_pagar FOREIGN KEY (IdContaPagar) REFERENCES conta_pagar);
 
 create table produto_venda(idProdutoVenda SERIAL NOT NULL,
 								idVenda INT NOT NULL,
