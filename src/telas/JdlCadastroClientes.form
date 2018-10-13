@@ -54,92 +54,92 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="lblCidade" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblRua" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="lblSexo" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblNome" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="lblRua" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="1" attributes="0">
+                                                      <Component id="lblSexo" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="lblNome" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <Component id="lblData" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblCpf" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jcbTipo" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="cbStatus" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="txfData" min="-2" pref="80" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="txfSexo" max="32767" attributes="0"/>
+                                                  <Component id="txfCpf" pref="120" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace max="32767" attributes="0"/>
+                                                      <Component id="lblRg" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                                      <Component id="lblTelefone" max="32767" attributes="0"/>
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                           </Group>
-                                          <Component id="lblData" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="lblBairro" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblComplemento" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txfTelefone" pref="112" max="32767" attributes="0"/>
+                                          <Component id="txfRg" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="lblCpf" min="-2" pref="44" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="txfNome" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txfRua" min="-2" pref="324" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jcbTipo" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="btnSalvar" min="-2" pref="46" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="cbStatus" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnSair" min="-2" pref="46" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="txfData" min="-2" pref="80" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="txfSexo" max="32767" attributes="0"/>
-                                              <Component id="txfCpf" pref="120" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="lblRg" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                                  <Component id="lblTelefone" max="32767" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txfTelefone" pref="112" max="32767" attributes="0"/>
-                                      <Component id="txfRg" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="txfNome" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="txfBairro" max="32767" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="lblCep" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="txfRua" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblNumero" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="txfNumero" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="txfCep" min="-2" pref="105" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="jPanel3" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="lblCidade" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblBairro" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblComplemento" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblCep" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txfComplemento" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jcbCidade" min="-2" pref="186" max="-2" attributes="0"/>
@@ -148,18 +148,30 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jcbEstado" min="-2" pref="60" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="txfBairro" max="32767" attributes="0"/>
+                                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="txfCep" min="-2" pref="114" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="lblNumero" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                                          <Component id="txfNumero" min="-2" pref="68" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="btnBuscaEndereco" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
-                      </Group>
-                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnSalvar" min="-2" pref="46" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnSair" min="-2" pref="46" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jPanel3" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="64" max="32767" attributes="0"/>
+                  <EmptySpace pref="82" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -196,19 +208,23 @@
                       <Component id="lblData" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="txfData" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblRua" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txfRua" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblNumero" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txfNumero" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="lblRua" min="-2" max="-2" attributes="0"/>
+                      <Component id="txfRua" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblCep" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txfCep" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBuscaEndereco" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblBairro" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txfBairro" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblCep" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txfCep" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblNumero" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txfNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -222,7 +238,7 @@
                       <Component id="lblEstado" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jcbEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="31" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -476,6 +492,14 @@
         <Component class="javax.swing.JTextField" name="txfSexo">
         </Component>
         <Component class="javax.swing.JTextField" name="txfRg">
+        </Component>
+        <Component class="javax.swing.JButton" name="btnBuscaEndereco">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Busca Endere&#xe7;o"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscaEnderecoActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

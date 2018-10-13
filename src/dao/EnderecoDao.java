@@ -3,6 +3,7 @@ package dao;
 import apoio.HibernateUtil;
 import entidades.Estado;
 import entidades.Municipio;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.transform.Transformers;
 
@@ -52,6 +53,27 @@ public class EnderecoDao extends Dao{
         return null;
     }
     
+    public Estado retornaObjetoUf(String nome) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            org.hibernate.Query q = sessao.createSQLQuery("SELECT * from Estado where Uf = '" + nome + "'");
+            List<Object[]> objs = q.list();
+            Estado uf = new Estado();
+            for (Object[] o : objs) {
+                Object[] aux = o;                
+                uf.setIdestado((Integer) aux[0]);
+                uf.setCodigouf((Integer) aux[1]);
+                uf.setNome((String) aux[2]);
+                uf.setUf((String) aux[3]);
+                uf.setRegiao((Integer) aux[4]);
+            }           
+            return uf;
+        } catch (Exception e) {
+            System.out.println("Erro ao Localizar Uf!" + e.toString());
+        }
+        return null;
+    }
+
     public Municipio retornaObjetoMunicipio(int id) {
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -61,6 +83,26 @@ public class EnderecoDao extends Dao{
             return cidade;
         } catch (Exception e) {
             System.out.println("Erro ao Localizar Cidade!" + e.toString());
+        }
+        return null;
+    }
+    
+    public Municipio retornaObjetoMunicipio(String nome) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            org.hibernate.Query q = sessao.createSQLQuery("SELECT * from Municipio where Nome = '" + nome + "'");
+            List<Object[]> objs = q.list();
+            Municipio municipio = new Municipio();
+            for (Object[] o : objs) {
+                Object[] aux = o;                
+                municipio.setIdmunicipio((Integer) aux[0]);
+                municipio.setCodigo((Integer) aux[1]);
+                municipio.setNome((String) aux[2]);
+                municipio.setUf((String) aux[3]);
+            }           
+            return municipio;
+        } catch (Exception e) {
+            System.out.println("Erro ao Localizar Municipio!" + e.toString());
         }
         return null;
     }
