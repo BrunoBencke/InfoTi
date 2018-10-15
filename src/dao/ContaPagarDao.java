@@ -51,11 +51,10 @@ public class ContaPagarDao extends Dao {
     public void populaContaPagar(JTable tabela) {
         //List resultado = null;
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
+            sessao = HibernateUtil.getSessionFactory().openSession();
             org.hibernate.Query q = sessao.createQuery("from ContaPagar");
             ArrayList<ContaPagar> resultado = new ArrayList<ContaPagar>();
-            resultado = (ArrayList<ContaPagar>) q.list();
+            resultado = (ArrayList<ContaPagar>) q.list();           
 
             Object[][] dadosTabela = null;
             Object[] cabecalho = new Object[7];

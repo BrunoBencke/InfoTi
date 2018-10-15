@@ -7,9 +7,7 @@ import dao.Dao;
 import entidades.Arquivo;
 import entidades.ContaPagar;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -218,7 +216,6 @@ public class JdlContasPagar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
         int linha = tblContasPagar.getSelectedRow();
         if (linha > -1) {
             botaopressionado = "editar";
@@ -226,20 +223,20 @@ public class JdlContasPagar extends javax.swing.JDialog {
             ContaPagar contaPagar = contaPagarDao.procurarPorId(codCont);
             JdlCadastroContasPagar telaContasPagar = null;
             try {
-                telaContasPagar = new JdlCadastroContasPagar(null, false, contaPagar, tblContasPagar);
+                telaContasPagar = new JdlCadastroContasPagar(null, true,tblContasPagar);
+                telaContasPagar.setVisible(true);
             } catch (ParseException ex) {
                 Logger.getLogger(JdlContasPagar.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            telaContasPagar.setVisible(true);
+            }            
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-
         JdlCadastroContasPagar jdlCadastroContasPagar = new JdlCadastroContasPagar(null, false);
         jdlCadastroContasPagar.setVisible(true);
+        contaPagarDao.populaContaPagar(tblContasPagar);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexcluirActionPerformed
@@ -259,15 +256,13 @@ public class JdlContasPagar extends javax.swing.JDialog {
     }//GEN-LAST:event_btexcluirActionPerformed
 
     private void BtnpagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnpagamentoActionPerformed
-
        int linha = tblContasPagar.getSelectedRow();
         if (linha > -1) {
             botaopressionado = "editar";
             int codCont = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
             ContaPagar contaPagar = contaPagarDao.procurarPorId(codCont);
             JdlPagarConta jdlPagarConta = new JdlPagarConta(null, false);
-            jdlPagarConta.setVisible(true);
-            
+            jdlPagarConta.setVisible(true);            
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }

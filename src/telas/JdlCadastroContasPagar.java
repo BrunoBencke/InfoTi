@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
-import apoio.CombosDAO;
 import dao.ContaPagarDao;
 import dao.Dao;
 import entidades.ContaPagar;
-import entidades.Produto;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -19,10 +11,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-/**
- *
- * @author Christian
- */
 public class JdlCadastroContasPagar extends javax.swing.JDialog {
 
     String botaopressionado = "novo";
@@ -54,8 +42,8 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
 
         this.contaPagar = cp;
         txtnome.setText(cp.getNome());
-        txtvalor.setText(cp.getValor().toString());
-        txtdataVencimento.setText(contaPagarDao.data_sistema(cp.getDataVencimento().toString()));
+        //txtvalor.setText(cp.getValor().toString());
+        //txtdataVencimento.setText(contaPagarDao.data_sistema(cp.getDataVencimento().toString()));
     }
 
     /**
@@ -193,10 +181,7 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
             txtvalor.setText("");
             txtdataVencimento.setText("");
             this.dispose();
-            // contaPagarDao.populaContaPagar(tblContasPagar);
-
         } else if (botaopressionado.equals("editar")) {
-
             contaPagar.setNome(txtnome.getText());
             contaPagar.setValor(BigDecimal.valueOf(Double.parseDouble(txtvalor.getText())));
             if (txtdataVencimento.getText().equals("  /  /    ")) {
@@ -217,7 +202,7 @@ public class JdlCadastroContasPagar extends javax.swing.JDialog {
             txtdataVencimento.setText("");
             this.dispose();
         }
-
+        //contaPagarDao.populaContaPagar(tblContasPagar);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed

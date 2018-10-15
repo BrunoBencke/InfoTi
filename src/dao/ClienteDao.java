@@ -91,7 +91,7 @@ public class ClienteDao extends Dao {
         return endereco;
     }
 
-        public void populaClientes(JTable tblClientes) {
+    public void populaClientes(JTable tblClientes) {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             org.hibernate.Query q = sessao.createQuery("from Cliente");
@@ -114,7 +114,7 @@ public class ClienteDao extends Dao {
                 Cliente u = resultado.get(i);
                 dadosTabela[lin][0] = u.getIdcliente();
                 dadosTabela[lin][1] = u.getNome();
-                dadosTabela[lin][2] = u.getTelefone();                
+                dadosTabela[lin][2] = u.getTelefone();
                 dadosTabela[lin][3] = retornaEndereco(u.getIdendereco().getIdendereco());
                 lin++;
             }
@@ -145,7 +145,7 @@ public class ClienteDao extends Dao {
                 }
             }
         } catch (HibernateException he) {
-           he.printStackTrace();
+            he.printStackTrace();
         }
     }
 

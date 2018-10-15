@@ -213,6 +213,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         fianceiro.add(contasReceber);
 
         jMenuItem2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/contas_pagar.png"))); // NOI18N
         jMenuItem2.setText("Contas a Pagar");
         jMenuItem2.setPreferredSize(new java.awt.Dimension(200, 50));
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -326,6 +327,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         auditoria.setBackground(new java.awt.Color(255, 255, 255));
         auditoria.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        auditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/auditoria.png"))); // NOI18N
         auditoria.setText("Auditoria");
         auditoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         auditoria.setPreferredSize(new java.awt.Dimension(200, 50));
