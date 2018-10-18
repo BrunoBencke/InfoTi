@@ -14,6 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import static telas.JfrPrincipal.user;
@@ -180,22 +183,81 @@ public class PermissaoDao extends Dao{
         return false;
     }
     
-//    public boolean status_permissao(int idPermissao) {
-//        try {
-//            sessao = HibernateUtil.getSessionFactory().openSession();
-//            org.hibernate.Query q = sessao.createQuery("from Permissao where idPermissao = '" + idPermissao + "'");
-//            List lista = q.list();
-//            Permissao a = (Permissao) lista.get(0);
-//            if (a.getSituacao()) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        } catch (HibernateException he) {
-//            he.printStackTrace();
-//        } finally {
-//            sessao.close();
-//        }
-//        return false;
-//    }
+    public void populaBotoes(JTable tblBotao, int idUsuario, int idTela) {
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query q = sessao.createSQLQuery("SELECT * FROM permissao WHERE idUsuario = '" + idUsuario + "' AND idTela = '"+ idTela+"'");
+            ArrayList<Permissao> resultado = new ArrayList<Permissao>();
+            resultado = (ArrayList<Permissao>) q.list();
+
+            Object[][] dadosTabela = null;
+            Object[] cabecalho = new Object[2];
+
+            cabecalho[0] = "Botão";
+            cabecalho[1] = "Situação";
+
+            // cria matriz de acordo com nº de registros da tabela
+            dadosTabela = new Object[resultado.size()][2];
+
+            int lin = 0;
+            for (int i = 0; i < resultado.size(); i++) {
+                //Permissao u = resultado.get(i);
+                dadosTabela[lin][0] = i;
+                dadosTabela[lin][1] = true;
+                lin++;
+            }
+
+
+//            model.addRow(new Object[0]);
+//            model.setValueAt(false, i, 0);
+//            model.setValueAt("Our Row" + (i + 1), i, 1);
+//            model.setValueAt("Our Column 2", i, 2);
+//            model.setValueAt("Our Column 3", i, 3);
+//            model.setValueAt("Our Column 4", i, 4);
+//    
+//                for (int i = 0; i < table.getRowCount(); i++) {
+//                    Boolean checked = Boolean.valueOf(table.getValueAt(i, 0).toString());
+//                    String col = table.getValueAt(i, 1).toString();
+//                }           
+//        
+            // configuracoes adicionais no componente tabela
+            tblBotao.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
+                @Override
+                // quando retorno for FALSE, a tabela nao é editavel
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+                
+                public Class<?> getColumnClass(int column) {
+                    switch (column) {
+                        case 0:
+                            return String.class;
+                        case 1:
+                            return Boolean.class;
+                        default:
+                            return String.class;
+                    }
+                }
+            });
+
+            // permite seleção de apenas uma linha da tabela
+            tblBotao.setSelectionMode(0);
+
+            // redimensiona as colunas de uma tabela
+            TableColumn column = null;
+            for (int i = 0; i < tblBotao.getColumnCount(); i++) {
+                column = tblBotao.getColumnModel().getColumn(i);
+                switch (i) {
+                    case 0:
+                        column.setPreferredWidth(17);
+                        break;
+                    case 1:
+                        column.setPreferredWidth(140);
+                        break;
+                }
+            }
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package apoio;
 import dao.Generica;
+import entidades.Tela;
 import javax.swing.JComboBox;
 import org.hibernate.Session;
 import java.util.List;
@@ -22,6 +23,23 @@ public class CombosDAO {
             }
         } catch (Exception e) {
             System.out.println("Erro ao popular Combo = " + e.toString());
+        }
+    }
+    
+    public void popularComboTelas(JComboBox combo) {
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query q = sessao.createQuery("from Tela");
+            List lista = q.list();
+            for (int i = 0; i < lista.size(); i++) {
+                ComboItens item = new ComboItens();
+                Tela tela = (Tela) lista.get(i);
+                item.setCodigo(tela.getIdtela());
+                item.setDescricao(tela.getNome());
+                combo.addItem(item);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao popular Combo Telas = " + e.toString());
         }
     }
 
