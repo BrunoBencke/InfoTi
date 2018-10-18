@@ -218,16 +218,13 @@ public class PermissaoDao extends Dao{
             for (int i = 0; i < resultado.size(); i++) {
                 Permissao u = resultado.get(i);
                 dadosTabela[lin][0] = nomeBotao(u.getIdbotao().getIdbotao());
-                dadosTabela[lin][1] = true;
+                if (u.getSituacao()) {
+                    dadosTabela[lin][1] = true;
+                }else{
+                    dadosTabela[lin][1] = false;
+                }                
                 lin++;
             }
-
-
-
-
-//                for (int i = 0; i < table.getRowCount(); i++) {
-//                    Boolean checked = Boolean.valueOf(table.getValueAt(i, 0).toString());
-//                    String col = table.getValueAt(i, 1).toString();
 
             tblBotao.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
                 @Override               

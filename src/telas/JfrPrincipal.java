@@ -37,6 +37,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         menu = new javax.swing.JMenuBar();
         registros = new javax.swing.JMenu();
         clientes = new javax.swing.JMenuItem();
@@ -69,6 +70,13 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iNFO-Ti");
+
+        jButton1.setText("Teste E-Mail");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         menu.setBackground(new java.awt.Color(255, 255, 255));
         menu.setBorder(null);
@@ -407,11 +415,17 @@ public class JfrPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 878, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jButton1)
+                .addContainerGap(742, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(jButton1)
+                .addContainerGap(405, Short.MAX_VALUE))
         );
 
         pack();
@@ -552,6 +566,11 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_relatoriosActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JdlEmail email = new JdlEmail();
+        email.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -601,6 +620,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem desconectar;
     private javax.swing.JMenu fianceiro;
     private javax.swing.JMenuItem funcionarios;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

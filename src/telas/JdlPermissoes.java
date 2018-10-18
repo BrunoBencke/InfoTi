@@ -270,6 +270,10 @@ public class JdlPermissoes extends javax.swing.JDialog {
         } else {
             permDao.setar_status_permissao(0, 1, 6, item.getCodigo());
         }
+        
+//                for (int i = 0; i < table.getRowCount(); i++) {
+//                    Boolean checked = Boolean.valueOf(table.getValueAt(i, 0).toString());
+//                    String col = table.getValueAt(i, 1).toString();
         this.dispose();
     }//GEN-LAST:event_dtnSalvarActionPerformed
 
