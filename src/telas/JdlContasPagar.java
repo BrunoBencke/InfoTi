@@ -273,26 +273,30 @@ public class JdlContasPagar extends javax.swing.JDialog {
         int linha = tblContasPagar.getSelectedRow();
         if (linha > -1) {
             int codContaPagar = Integer.valueOf(String.valueOf(tblContasPagar.getValueAt(linha, 0)));
-            if (!arqDao.possuiAnexo(codContaPagar)) {               
-            ContaPagar contaPagar = contaPagarDao.procurarPorId(codContaPagar);
-            JFileChooser fc = new JFileChooser();
-            int res = fc.showOpenDialog(null);
-            if (res == JFileChooser.APPROVE_OPTION) {
-                File arquivo = fc.getSelectedFile();
-                imagem = ManipularImagem.setImagemDimensao(arquivo.getAbsolutePath(), 1000, 700);
-                try {
-                    Arquivo arq = new Arquivo();
-                    arq.setArquivo(ManipularImagem.getImgBytes(imagem));
-                    arq.setIdcontapagar(contaPagar);
-                    d.salvar(arq);
-                    JOptionPane.showMessageDialog(rootPane, "Anexo Enviado");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(rootPane, "Anexo não Enviado");
+            if (!arqDao.possuiAnexo(codContaPagar)) {
+                ContaPagar contaPagar = contaPagarDao.procurarPorId(codContaPagar);
+                JFileChooser fc = new JFileChooser();
+                int res = fc.showOpenDialog(null);
+                if (res == JFileChooser.APPROVE_OPTION) {
+                    File arquivo = fc.getSelectedFile();
+                    if (!arquivo.getName().endsWith(".jpg")) {
+                        JOptionPane.showMessageDialog(null,"Apenas arquivos no formato .jpg");
+                    } else {
+                        imagem = ManipularImagem.setImagemDimensao(arquivo.getAbsolutePath(), 1000, 700);
+                        try {
+                            Arquivo arq = new Arquivo();
+                            arq.setArquivo(ManipularImagem.getImgBytes(imagem));
+                            arq.setIdcontapagar(contaPagar);
+                            d.salvar(arq);
+                            JOptionPane.showMessageDialog(rootPane, "Anexo Enviado");
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(rootPane, "Anexo não Enviado");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Voce nao selecionou nenhum arquivo.");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Voce nao selecionou nenhum arquivo.");
-            }
-            } else{
                 JOptionPane.showMessageDialog(null, "Essa Conta Já Possui Anexo!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
