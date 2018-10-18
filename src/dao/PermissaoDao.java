@@ -183,10 +183,25 @@ public class PermissaoDao extends Dao{
         return false;
     }
     
+    public String nomeBotao(int idBotao) {
+        Botao b = new Botao();
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            org.hibernate.Query q = sessao.createQuery("from Botao where idBotao = '" + idBotao + "'");
+            List lista = q.list();
+            b = (Botao) lista.get(0);
+            return b.getNome();
+        } catch (Exception e) {
+            System.out.println("Erro ao Localizar Objeto!" + e.toString());
+        }
+        return null;
+    }
+    
     public void populaBotoes(JTable tblBotao, int idUsuario, int idTela) {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query q = sessao.createSQLQuery("SELECT * FROM permissao WHERE idUsuario = '" + idUsuario + "' AND idTela = '"+ idTela+"'");
+            //org.hibernate.Query q = sessao.createSQLQuery("SELECT * FROM permissao WHERE idUsuario = '" + idUsuario + "' AND idTela = '"+ idTela+"'");
+            org.hibernate.Query q = sessao.createQuery("from Permissao WHERE idUsuario = '" + idUsuario + "' AND idTela = '"+ idTela+"'");
             ArrayList<Permissao> resultado = new ArrayList<Permissao>();
             resultado = (ArrayList<Permissao>) q.list();
 
@@ -201,33 +216,21 @@ public class PermissaoDao extends Dao{
 
             int lin = 0;
             for (int i = 0; i < resultado.size(); i++) {
-                //Permissao u = resultado.get(i);
-                dadosTabela[lin][0] = i;
+                Permissao u = resultado.get(i);
+                dadosTabela[lin][0] = nomeBotao(u.getIdbotao().getIdbotao());
                 dadosTabela[lin][1] = true;
                 lin++;
             }
 
 
-//            model.addRow(new Object[0]);
-//            model.setValueAt(false, i, 0);
-//            model.setValueAt("Our Row" + (i + 1), i, 1);
-//            model.setValueAt("Our Column 2", i, 2);
-//            model.setValueAt("Our Column 3", i, 3);
-//            model.setValueAt("Our Column 4", i, 4);
-//    
+
+
 //                for (int i = 0; i < table.getRowCount(); i++) {
 //                    Boolean checked = Boolean.valueOf(table.getValueAt(i, 0).toString());
 //                    String col = table.getValueAt(i, 1).toString();
-//                }           
-//        
-            // configuracoes adicionais no componente tabela
+
             tblBotao.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
-                @Override
-                // quando retorno for FALSE, a tabela nao é editavel
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-                
+                @Override               
                 public Class<?> getColumnClass(int column) {
                     switch (column) {
                         case 0:
