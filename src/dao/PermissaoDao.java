@@ -199,29 +199,30 @@ public class PermissaoDao extends Dao{
     
     public void populaBotoes(JTable tblBotao, int idUsuario, int idTela) {
         try {
-            sessao = HibernateUtil.getSessionFactory().openSession();
-            //org.hibernate.Query q = sessao.createSQLQuery("SELECT * FROM permissao WHERE idUsuario = '" + idUsuario + "' AND idTela = '"+ idTela+"'");
+            sessao = HibernateUtil.getSessionFactory().openSession();           
             org.hibernate.Query q = sessao.createQuery("from Permissao WHERE idUsuario = '" + idUsuario + "' AND idTela = '"+ idTela+"'");
             ArrayList<Permissao> resultado = new ArrayList<Permissao>();
             resultado = (ArrayList<Permissao>) q.list();
 
             Object[][] dadosTabela = null;
-            Object[] cabecalho = new Object[2];
+            Object[] cabecalho = new Object[3];
 
-            cabecalho[0] = "Botão";
-            cabecalho[1] = "Situação";
+            cabecalho[0] = "Código";
+            cabecalho[1] = "Botão";
+            cabecalho[2] = "Situação";
 
             // cria matriz de acordo com nº de registros da tabela
-            dadosTabela = new Object[resultado.size()][2];
+            dadosTabela = new Object[resultado.size()][3];
 
             int lin = 0;
             for (int i = 0; i < resultado.size(); i++) {
                 Permissao u = resultado.get(i);
-                dadosTabela[lin][0] = nomeBotao(u.getIdbotao().getIdbotao());
+                dadosTabela[lin][0] = u.getIdbotao().getIdbotao();
+                dadosTabela[lin][1] = nomeBotao(u.getIdbotao().getIdbotao());
                 if (u.getSituacao()) {
-                    dadosTabela[lin][1] = true;
+                    dadosTabela[lin][2] = true;
                 }else{
-                    dadosTabela[lin][1] = false;
+                    dadosTabela[lin][2] = false;
                 }                
                 lin++;
             }
@@ -233,6 +234,8 @@ public class PermissaoDao extends Dao{
                         case 0:
                             return String.class;
                         case 1:
+                            return String.class;
+                        case 2:
                             return Boolean.class;
                         default:
                             return String.class;

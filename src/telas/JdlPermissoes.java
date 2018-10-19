@@ -23,6 +23,36 @@ public class JdlPermissoes extends javax.swing.JDialog {
             jcbAuditoria.setSelected(true);
         }
     }
+    
+    public void salvaPermissoes(){
+        ComboItens usuario = (ComboItens) jcbUsuario.getSelectedItem();
+        if (jcbAuditoria.isSelected()) {
+            cDao.setar_status_auditoria(1);
+        } else {
+            cDao.setar_status_auditoria(0);
+        }
+        if (jcbTelaClientes.isSelected()) {
+            permDao.setar_status_permissao(1, 10, 5, usuario.getCodigo());
+        } else {
+            permDao.setar_status_permissao(0, 10, 5, usuario.getCodigo());
+        }
+        if (jcbTelaProdutos.isSelected()) {
+            permDao.setar_status_permissao(1, 1, 6, usuario.getCodigo());
+        } else {
+            permDao.setar_status_permissao(0, 1, 6, usuario.getCodigo());
+        } 
+        ComboItens tela = (ComboItens) jcbTela.getSelectedItem();
+        for (int i = 0; i < tblBotoes.getRowCount(); i++) {
+            Boolean checked = Boolean.valueOf(tblBotoes.getValueAt(i, 2).toString());
+            //String col = tblBotoes.getValueAt(i, 0).toString();
+            int codProduto = Integer.valueOf(String.valueOf(tblBotoes.getValueAt(i, 0)));
+            if (checked) {
+                permDao.setar_status_permissao(1, tela.getCodigo(), codProduto, usuario.getCodigo());
+            }else{
+                permDao.setar_status_permissao(0, tela.getCodigo(), codProduto, usuario.getCodigo());
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -254,26 +284,7 @@ public class JdlPermissoes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void dtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtnSalvarActionPerformed
-        ComboItens item = (ComboItens) jcbUsuario.getSelectedItem();
-        if (jcbAuditoria.isSelected()) {
-            cDao.setar_status_auditoria(1);
-        } else {
-            cDao.setar_status_auditoria(0);
-        }
-        if (jcbTelaClientes.isSelected()) {            
-            permDao.setar_status_permissao(1, 10, 5, item.getCodigo());
-        } else {
-            permDao.setar_status_permissao(0, 10, 5, item.getCodigo());
-        }       
-        if (jcbTelaProdutos.isSelected()) {
-            permDao.setar_status_permissao(1, 1, 6, item.getCodigo());
-        } else {
-            permDao.setar_status_permissao(0, 1, 6, item.getCodigo());
-        }
-        
-//                for (int i = 0; i < table.getRowCount(); i++) {
-//                    Boolean checked = Boolean.valueOf(table.getValueAt(i, 0).toString());
-//                    String col = table.getValueAt(i, 1).toString();
+        salvaPermissoes();
         this.dispose();
     }//GEN-LAST:event_dtnSalvarActionPerformed
 
