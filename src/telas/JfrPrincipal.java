@@ -37,7 +37,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         menu = new javax.swing.JMenuBar();
         registros = new javax.swing.JMenu();
         clientes = new javax.swing.JMenuItem();
@@ -46,7 +45,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         funcionarios = new javax.swing.JMenuItem();
         marcasProdutos = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        vendas = new javax.swing.JMenu();
         pedidos = new javax.swing.JMenuItem();
         todosPedidos = new javax.swing.JMenuItem();
         fianceiro = new javax.swing.JMenu();
@@ -62,6 +61,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
         miAllOrders = new javax.swing.JMenuItem();
         miOrdersPeriod = new javax.swing.JMenuItem();
         auditoria = new javax.swing.JMenuItem();
+        ferramentas = new javax.swing.JMenu();
+        email = new javax.swing.JMenuItem();
         sistema = new javax.swing.JMenu();
         usuario = new javax.swing.JMenuItem();
         desconectar = new javax.swing.JMenuItem();
@@ -70,13 +71,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iNFO-Ti");
-
-        jButton1.setText("Teste E-Mail");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         menu.setBackground(new java.awt.Color(255, 255, 255));
         menu.setBorder(null);
@@ -164,11 +158,12 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         menu.add(registros);
 
-        jMenu1.setBackground(new java.awt.Color(255, 255, 255));
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/OS.png"))); // NOI18N
-        jMenu1.setText("Vendas");
-        jMenu1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jMenu1.setMaximumSize(new java.awt.Dimension(150, 32767));
+        vendas.setBackground(new java.awt.Color(255, 255, 255));
+        vendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/OS.png"))); // NOI18N
+        vendas.setText("Vendas");
+        vendas.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        vendas.setMaximumSize(new java.awt.Dimension(150, 32767));
+        vendas.setPreferredSize(new java.awt.Dimension(170, 50));
 
         pedidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         pedidos.setBackground(new java.awt.Color(255, 255, 255));
@@ -182,7 +177,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
                 pedidosActionPerformed(evt);
             }
         });
-        jMenu1.add(pedidos);
+        vendas.add(pedidos);
 
         todosPedidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         todosPedidos.setBackground(new java.awt.Color(255, 255, 255));
@@ -196,9 +191,9 @@ public class JfrPrincipal extends javax.swing.JFrame {
                 todosPedidosActionPerformed(evt);
             }
         });
-        jMenu1.add(todosPedidos);
+        vendas.add(todosPedidos);
 
-        menu.add(jMenu1);
+        menu.add(vendas);
 
         fianceiro.setBackground(new java.awt.Color(255, 255, 255));
         fianceiro.setBorder(null);
@@ -348,6 +343,22 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         menu.add(relatorios);
 
+        ferramentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/ferramentas.png"))); // NOI18N
+        ferramentas.setText("Ferramentas");
+        ferramentas.setPreferredSize(new java.awt.Dimension(170, 50));
+
+        email.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/email.png"))); // NOI18N
+        email.setText("E-Mail");
+        email.setPreferredSize(new java.awt.Dimension(200, 50));
+        email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailActionPerformed(evt);
+            }
+        });
+        ferramentas.add(email);
+
+        menu.add(ferramentas);
+
         sistema.setBackground(new java.awt.Color(255, 255, 255));
         sistema.setBorder(null);
         sistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/System.png"))); // NOI18N
@@ -415,17 +426,11 @@ public class JfrPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jButton1)
-                .addContainerGap(742, Short.MAX_VALUE))
+            .addGap(0, 878, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jButton1)
-                .addContainerGap(405, Short.MAX_VALUE))
+            .addGap(0, 486, Short.MAX_VALUE)
         );
 
         pack();
@@ -566,10 +571,10 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_relatoriosActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
         JdlEmail email = new JdlEmail();
         email.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_emailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -618,10 +623,10 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem config;
     private javax.swing.JMenuItem contasReceber;
     private javax.swing.JMenuItem desconectar;
+    private javax.swing.JMenuItem email;
+    private javax.swing.JMenu ferramentas;
     private javax.swing.JMenu fianceiro;
     private javax.swing.JMenuItem funcionarios;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem marcasProdutos;
@@ -642,5 +647,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu sistema;
     private javax.swing.JMenuItem todosPedidos;
     private javax.swing.JMenuItem usuario;
+    private javax.swing.JMenu vendas;
     // End of variables declaration//GEN-END:variables
 }
