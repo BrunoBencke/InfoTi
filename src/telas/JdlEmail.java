@@ -64,7 +64,7 @@ public class JdlEmail extends javax.swing.JFrame {
         Senha = new javax.swing.JPasswordField();
         jLabel8 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("E-Mail");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -285,6 +285,7 @@ private void DestinatarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
 private void BotaoEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEnviarActionPerformed
     EmailAnexo();
+    this.dispose();
 }//GEN-LAST:event_BotaoEnviarActionPerformed
 
 private void BotaoAnexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAnexoActionPerformed
