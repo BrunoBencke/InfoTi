@@ -193,7 +193,7 @@ public class JdlEmail extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                         .addComponent(EnderecoAnexo, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -246,9 +246,9 @@ public class JdlEmail extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(Assunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BotaoExcluir)
                     .addComponent(EnderecoAnexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -448,49 +448,4 @@ private void BotaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
             JOptionPane.showMessageDialog(null, "Houve um erro no Envio !\n" + e);
         }
     }
-
-// public void EmailSimples() throws UnsupportedEncodingException {
-//
-//        Properties props = new Properties();
-//        /** Parâmetros de conexão com servidor Gmail */
-//        props.put("mail.smtp.host", ServidorSMTP.getText());
-//        props.put("mail.smtp.socketFactory.port", Porta.getText());
-//        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-//        props.put("mail.smtp.auth", "true");
-//        props.put("mail.smtp.port", Porta.getText());
-//
-//        Session session = Session.getDefaultInstance(props,
-//                new javax.mail.Authenticator() {
-//
-//                    protected PasswordAuthentication getPasswordAuthentication() {
-//                        return new PasswordAuthentication(Remetente.getText(), Senha.getText());
-//                    }
-//                });
-//
-//        /** Ativa Debug para sessão */
-//        session.setDebug(true);
-//
-//        try {
-//
-//            Message message = new MimeMessage(session);
-//            message.setFrom(new InternetAddress(Remetente.getText(), NomeRemetente.getText())); //Remetente
-//
-//            Address[] toUser = InternetAddress //Destinatário(s)
-//                    .parse(Destinatario.getText());
-//
-//            message.setRecipients(Message.RecipientType.TO, toUser);
-//            message.setSubject(Assunto.getText());//Assunto
-//            message.setText(Mensagem.getText());
-//            /**Método para enviar a mensagem criada*/
-//            Transport.send(message);
-//
-//            System.out.println("Feito!!!");
-//            JOptionPane.showMessageDialog(null, "Email Enviado com Sucesso");
-//
-//        } catch (MessagingException e) {
-//            JOptionPane.showMessageDialog(null, "Houve um erro no Envio !");
-//            throw new RuntimeException(e);
-//
-//        }
-//    }
 }
