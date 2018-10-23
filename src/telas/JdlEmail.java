@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 public class JdlEmail extends javax.swing.JFrame {
 
     File[] Anexo;
+    final int botaoCancelar = 1;
 
     /**
      * Creates new form JanelaEmail
@@ -292,8 +293,9 @@ private void BotaoAnexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     JFileChooser file = new JFileChooser();
     file.setMultiSelectionEnabled(true);
     file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    int i = file.showOpenDialog(null);
-    if (i == 1) {
+    int opcaoSelecionada = file.showOpenDialog(null);
+    
+    if (opcaoSelecionada == botaoCancelar) {
         EnderecoAnexo.setText("");
         Anexo = null;
     } else {
