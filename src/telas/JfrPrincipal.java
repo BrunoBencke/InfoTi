@@ -63,6 +63,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         auditoria = new javax.swing.JMenuItem();
         ferramentas = new javax.swing.JMenu();
         email = new javax.swing.JMenuItem();
+        xml = new javax.swing.JMenuItem();
         sistema = new javax.swing.JMenu();
         usuario = new javax.swing.JMenuItem();
         desconectar = new javax.swing.JMenuItem();
@@ -357,6 +358,16 @@ public class JfrPrincipal extends javax.swing.JFrame {
         });
         ferramentas.add(email);
 
+        xml.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/email.png"))); // NOI18N
+        xml.setText("XML");
+        xml.setPreferredSize(new java.awt.Dimension(200, 50));
+        xml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xmlActionPerformed(evt);
+            }
+        });
+        ferramentas.add(xml);
+
         menu.add(ferramentas);
 
         sistema.setBackground(new java.awt.Color(255, 255, 255));
@@ -576,6 +587,11 @@ public class JfrPrincipal extends javax.swing.JFrame {
         email.setVisible(true);
     }//GEN-LAST:event_emailActionPerformed
 
+    private void xmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlActionPerformed
+        JdlXml xml = new JdlXml(this,true);
+        xml.setVisible(true);
+    }//GEN-LAST:event_xmlActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -648,5 +664,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem todosPedidos;
     private javax.swing.JMenuItem usuario;
     private javax.swing.JMenu vendas;
+    private javax.swing.JMenuItem xml;
     // End of variables declaration//GEN-END:variables
 }
