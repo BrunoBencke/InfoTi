@@ -5,9 +5,12 @@
  */
 package telas;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,8 +45,14 @@ public class JdlXml extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         btnXml = new javax.swing.JButton();
+        lblCaminho = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProdutos = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Lançamento NF-E");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -54,21 +63,64 @@ public class JdlXml extends javax.swing.JDialog {
             }
         });
 
+        lblCaminho.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblCaminho.setEnabled(false);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Lançamento de NF-e");
+
+        tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tblProdutos);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Produtos");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(280, Short.MAX_VALUE)
-                .addComponent(btnXml)
-                .addGap(45, 45, 45))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblCaminho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnXml)))
+                        .addGap(29, 29, 29))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(btnXml)
-                .addContainerGap(230, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnXml)
+                    .addComponent(lblCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -84,63 +136,71 @@ public class JdlXml extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXmlActionPerformed
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            
-            Document doc = builder.parse("C:\\Users\\atendimento\\Documents\\Xml notas\\mazer.xml");//caminho do xml
-            
-            NodeList listaProdutos = doc.getElementsByTagName("prod");
-            
-            int tamanhoLista = listaProdutos.getLength();
-            
-            for (int i = 0; i < tamanhoLista; i++) {
-                Node noProdutos = listaProdutos.item(i);
-                
-                if (noProdutos.getNodeType() == Node.ELEMENT_NODE) {//caso for um elemento
-                    Element elementoProduto = (Element) noProdutos;                    
-                    NodeList listaAtributos = elementoProduto.getChildNodes();
-                    int tamanhoAtributos = listaAtributos.getLength();
-                    for (int j = 0; j < tamanhoAtributos; j++) {
-                        Node atributo = listaAtributos.item(j);
-                        if (atributo.getNodeType() == Node.ELEMENT_NODE) {
-                            Element elementoAtributo = (Element) atributo;
-                            
-                            switch(elementoAtributo.getTagName()){
-                                case "xProd":
-                                    System.out.println("Nome: " + elementoAtributo.getTextContent());
-                                    break;
-                                    
-                                case "qCom":
-                                    System.out.println("Quantidade: " + elementoAtributo.getTextContent());
-                                    break;
-                                    
-                                case "vUnCom":
-                                    System.out.println("Valor Unidade: " + elementoAtributo.getTextContent());
-                                    break;
+        JFileChooser fc = new JFileChooser();
+        int res = fc.showOpenDialog(null);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File arquivo = fc.getSelectedFile();
+            if (!arquivo.getName().endsWith(".xml")) {
+                JOptionPane.showMessageDialog(null, "Apenas arquivos no formato .xml");
+            } else {
+                try {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+
+                Document doc = builder.parse(fc.getSelectedFile().getPath());
+                lblCaminho.setText(fc.getSelectedFile().getPath());
+                NodeList listaProdutos = doc.getElementsByTagName("prod");
+
+                int tamanhoLista = listaProdutos.getLength();
+
+                for (int i = 0; i < tamanhoLista; i++) {
+                    Node noProdutos = listaProdutos.item(i);
+
+                    if (noProdutos.getNodeType() == Node.ELEMENT_NODE) {//caso for um elemento
+                        Element elementoProduto = (Element) noProdutos;
+                        NodeList listaAtributos = elementoProduto.getChildNodes();
+                        int tamanhoAtributos = listaAtributos.getLength();
+                        for (int j = 0; j < tamanhoAtributos; j++) {
+                            Node atributo = listaAtributos.item(j);
+                            if (atributo.getNodeType() == Node.ELEMENT_NODE) {
+                                Element elementoAtributo = (Element) atributo;
+
+                                switch (elementoAtributo.getTagName()) {
+                                    case "xProd":
+                                        System.out.println("Nome: " + elementoAtributo.getTextContent());
+                                        break;
+
+                                    case "qCom":
+                                        System.out.println("Quantidade: " + elementoAtributo.getTextContent());
+                                        break;
+
+                                    case "vUnCom":
+                                        System.out.println("Valor Unidade: " + elementoAtributo.getTextContent());
+                                        break;
+                                }
                             }
                         }
                     }
                 }
+
+            } catch (ParserConfigurationException ex) {
+                Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SAXException ex) {
+                Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        }
     }//GEN-LAST:event_btnXmlActionPerformed
 
     /**
@@ -187,6 +247,11 @@ public class JdlXml extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnXml;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCaminho;
+    private javax.swing.JTable tblProdutos;
     // End of variables declaration//GEN-END:variables
 }
