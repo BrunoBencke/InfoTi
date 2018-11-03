@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
 import java.io.File;
@@ -11,6 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,10 +17,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-/**
- *
- * @author atendimento
- */
 public class JdlXml extends javax.swing.JDialog {
 
     /**
@@ -173,19 +166,66 @@ public class JdlXml extends javax.swing.JDialog {
                             Node atributo = listaAtributos.item(j);
                             if (atributo.getNodeType() == Node.ELEMENT_NODE) {
                                 Element elementoAtributo = (Element) atributo;
+                                
+                                //popula tabela
+                                Object[][] dadosTabela = null;
+                                Object[] cabecalho = new Object[4];
 
+                                cabecalho[0] = "Nome";
+                                cabecalho[1] = "Quantidade";
+                                cabecalho[2] = "Valor Unitário";
+                                cabecalho[3] = "Valor Total";
+                                
+                                dadosTabela = new Object[tamanhoLista][4];
+                                int lin = 0;
+                                int teste = 0;
                                 switch (elementoAtributo.getTagName()) {
                                     case "xProd":
+                                        System.out.println("linha "+lin);
+                                        System.out.println("teste"+teste);
                                         System.out.println("Nome: " + elementoAtributo.getTextContent());
+                                        dadosTabela[lin][0] = elementoAtributo.getTextContent();
                                         break;
 
                                     case "qCom":
                                         System.out.println("Quantidade: " + elementoAtributo.getTextContent());
+                                        dadosTabela[lin][1] = elementoAtributo.getTextContent();
                                         break;
 
                                     case "vUnCom":
                                         System.out.println("Valor Unidade: " + elementoAtributo.getTextContent());
+                                        dadosTabela[lin][2] = elementoAtributo.getTextContent();
                                         break;
+                                        
+                                    case "vProd": teste++;
+                                        System.out.println("Valor Total: " + elementoAtributo.getTextContent());
+                                        dadosTabela[lin][3] = elementoAtributo.getTextContent();
+                                        lin++;                                        
+                                        break;                                    
+                                }
+                                tblProdutos.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
+                                    @Override
+                                    // quando retorno for FALSE, a tabela nao é editavel
+                                    public boolean isCellEditable(int row, int column) {
+                                        return false;
+                                    }
+                                });
+
+                                // permite seleção de apenas uma linha da tabela
+                                tblProdutos.setSelectionMode(0);
+
+                                // redimensiona as colunas de uma tabela
+                                TableColumn column = null;
+                                for (int k = 0; k < tblProdutos.getColumnCount(); k++) {
+                                    column = tblProdutos.getColumnModel().getColumn(k);
+                                    switch (k) {
+                                        case 0:
+                                            column.setPreferredWidth(17);
+                                            break;
+                                        case 1:
+                                            column.setPreferredWidth(140);
+                                            break;
+                                    }
                                 }
                             }
                         }
