@@ -64,7 +64,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
     public void carregarDados(Produto p) {
         txfNome.setText(p.getNome());
         txfPrecoCusto.setText(p.getValor().toString());
-        txfEstoque.setText(Integer.valueOf(p.getEstoque()).toString());
+        txfEstoque.setText(Double.valueOf(p.getEstoque()).toString());
         txfDescricao.setText(p.getDescricao());
         new CombosDAO().popularCombo("MarcaProduto", jcbProduto);
     }
@@ -258,7 +258,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         if (botaopressionado.equals("novo")) {
             produto.setNome(txfNome.getText());
             produto.setValor(BigDecimal.valueOf(Double.parseDouble(txfPrecoCusto.getText())));
-            produto.setEstoque(Integer.parseInt(txfEstoque.getText()));
+            produto.setEstoque(Double.parseDouble(txfEstoque.getText()));
             produto.setDescricao(txfDescricao.getText());
             ComboItens item = (ComboItens) jcbProduto.getSelectedItem();
             marcaProduto.setIdmarcaProduto(item.getCodigo());

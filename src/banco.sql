@@ -158,11 +158,14 @@ create table marca_produto(idMarca_Produto SERIAL NOT NULL,
                        		  situacao BOOLEAN NOT NULL,
 constraint pk_marca_produto PRIMARY KEY (idMarca_Produto));
 
+INSERT INTO marca_produto
+VALUES (default,'Padrão',true);
+
 create table produto(idProduto SERIAL NOT NULL,
                        nome VARCHAR(60) NOT NULL,
                        valor DECIMAL(10,2) NOT NULL,
-                       estoque INT NOT NULL,
-                       descricao VARCHAR(200) NOT NULL,
+                       estoque FLOAT NOT NULL,
+                       descricao VARCHAR(200),
                        situacao BOOLEAN NOT NULL,
                        idMarca_Produto INT NOT NULL,
 constraint pk_produto PRIMARY KEY (idProduto),

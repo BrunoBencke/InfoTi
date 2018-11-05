@@ -53,6 +53,29 @@ public class ProdutosDao extends Dao {
         return retorno;
     }
     
+    public MarcaProduto retornaObjetoMarcaProduto(int codigo) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Query q = sessao.createQuery("from MarcaProduto where idmarcaProduto = '" + codigo + "'");
+        List lista = q.list();
+        MarcaProduto marcaProduto = (MarcaProduto) lista.get(0);
+        return marcaProduto;
+    }
+    
+    public Produto retornaExistente(String nome) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            org.hibernate.Query q = sessao.createQuery("from Produto where nome = '" + nome + "'");
+            resultado = (ArrayList<Produto>) q.list();
+            Produto u = resultado.get(0);
+            return u;
+        } catch (Exception e) {
+            //System.out.println("Erro ao Localizar Objeto!" + e.toString());
+        } finally {
+            sessao.close();
+        }
+        return null;
+    }
+    
     public void populaProduto(JTable tabela) {
         //List resultado = null;
         try {

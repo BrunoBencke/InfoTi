@@ -1,7 +1,10 @@
 package telas;
 
+import dao.ProdutosDao;
+import entidades.Produto;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -19,12 +22,59 @@ import org.xml.sax.SAXException;
 
 public class JdlXml extends javax.swing.JDialog {
 
-    /**
-     * Creates new form JdlXml
-     */
+    ProdutosDao pDao = new ProdutosDao();
+    NodeList listaProdutos;
+    int tamanhoLista;
+    
     public JdlXml(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+    
+    
+    public void lancaCompra(NodeList listaProdutos, int tamanhoLista) {
+        for (int i = 0; i < tamanhoLista; i++) {
+            Node noProdutos = listaProdutos.item(i);
+
+            if (noProdutos.getNodeType() == Node.ELEMENT_NODE) {//caso for um elemento
+                Element elementoProduto = (Element) noProdutos;
+                Produto p = new Produto();
+                NodeList listaAtributos = elementoProduto.getChildNodes();
+                int tamanhoAtributos = listaAtributos.getLength();
+                for (int j = 0; j < tamanhoAtributos; j++) {
+                    Node atributo = listaAtributos.item(j);
+
+                    if (atributo.getNodeType() == Node.ELEMENT_NODE) {
+                        Element elementoAtributo = (Element) atributo;
+
+                        switch (elementoAtributo.getTagName()) {
+                            case "xProd":
+                                if (pDao.retornaExistente(elementoAtributo.getTextContent()) != null) {
+                                    p = pDao.retornaExistente(elementoAtributo.getTextContent());
+                                } else {
+                                    p.setValor(BigDecimal.ZERO);
+                                    p.setDescricao(" ");
+                                    p.setIdmarcaProduto(pDao.retornaObjetoMarcaProduto(1));
+                                }
+                                p.setNome(elementoAtributo.getTextContent());
+                                break;
+
+                            case "qCom":
+                                double estoque = Double.parseDouble(elementoAtributo.getTextContent());
+                                p.setEstoque(p.getEstoque() + estoque);
+                                break;
+
+//                                        case "vUnCom":
+//                                            break;
+//
+//                                        case "vProd":
+//                                            break;
+                        }
+                    }
+                }
+                pDao.atualizar(p, "Produto Editado Lançamento NF-E");
+            }
+        }
     }
 
     /**
@@ -43,6 +93,8 @@ public class JdlXml extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProdutos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        dtnSalvar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lançamento NF-E");
@@ -78,6 +130,20 @@ public class JdlXml extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Produtos");
 
+        dtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/salvar.png"))); // NOI18N
+        dtnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dtnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/cancelar.png"))); // NOI18N
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -88,17 +154,23 @@ public class JdlXml extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(466, 466, 466))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblCaminho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnXml)))
                         .addGap(29, 29, 29))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,11 +181,15 @@ public class JdlXml extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXml)
                     .addComponent(lblCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dtnSalvar)
+                    .addComponent(btnExcluir))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,8 +205,8 @@ public class JdlXml extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -146,102 +222,66 @@ public class JdlXml extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Apenas arquivos no formato .xml");
             } else {
                 try {
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
 
-                Document doc = builder.parse(fc.getSelectedFile().getPath());
-                lblCaminho.setText(fc.getSelectedFile().getPath());
-                NodeList listaProdutos = doc.getElementsByTagName("prod");
+                    Document doc = builder.parse(fc.getSelectedFile().getPath());
+                    lblCaminho.setText(fc.getSelectedFile().getPath());
+                    this.listaProdutos = doc.getElementsByTagName("prod");
+                    this.tamanhoLista = listaProdutos.getLength();
 
-                int tamanhoLista = listaProdutos.getLength();
+                    for (int i = 0; i < tamanhoLista; i++) {
+                        Node noProdutos = listaProdutos.item(i);
 
-                for (int i = 0; i < tamanhoLista; i++) {
-                    Node noProdutos = listaProdutos.item(i);
+                        if (noProdutos.getNodeType() == Node.ELEMENT_NODE) {//caso for um elemento
+                            Element elementoProduto = (Element) noProdutos;
+                            Produto p = new Produto();
+                            NodeList listaAtributos = elementoProduto.getChildNodes();
+                            int tamanhoAtributos = listaAtributos.getLength();
+                            for (int j = 0; j < tamanhoAtributos; j++) {
+                                Node atributo = listaAtributos.item(j);
 
-                    if (noProdutos.getNodeType() == Node.ELEMENT_NODE) {//caso for um elemento
-                        Element elementoProduto = (Element) noProdutos;
-                        NodeList listaAtributos = elementoProduto.getChildNodes();
-                        int tamanhoAtributos = listaAtributos.getLength();
-                        for (int j = 0; j < tamanhoAtributos; j++) {
-                            Node atributo = listaAtributos.item(j);
-                            if (atributo.getNodeType() == Node.ELEMENT_NODE) {
-                                Element elementoAtributo = (Element) atributo;
-                                
-                                //popula tabela
-                                Object[][] dadosTabela = null;
-                                Object[] cabecalho = new Object[4];
+                                if (atributo.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element elementoAtributo = (Element) atributo;
 
-                                cabecalho[0] = "Nome";
-                                cabecalho[1] = "Quantidade";
-                                cabecalho[2] = "Valor Unitário";
-                                cabecalho[3] = "Valor Total";
-                                
-                                dadosTabela = new Object[tamanhoLista][4];
-                                int lin = 0;
-                                int teste = 0;
-                                switch (elementoAtributo.getTagName()) {
-                                    case "xProd":
-                                        System.out.println("linha "+lin);
-                                        System.out.println("teste"+teste);
-                                        System.out.println("Nome: " + elementoAtributo.getTextContent());
-                                        dadosTabela[lin][0] = elementoAtributo.getTextContent();
-                                        break;
-
-                                    case "qCom":
-                                        System.out.println("Quantidade: " + elementoAtributo.getTextContent());
-                                        dadosTabela[lin][1] = elementoAtributo.getTextContent();
-                                        break;
-
-                                    case "vUnCom":
-                                        System.out.println("Valor Unidade: " + elementoAtributo.getTextContent());
-                                        dadosTabela[lin][2] = elementoAtributo.getTextContent();
-                                        break;
-                                        
-                                    case "vProd": teste++;
-                                        System.out.println("Valor Total: " + elementoAtributo.getTextContent());
-                                        dadosTabela[lin][3] = elementoAtributo.getTextContent();
-                                        lin++;                                        
-                                        break;                                    
-                                }
-                                tblProdutos.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
-                                    @Override
-                                    // quando retorno for FALSE, a tabela nao é editavel
-                                    public boolean isCellEditable(int row, int column) {
-                                        return false;
-                                    }
-                                });
-
-                                // permite seleção de apenas uma linha da tabela
-                                tblProdutos.setSelectionMode(0);
-
-                                // redimensiona as colunas de uma tabela
-                                TableColumn column = null;
-                                for (int k = 0; k < tblProdutos.getColumnCount(); k++) {
-                                    column = tblProdutos.getColumnModel().getColumn(k);
-                                    switch (k) {
-                                        case 0:
-                                            column.setPreferredWidth(17);
+                                    switch (elementoAtributo.getTagName()) {
+                                        case "xProd":
+                                            p.setNome(elementoAtributo.getTextContent());
                                             break;
-                                        case 1:
-                                            column.setPreferredWidth(140);
+
+                                        case "qCom":
+                                            double estoque = Double.parseDouble(elementoAtributo.getTextContent());
+                                            p.setEstoque(p.getEstoque() + estoque);
                                             break;
                                     }
                                 }
                             }
+                            //objeto p populado
+                            //tblProdutos.addr
                         }
                     }
-                }
+                    
+                    
 
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SAXException ex) {
-                Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParserConfigurationException ex) {
+                    Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SAXException ex) {
+                    Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
             }
-        }
-        }
+        
     }//GEN-LAST:event_btnXmlActionPerformed
+
+    private void dtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtnSalvarActionPerformed
+        lancaCompra(listaProdutos, tamanhoLista);
+    }//GEN-LAST:event_dtnSalvarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,7 +326,9 @@ public class JdlXml extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnXml;
+    private javax.swing.JButton dtnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
