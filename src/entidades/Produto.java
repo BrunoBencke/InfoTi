@@ -7,9 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,14 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "produto")
@@ -40,9 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Produto.findByDescricao", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao")
     , @NamedQuery(name = "Produto.findBySituacao", query = "SELECT p FROM Produto p WHERE p.situacao = :situacao")})
 public class Produto implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduto")
-    private List<ProdutoVenda> produtoVendaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,7 +52,7 @@ public class Produto implements Serializable {
     private BigDecimal valor;
     @Basic(optional = false)
     @Column(name = "estoque")
-    private int estoque;
+    private double estoque;
     @Basic(optional = false)
     @Column(name = "descricao")
     private String descricao;
@@ -77,7 +70,7 @@ public class Produto implements Serializable {
         this.idproduto = idproduto;
     }
 
-    public Produto(Integer idproduto, String nome, BigDecimal valor, int estoque, String descricao, boolean situacao) {
+    public Produto(Integer idproduto, String nome, BigDecimal valor, double estoque, String descricao, boolean situacao) {
         this.idproduto = idproduto;
         this.nome = nome;
         this.valor = valor;
@@ -110,11 +103,11 @@ public class Produto implements Serializable {
         this.valor = valor;
     }
 
-    public int getEstoque() {
+    public double getEstoque() {
         return estoque;
     }
 
-    public void setEstoque(int estoque) {
+    public void setEstoque(double estoque) {
         this.estoque = estoque;
     }
 
@@ -164,16 +157,7 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return "Id Produto:"+idproduto+" Nome:"+nome+" Valor:"+valor+" Estoque:"+estoque+" Descrição:"+descricao+" Id MarcaProduto:"+idmarcaProduto;
-    }
-
-    @XmlTransient
-    public List<ProdutoVenda> getProdutoVendaList() {
-        return produtoVendaList;
-    }
-
-    public void setProdutoVendaList(List<ProdutoVenda> produtoVendaList) {
-        this.produtoVendaList = produtoVendaList;
+        return "entidades.Produto[ idproduto=" + idproduto + " ]";
     }
     
 }

@@ -74,7 +74,7 @@ public class Dao<T> {
                 auditoria.setOperacao("Update");
                 sessao.save(auditoria);
             }
-            sessao.update(object);
+            sessao.saveOrUpdate(object);
             t.commit();
         } catch (HibernateException he) {
             he.printStackTrace();
