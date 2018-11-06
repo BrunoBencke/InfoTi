@@ -74,6 +74,29 @@ public class Dao<T> {
                 auditoria.setOperacao("Update");
                 sessao.save(auditoria);
             }
+            sessao.update(object);
+            t.commit();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return null;
+    }
+    
+    public T saveOrUpdate(T object, String dado_anterior) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Transaction t = sessao.beginTransaction();
+            if (config.status_auditoria()) {
+                auditoria.setDadoAnterior(dado_anterior);
+                auditoria.setDadoNovo(object.toString());
+                auditoria.setData(calendario.obterDataAtualDMA());
+                auditoria.setHora(calendario.obterHoraAtual());
+                auditoria.setIdusuario(user);
+                auditoria.setOperacao("Update");
+                sessao.save(auditoria);
+            }
             sessao.saveOrUpdate(object);
             t.commit();
         } catch (HibernateException he) {

@@ -21,14 +21,7 @@ public class JdlProdutos extends javax.swing.JDialog {
         initComponents();
         String botaopressionado = "novo";
         produtosDao.populaProduto(JtlProdutos);
-        //permissaoDao.aplicaPermissao(this, permissao, botoes(),10);
-    }
-
-    JdlProdutos() {
-        initComponents();
-        String botaopressionado = "novo";
-        produtosDao.populaProduto(JtlProdutos);
-
+        permissaoDao.aplicaPermissao(this, permissao, botoes(),1);
     }
 
     @SuppressWarnings("unchecked")

@@ -55,6 +55,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
         this.tblProdutos = JtlProdutos;
         jcbProduto.removeAllItems();
         jcbProduto.setMaximumRowCount(15);
+        this.botaopressionado = "editar";
         new CombosDAO().popularCombo("MarcaProduto", jcbProduto); 
         carregarDados(produto);
     }
@@ -62,6 +63,7 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
 
 
     public void carregarDados(Produto p) {
+        txfCod.setText(String.valueOf(p.getIdproduto()));
         txfNome.setText(p.getNome());
         txfPrecoCusto.setText(p.getValor().toString());
         txfEstoque.setText(Double.valueOf(p.getEstoque()).toString());
@@ -274,9 +276,10 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
             this.dispose();
             
         } else if (botaopressionado.equals("editar")) {
+            produto.setIdproduto(Integer.valueOf(txfCod.getText()));
             produto.setNome(txfNome.getText());
             produto.setValor(BigDecimal.valueOf(Double.parseDouble(txfPrecoCusto.getText())));
-            produto.setEstoque(Integer.parseInt(txfEstoque.getText()));
+            produto.setEstoque(Double.valueOf(txfEstoque.getText()));
             produto.setDescricao(txfDescricao.getText());
             ComboItens item = (ComboItens) jcbProduto.getSelectedItem();
             marcaProduto.setIdmarcaProduto(item.getCodigo());
@@ -284,15 +287,14 @@ public class JdlCadastroProdutos extends javax.swing.JDialog {
             produto.setIdmarcaProduto(marcaProduto);
             produto.setSituacao(true);
             d.atualizar(produto, produto.toString());
-            JOptionPane.showMessageDialog(this, "Produto Cadastrada!");
+            JOptionPane.showMessageDialog(this, "Produto Editado!");
             txfNome.setText("");
             txfEstoque.setText("");
             txfPrecoCusto.setText("");
             txfDescricao.setText("");
             this.dispose();
-
         }
-        //produtosDao.populaProduto(tblProdutos);
+        produtosDao.populaProduto(tblProdutos);
     }//GEN-LAST:event_dtnSalvarActionPerformed
 
     /**

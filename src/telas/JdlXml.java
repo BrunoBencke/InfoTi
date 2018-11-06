@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,7 +21,7 @@ import org.xml.sax.SAXException;
 
 public class JdlXml extends javax.swing.JDialog {
 
-    ProdutosDao pDao = new ProdutosDao();
+    ProdutosDao pDao = new ProdutosDao(); 
     NodeList listaProdutos;
     int tamanhoLista;
     
@@ -55,6 +54,7 @@ public class JdlXml extends javax.swing.JDialog {
                                     p.setValor(BigDecimal.ZERO);
                                     p.setDescricao(" ");
                                     p.setIdmarcaProduto(pDao.retornaObjetoMarcaProduto(1));
+                                    p.setSituacao(true);
                                 }
                                 p.setNome(elementoAtributo.getTextContent());
                                 break;
@@ -116,13 +116,10 @@ public class JdlXml extends javax.swing.JDialog {
 
         tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "Produto", "Quantidade"
             }
         ));
         jScrollPane1.setViewportView(tblProdutos);
@@ -215,6 +212,7 @@ public class JdlXml extends javax.swing.JDialog {
 
     private void btnXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXmlActionPerformed
         JFileChooser fc = new JFileChooser();
+        DefaultTableModel tabelaProdutos = (DefaultTableModel)tblProdutos.getModel();
         int res = fc.showOpenDialog(null);
         if (res == JFileChooser.APPROVE_OPTION) {
             File arquivo = fc.getSelectedFile();
@@ -228,14 +226,14 @@ public class JdlXml extends javax.swing.JDialog {
                     Document doc = builder.parse(fc.getSelectedFile().getPath());
                     lblCaminho.setText(fc.getSelectedFile().getPath());
                     this.listaProdutos = doc.getElementsByTagName("prod");
-                    this.tamanhoLista = listaProdutos.getLength();
+                    this.tamanhoLista = listaProdutos.getLength();                    
 
                     for (int i = 0; i < tamanhoLista; i++) {
                         Node noProdutos = listaProdutos.item(i);
-
+                        Produto p = new Produto();
+                        
                         if (noProdutos.getNodeType() == Node.ELEMENT_NODE) {//caso for um elemento
-                            Element elementoProduto = (Element) noProdutos;
-                            Produto p = new Produto();
+                            Element elementoProduto = (Element) noProdutos;                            
                             NodeList listaAtributos = elementoProduto.getChildNodes();
                             int tamanhoAtributos = listaAtributos.getLength();
                             for (int j = 0; j < tamanhoAtributos; j++) {
@@ -250,19 +248,14 @@ public class JdlXml extends javax.swing.JDialog {
                                             break;
 
                                         case "qCom":
-                                            double estoque = Double.parseDouble(elementoAtributo.getTextContent());
-                                            p.setEstoque(p.getEstoque() + estoque);
+                                            p.setEstoque(Double.parseDouble(elementoAtributo.getTextContent()));
                                             break;
                                     }
-                                }
+                                }                                
                             }
-                            //objeto p populado
-                            //tblProdutos.addr
                         }
+                        tabelaProdutos.addRow(new String[]{p.getNome(),String.valueOf(p.getEstoque())});
                     }
-                    
-                    
-
                 } catch (ParserConfigurationException ex) {
                     Logger.getLogger(JdlXml.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SAXException ex) {

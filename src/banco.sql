@@ -162,7 +162,7 @@ INSERT INTO marca_produto
 VALUES (default,'Padrão',true);
 
 create table produto(idProduto SERIAL NOT NULL,
-                       nome VARCHAR(60) NOT NULL,
+                       nome VARCHAR(355) NOT NULL,
                        valor DECIMAL(10,2) NOT NULL,
                        estoque FLOAT NOT NULL,
                        descricao VARCHAR(200),
