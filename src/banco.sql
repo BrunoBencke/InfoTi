@@ -250,6 +250,12 @@ create table titulo_pagar(idTitulo_Pagar SERIAL NOT NULL,
 constraint pk_titulo_pagar PRIMARY KEY (idTitulo_Pagar),
 constraint fk_idCaixa_caixa FOREIGN KEY (idCaixa) REFERENCES caixa);
 
+create table consulta(idConsulta SERIAL NOT NULL,
+                      data_consulta DATE,
+                      hora_consulta VARCHAR,
+                      idProdutos INT NOT NULL,
+constraint pk_consulta PRIMARY KEY (idConsulta),
+constraint fk_idProdutos FOREIGN KEY (idProdutos) REFERENCES produto);
 
 
 -- Populando Estados --
