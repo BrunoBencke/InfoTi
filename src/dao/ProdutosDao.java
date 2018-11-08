@@ -50,6 +50,7 @@ public class ProdutosDao extends Dao {
         List lista = q.list();
         MarcaProduto marcaProduto = (MarcaProduto) lista.get(0);
         String retorno = marcaProduto.getNome();
+        sessao.close();
         return retorno;
     }
     
@@ -58,6 +59,7 @@ public class ProdutosDao extends Dao {
         org.hibernate.Query q = sessao.createQuery("from MarcaProduto where idmarcaProduto = '" + codigo + "'");
         List lista = q.list();
         MarcaProduto marcaProduto = (MarcaProduto) lista.get(0);
+        sessao.close();
         return marcaProduto;
     }
     

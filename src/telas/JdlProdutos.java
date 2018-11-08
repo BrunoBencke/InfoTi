@@ -4,9 +4,31 @@ import dao.Dao;
 import dao.PermissaoDao;
 import dao.ProdutosDao;
 import entidades.Produto;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import static telas.JfrPrincipal.permissao;
 
 public class JdlProdutos extends javax.swing.JDialog {
@@ -15,12 +37,15 @@ public class JdlProdutos extends javax.swing.JDialog {
     PermissaoDao permissaoDao = new PermissaoDao();
     Produto produto = new Produto();
     Dao d = new Dao();
+    ProdutosDao pDao = new ProdutosDao();
+    NodeList listaProdutos;
+    int tamanhoLista;
 
     public JdlProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         String botaopressionado = "novo";
-        produtosDao.populaProduto(JtlProdutos);
+        produtosDao.populaProduto(tblProdutos);
         permissaoDao.aplicaPermissao(this, permissao, botoes(),1);
     }
 
@@ -33,12 +58,14 @@ public class JdlProdutos extends javax.swing.JDialog {
         btnEditar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        btnXml = new javax.swing.JButton();
+        btnImportarXml = new javax.swing.JButton();
         Cadastro1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txfBuscar1 = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        JtlProdutos = new javax.swing.JTable();
+        tblProdutos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Produtos");
@@ -73,6 +100,22 @@ public class JdlProdutos extends javax.swing.JDialog {
             }
         });
 
+        btnXml.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/exporta_32.png"))); // NOI18N
+        btnXml.setText("Exportar XML");
+        btnXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXmlActionPerformed(evt);
+            }
+        });
+
+        btnImportarXml.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/importar_32.png"))); // NOI18N
+        btnImportarXml.setText("Importar XML");
+        btnImportarXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarXmlActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout BotoesLayout = new javax.swing.GroupLayout(Botoes);
         Botoes.setLayout(BotoesLayout);
         BotoesLayout.setHorizontalGroup(
@@ -84,6 +127,10 @@ public class JdlProdutos extends javax.swing.JDialog {
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(btnXml)
+                .addGap(18, 18, 18)
+                .addComponent(btnImportarXml)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -93,6 +140,9 @@ public class JdlProdutos extends javax.swing.JDialog {
             .addGroup(BotoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnXml)
+                        .addComponent(btnImportarXml))
                     .addComponent(btnExcluir)
                     .addComponent(btnEditar)
                     .addComponent(btnNovo)
@@ -107,7 +157,7 @@ public class JdlProdutos extends javax.swing.JDialog {
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Search.png"))); // NOI18N
 
-        JtlProdutos.setModel(new javax.swing.table.DefaultTableModel(
+        tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -115,7 +165,7 @@ public class JdlProdutos extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane2.setViewportView(JtlProdutos);
+        jScrollPane2.setViewportView(tblProdutos);
 
         javax.swing.GroupLayout Cadastro1Layout = new javax.swing.GroupLayout(Cadastro1);
         Cadastro1.setLayout(Cadastro1Layout);
@@ -195,10 +245,10 @@ public class JdlProdutos extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int linha = JtlProdutos.getSelectedRow();
+        int linha = tblProdutos.getSelectedRow();
         if (linha > -1) {
             int resposta = 0;
-            int codProduto = Integer.valueOf(String.valueOf(JtlProdutos.getValueAt(JtlProdutos.getSelectedRow(), 0)));
+            int codProduto = Integer.valueOf(String.valueOf(tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 0)));
             resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
             if (resposta == JOptionPane.YES_OPTION) {
                 produto = produtosDao.procurarPorId(codProduto);
@@ -206,23 +256,163 @@ public class JdlProdutos extends javax.swing.JDialog {
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
-            produtosDao.populaProduto(JtlProdutos);
+            produtosDao.populaProduto(tblProdutos);
         }
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int linha = JtlProdutos.getSelectedRow();
+        int linha = tblProdutos.getSelectedRow();
         if (linha > -1) {
             String botaopressionado = "editar";
-            int codProd = Integer.valueOf(String.valueOf(JtlProdutos.getValueAt(linha, 0)));
+            int codProd = Integer.valueOf(String.valueOf(tblProdutos.getValueAt(linha, 0)));
             Produto produto = produtosDao.procurarPorId(codProd);
-            JdlCadastroProdutos telaProdutos = new JdlCadastroProdutos(null, false, produto, JtlProdutos);
+            JdlCadastroProdutos telaProdutos = new JdlCadastroProdutos(null, false, produto, tblProdutos);
             telaProdutos.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXmlActionPerformed
+        int linha = tblProdutos.getSelectedRow();
+        if (linha > -1) {
+            int codProd = Integer.valueOf(String.valueOf(tblProdutos.getValueAt(linha, 0)));
+            Produto p = produtosDao.procurarPorId(codProd);
+            //criar XML           
+            try {
+                DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+                Document documentoXml = documentBuilder.newDocument();
+                Element root = documentoXml.createElement("root");
+                documentoXml.appendChild(root);                
+                Element produto = documentoXml.createElement("produto");
+                //criar e setar um atributo
+                Attr id = documentoXml.createAttribute("id");
+                id.setValue(String.valueOf(codProd));
+                produto.setAttributeNode(id);
+                root.appendChild(produto);
+                
+                Element nome = documentoXml.createElement("nome");
+                //<nome> Mouse </nome>
+                nome.appendChild(documentoXml.createTextNode(p.getNome()));
+                produto.appendChild(nome);
+
+                Element valor = documentoXml.createElement("valor");
+                valor.appendChild(documentoXml.createTextNode(p.getValor().toPlainString()));
+                produto.appendChild(valor);
+
+                Element estoque = documentoXml.createElement("estoque");
+                estoque.appendChild(documentoXml.createTextNode(String.valueOf(p.getEstoque())));
+                produto.appendChild(estoque);
+
+                Element descricao = documentoXml.createElement("descricao");
+                descricao.appendChild(documentoXml.createTextNode(p.getDescricao()));
+                produto.appendChild(descricao);
+
+                Element marcaProduto = documentoXml.createElement("marcaProduto");
+                marcaProduto.appendChild(documentoXml.createTextNode(String.valueOf(p.getIdmarcaProduto().getId())));
+                produto.appendChild(marcaProduto);
+                
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                
+                //System.out.println(System.getProperty("user.home"));
+                DOMSource documentoFonte = new DOMSource(documentoXml);
+                StreamResult documentoFinal = new StreamResult(new File("C:\\Users\\atendimento\\Desktop\\produto.xml"));
+                transformer.transform(documentoFonte, documentoFinal);
+                
+            } catch (ParserConfigurationException ex) {
+                Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TransformerConfigurationException ex) {
+                Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TransformerException ex) {
+                Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnXmlActionPerformed
+
+    private void btnImportarXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarXmlActionPerformed
+        JFileChooser fc = new JFileChooser();
+        DefaultTableModel tabelaProdutos = (DefaultTableModel) tblProdutos.getModel();
+        int res = fc.showOpenDialog(null);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            File arquivo = fc.getSelectedFile();
+            if (!arquivo.getName().endsWith(".xml")) {
+                JOptionPane.showMessageDialog(null, "Apenas arquivos no formato .xml");
+            } else {
+                try {
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
+
+                    Document doc = builder.parse(fc.getSelectedFile().getPath());
+                    this.listaProdutos = doc.getElementsByTagName("produto");
+                    this.tamanhoLista = listaProdutos.getLength();
+
+                    for (int i = 0; i < tamanhoLista; i++) {
+                        Node noProdutos = listaProdutos.item(i);
+
+                        if (noProdutos.getNodeType() == Node.ELEMENT_NODE) {//caso for um elemento
+                            Element elementoProduto = (Element) noProdutos;
+                            Produto p = new Produto();
+                            NodeList listaAtributos = elementoProduto.getChildNodes();
+                            int tamanhoAtributos = listaAtributos.getLength();
+                            for (int j = 0; j < tamanhoAtributos; j++) {
+                                Node atributo = listaAtributos.item(j);
+
+                                if (atributo.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element elementoAtributo = (Element) atributo;
+
+                                    switch (elementoAtributo.getTagName()) {
+                                        case "id":
+                                            int id = Integer.parseInt(elementoAtributo.getTextContent());
+                                            if (pDao.procurarPorId(id) != null) {
+                                                p = pDao.procurarPorId(id);
+                                            }
+                                            p.setSituacao(true);
+                                            break;
+
+                                        case "estoque":
+                                            double estoque = Double.parseDouble(elementoAtributo.getTextContent());
+                                            p.setEstoque(p.getEstoque() + estoque);
+                                            break;
+
+                                        case "nome":
+                                            p.setNome(elementoAtributo.getTextContent());
+                                            break;
+
+                                        case "descricao":
+                                            p.setDescricao(elementoAtributo.getTextContent());
+                                            break;
+
+                                        case "valor":
+                                            BigDecimal b = new BigDecimal(elementoAtributo.getTextContent());
+                                            p.setValor(b);
+                                            break;
+
+                                        case "marcaProduto":
+                                            p.setIdmarcaProduto(pDao.retornaObjetoMarcaProduto(Integer.parseInt(elementoAtributo.getTextContent())));
+                                            break;
+                                    }
+                                }
+                            }
+                            pDao.saveOrUpdate(p, "Produto Lançado Por XML");
+                        }
+                    }
+                } catch (ParserConfigurationException ex) {
+                    Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SAXException ex) {
+                    Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    
+    }//GEN-LAST:event_btnImportarXmlActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,14 +459,16 @@ public class JdlProdutos extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Botoes;
     private javax.swing.JPanel Cadastro1;
-    private javax.swing.JTable JtlProdutos;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnImportarXml;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnXml;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblProdutos;
     private javax.swing.JTextField txfBuscar1;
     // End of variables declaration//GEN-END:variables
 }

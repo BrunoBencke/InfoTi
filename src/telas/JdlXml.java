@@ -28,6 +28,7 @@ public class JdlXml extends javax.swing.JDialog {
     public JdlXml(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tblProdutos.getColumnModel().getColumn(1).setPreferredWidth(50);
     }
     
     
@@ -72,7 +73,7 @@ public class JdlXml extends javax.swing.JDialog {
                         }
                     }
                 }
-                pDao.atualizar(p, "Produto Editado Lançamento NF-E");
+                pDao.saveOrUpdate(p, "Produto Editado Lançamento NF-E");
             }
         }
     }
@@ -270,6 +271,8 @@ public class JdlXml extends javax.swing.JDialog {
 
     private void dtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtnSalvarActionPerformed
         lancaCompra(listaProdutos, tamanhoLista);
+        JOptionPane.showMessageDialog(null, "Compra Lançada Com Sucesso!");
+        this.dispose();
     }//GEN-LAST:event_dtnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed

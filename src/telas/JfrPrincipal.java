@@ -64,6 +64,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         ferramentas = new javax.swing.JMenu();
         email = new javax.swing.JMenuItem();
         xml = new javax.swing.JMenuItem();
+        grafico = new javax.swing.JMenuItem();
         sistema = new javax.swing.JMenu();
         usuario = new javax.swing.JMenuItem();
         desconectar = new javax.swing.JMenuItem();
@@ -358,7 +359,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         });
         ferramentas.add(email);
 
-        xml.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/email.png"))); // NOI18N
+        xml.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/xml_32.png"))); // NOI18N
         xml.setText("XML");
         xml.setPreferredSize(new java.awt.Dimension(200, 50));
         xml.addActionListener(new java.awt.event.ActionListener() {
@@ -367,6 +368,16 @@ public class JfrPrincipal extends javax.swing.JFrame {
             }
         });
         ferramentas.add(xml);
+
+        grafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/grafico_32.png"))); // NOI18N
+        grafico.setText("Gráfico");
+        grafico.setPreferredSize(new java.awt.Dimension(200, 50));
+        grafico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                graficoActionPerformed(evt);
+            }
+        });
+        ferramentas.add(grafico);
 
         menu.add(ferramentas);
 
@@ -592,6 +603,10 @@ public class JfrPrincipal extends javax.swing.JFrame {
         xml.setVisible(true);
     }//GEN-LAST:event_xmlActionPerformed
 
+    private void graficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graficoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_graficoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -643,6 +658,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu ferramentas;
     private javax.swing.JMenu fianceiro;
     private javax.swing.JMenuItem funcionarios;
+    private javax.swing.JMenuItem grafico;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem marcasProdutos;
