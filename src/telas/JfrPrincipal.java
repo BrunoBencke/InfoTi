@@ -604,7 +604,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_xmlActionPerformed
 
     private void graficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graficoActionPerformed
-        // TODO add your handling code here:
+        JdlGrafico grafico  = new JdlGrafico(this, true);
+        grafico.setVisible(true);
     }//GEN-LAST:event_graficoActionPerformed
 
     /**

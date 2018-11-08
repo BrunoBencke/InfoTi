@@ -321,7 +321,8 @@ public class JdlProdutos extends javax.swing.JDialog {
                 DOMSource documentoFonte = new DOMSource(documentoXml);
                 StreamResult documentoFinal = new StreamResult(new File("C:\\Users\\atendimento\\Desktop\\produto.xml"));
                 transformer.transform(documentoFonte, documentoFinal);
-                
+                JOptionPane.showMessageDialog(null, "Exportado Com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                produtosDao.populaProduto(tblProdutos);
             } catch (ParserConfigurationException ex) {
                 Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
             } catch (TransformerConfigurationException ex) {
@@ -400,6 +401,8 @@ public class JdlProdutos extends javax.swing.JDialog {
                                 }
                             }
                             pDao.saveOrUpdate(p, "Produto Lançado Por XML");
+                            JOptionPane.showMessageDialog(null, "Importado Com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                            produtosDao.populaProduto(tblProdutos);
                         }
                     }
                 } catch (ParserConfigurationException ex) {

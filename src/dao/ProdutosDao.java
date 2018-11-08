@@ -78,6 +78,20 @@ public class ProdutosDao extends Dao {
         return null;
     }
     
+    public ArrayList<Produto> retornaTodosProdutos() {
+        try {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            org.hibernate.Query q = sessao.createQuery("from Produto");
+            ArrayList<Produto> resultado = new ArrayList<Produto>();
+            resultado = (ArrayList<Produto>) q.list();
+            return resultado;
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return null;
+    }
+
     public void populaProduto(JTable tabela) {
         //List resultado = null;
         try {
