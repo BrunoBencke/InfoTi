@@ -1,6 +1,6 @@
 package dao;
 
-import apoio.ArquivoLog;
+import apoio.GravaTxt;
 import apoio.HibernateUtil;
 import entidades.ProdutoVenda;
 import entidades.Venda;
@@ -16,7 +16,7 @@ public class VendaDao extends Dao {
     ArrayList<Venda> resultado;    
     
     public boolean vendaSemProdutos(Integer id) {
-        ArquivoLog arquivoLog = new ArquivoLog();
+        GravaTxt arquivoLog = new GravaTxt();
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             org.hibernate.Query q = sessao.createQuery("from ProdutoVenda where idVenda = '" + id + "'");
@@ -35,7 +35,7 @@ public class VendaDao extends Dao {
     }
 
     public Venda procurarPorId(Integer id) {
-        ArquivoLog arquivoLog =  new ArquivoLog();
+        GravaTxt arquivoLog =  new GravaTxt();
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {
             org.hibernate.Query q = sessao.createQuery("from Venda");

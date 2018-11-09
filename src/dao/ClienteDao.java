@@ -1,6 +1,6 @@
 package dao;
 
-import apoio.ArquivoLog;
+import apoio.GravaTxt;
 import apoio.HibernateUtil;
 import entidades.Cliente;
 import entidades.Endereco;
@@ -49,7 +49,7 @@ public class ClienteDao extends Dao {
     }
 
     public Cliente procurarPorId(Integer id) {
-        ArquivoLog arquivoLog =  new ArquivoLog();
+        GravaTxt arquivoLog =  new GravaTxt();
         
         sessao = HibernateUtil.getSessionFactory().openSession();
         try {

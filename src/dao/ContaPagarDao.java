@@ -1,6 +1,6 @@
 package dao;
 
-import apoio.ArquivoLog;
+import apoio.GravaTxt;
 import apoio.HibernateUtil;
 import entidades.ContaPagar;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import org.hibernate.Transaction;
 
 public class ContaPagarDao extends Dao {
 
-    ArquivoLog arquivoLog = new ArquivoLog();
+    GravaTxt arquivoLog = new GravaTxt();
 
     Dao d = new Dao();
 

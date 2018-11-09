@@ -1,6 +1,7 @@
 package telas;
 
 import apoio.Criptografia;
+import apoio.GravaTxt;
 import apoio.HibernateUtil;
 import dao.PermissaoDao;
 import entidades.Permissao;
@@ -22,9 +23,11 @@ public class JfrLogin extends javax.swing.JFrame {
     Usuario user;
     PermissaoDao permDao = new PermissaoDao();
     ArrayList<Permissao> perm;
+    GravaTxt gravaTxt = new GravaTxt();
 
     public JfrLogin() throws ClassNotFoundException {
         initComponents();
+        gravaTxt.retornaServidor();
     }
 
     public boolean login() {
