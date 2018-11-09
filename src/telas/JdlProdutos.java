@@ -319,7 +319,7 @@ public class JdlProdutos extends javax.swing.JDialog {
                 
                 //System.out.println(System.getProperty("user.home"));
                 DOMSource documentoFonte = new DOMSource(documentoXml);
-                StreamResult documentoFinal = new StreamResult(new File("C:\\Users\\atendimento\\Desktop\\produto.xml"));
+                StreamResult documentoFinal = new StreamResult(new File("C:\\Users\\bruno.bencke\\Desktop\\produto.xml"));
                 transformer.transform(documentoFonte, documentoFinal);
                 JOptionPane.showMessageDialog(null, "Exportado Com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
                 produtosDao.populaProduto(tblProdutos);

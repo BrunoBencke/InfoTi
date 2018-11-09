@@ -31,29 +31,11 @@ public class Servidor implements Runnable{
     public Servidor(int porta) throws Exception{
         atendentes = new ArrayList<Atendente>();
         inicializado = false;
-        executando = false;
-        
+        executando = false;        
         open(porta);
     }
     
-    @Override
-    public void run() {
-        System.out.println("Aguardando Conexão.");
-        while(executando){
-            try{
-                server.setSoTimeout(2500);
-                
-                Socket socket = server.accept();
-                System.out.println("Conexao Estabelecida");
-                
-            }catch(SocketTimeoutException e){
-                //System.out.println("Tempo de Conexão Excedido!");
-            } catch (Exception e) {
-                System.out.println(e);
-                break;
-            } 
-        }
-    } 
+
     
     private void open(int porta) throws Exception{
         server = new ServerSocket (porta);
@@ -95,7 +77,27 @@ public class Servidor implements Runnable{
             thread.join();
         }        
     }
-    
+
+    @Override
+    public void run() {
+        System.out.println("Aguardando Conexão.");
+        while (executando) {
+            try {
+                server.setSoTimeout(2500);
+                Socket socket = server.accept();
+                System.out.println("Conexao Estabelecida");                
+                Atendente atendente = new Atendente(socket);
+                atendente.start();
+                atendentes.add(atendente);
+            } catch (SocketTimeoutException e) {
+                //System.out.println("Tempo de Conexão Excedido!");
+            } catch (Exception e) {
+                System.out.println(e);
+                break;
+            }
+        }
+        close();
+    }
     
     //servidor síncrono de uma única thread.atendende um único cliente de cada vez e as mensagens trocadas são sincronizadas: 
     //quando o socket cliente grava, o socket server lê; 
