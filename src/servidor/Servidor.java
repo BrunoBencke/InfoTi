@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class Servidor implements Runnable{
     
-    private List<Atendente> atendentes;
+    private static List<Atendente> atendentes;
     private ServerSocket server;
     private boolean inicializado;
     private boolean executando;
@@ -119,4 +119,14 @@ public class Servidor implements Runnable{
         servidor.stop();
     }
 
+    public static boolean alertarEstoque(String pMsg)
+    {
+        String wmsg = "CLIE: " + pMsg;
+        for (Atendente atendente : atendentes) {
+            atendente.escreverMensagem("Testexxx");
+        }
+        return true;
+    }
+    
+    
 }

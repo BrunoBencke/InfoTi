@@ -88,6 +88,10 @@ public class Atendente implements Runnable {
             thread.join();
         }        
     }
+    
+    public void escreverMensagem(String mensagem){
+        out.println(mensagem);
+    }
 
     @Override
     public void run() {
@@ -96,13 +100,18 @@ public class Atendente implements Runnable {
                 socket.setSoTimeout(2500);
 
                 String mensagem = in.readLine();
-
+                System.out.println("mensagem recebida"+mensagem);
+                if (mensagem.equalsIgnoreCase("1")) {
+                    if (Servidor.alertarEstoque("alertaEstoque")) {
+                        
+                    }
+                }
                 System.out.println("Mensagem recebida do cliente " + socket.getInetAddress().getHostName() + " : " + socket.getPort() + " - " + mensagem);
 
                 if ("FIM".equals(mensagem)) {//se a mensagem for FIM encerra a conexao
                     break;
                 }
-
+                
                 out.println(mensagem);
             } catch (SocketTimeoutException e) {
                 //ignorar

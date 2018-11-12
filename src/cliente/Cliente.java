@@ -1,6 +1,7 @@
 package cliente;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -101,9 +102,11 @@ public class Cliente implements Runnable {
             try {
                 socket.setSoTimeout(2500);
                 String mensagem = in.readLine();
-                if (mensagem == null) {
-                    break;
-                }
+
+//                mensagem.split(":");
+//                if (mensagem.split(":")[0] == "PROD") {
+//                    break;
+//                }
                 System.out.println("Servidor enviou: " + mensagem);
             } catch (SocketTimeoutException e) {
                 //ignorar
