@@ -277,60 +277,65 @@ public class JdlProdutos extends javax.swing.JDialog {
     private void btnXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXmlActionPerformed
         int linha = tblProdutos.getSelectedRow();
         if (linha > -1) {
-            int codProd = Integer.valueOf(String.valueOf(tblProdutos.getValueAt(linha, 0)));
-            Produto p = produtosDao.procurarPorId(codProd);
-            //criar XML           
-            try {
-                DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-                Document documentoXml = documentBuilder.newDocument();
-                Element root = documentoXml.createElement("root");
-                documentoXml.appendChild(root);                
-                Element produto = documentoXml.createElement("produto");
-                //criar e setar um atributo
-                Attr id = documentoXml.createAttribute("id");
-                id.setValue(String.valueOf(codProd));
-                produto.setAttributeNode(id);
-                root.appendChild(produto);
-                
-                Element nome = documentoXml.createElement("nome");
-                //<nome> Mouse </nome>
-                nome.appendChild(documentoXml.createTextNode(p.getNome()));
-                produto.appendChild(nome);
+            JFileChooser fc = new JFileChooser();
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showOpenDialog(null);
+            if (res == JFileChooser.APPROVE_OPTION) {
+                int codProd = Integer.valueOf(String.valueOf(tblProdutos.getValueAt(linha, 0)));
+                Produto p = produtosDao.procurarPorId(codProd);
+                //criar XML           
+                try {
+                    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+                    Document documentoXml = documentBuilder.newDocument();
+                    Element root = documentoXml.createElement("root");
+                    documentoXml.appendChild(root);
+                    Element produto = documentoXml.createElement("produto");
+                    //criar e setar um atributo
+                    Attr id = documentoXml.createAttribute("id");
+                    id.setValue(String.valueOf(codProd));
+                    produto.setAttributeNode(id);
+                    root.appendChild(produto);
 
-                Element valor = documentoXml.createElement("valor");
-                valor.appendChild(documentoXml.createTextNode(p.getValor().toPlainString()));
-                produto.appendChild(valor);
+                    Element nome = documentoXml.createElement("nome");
+                    //<nome> Mouse </nome>
+                    nome.appendChild(documentoXml.createTextNode(p.getNome()));
+                    produto.appendChild(nome);
 
-                Element estoque = documentoXml.createElement("estoque");
-                estoque.appendChild(documentoXml.createTextNode(String.valueOf(p.getEstoque())));
-                produto.appendChild(estoque);
+                    Element valor = documentoXml.createElement("valor");
+                    valor.appendChild(documentoXml.createTextNode(p.getValor().toPlainString()));
+                    produto.appendChild(valor);
 
-                Element descricao = documentoXml.createElement("descricao");
-                descricao.appendChild(documentoXml.createTextNode(p.getDescricao()));
-                produto.appendChild(descricao);
+                    Element estoque = documentoXml.createElement("estoque");
+                    estoque.appendChild(documentoXml.createTextNode(String.valueOf(p.getEstoque())));
+                    produto.appendChild(estoque);
 
-                Element marcaProduto = documentoXml.createElement("marcaProduto");
-                marcaProduto.appendChild(documentoXml.createTextNode(String.valueOf(p.getIdmarcaProduto().getId())));
-                produto.appendChild(marcaProduto);
-                
-                TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                Transformer transformer = transformerFactory.newTransformer();
-                
-                //System.out.println(System.getProperty("user.home"));
-                DOMSource documentoFonte = new DOMSource(documentoXml);
-                StreamResult documentoFinal = new StreamResult(new File("C:\\Users\\bruno.bencke\\Desktop\\produto.xml"));
-                transformer.transform(documentoFonte, documentoFinal);
-                JOptionPane.showMessageDialog(null, "Exportado Com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
-                produtosDao.populaProduto(tblProdutos);
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (TransformerConfigurationException ex) {
-                Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (TransformerException ex) {
-                Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                    Element descricao = documentoXml.createElement("descricao");
+                    descricao.appendChild(documentoXml.createTextNode(p.getDescricao()));
+                    produto.appendChild(descricao);
+
+                    Element marcaProduto = documentoXml.createElement("marcaProduto");
+                    marcaProduto.appendChild(documentoXml.createTextNode(String.valueOf(p.getIdmarcaProduto().getId())));
+                    produto.appendChild(marcaProduto);
+
+                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    Transformer transformer = transformerFactory.newTransformer();
+
+                    //System.out.println(System.getProperty("user.home"));
+                    DOMSource documentoFonte = new DOMSource(documentoXml);
+                    String nomeArquivo = fc.getSelectedFile().getPath() + "\\" + p.getNome() + ".xml";
+                    StreamResult documentoFinal = new StreamResult(new File(nomeArquivo));
+                    transformer.transform(documentoFonte, documentoFinal);
+                    JOptionPane.showMessageDialog(null, "Exportado Com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                    produtosDao.populaProduto(tblProdutos);
+                } catch (ParserConfigurationException ex) {
+                    Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TransformerConfigurationException ex) {
+                    Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (TransformerException ex) {
+                    Logger.getLogger(JdlProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Produto!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
