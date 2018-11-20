@@ -65,6 +65,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
         email = new javax.swing.JMenuItem();
         xml = new javax.swing.JMenuItem();
         grafico = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         sistema = new javax.swing.JMenu();
         usuario = new javax.swing.JMenuItem();
         desconectar = new javax.swing.JMenuItem();
@@ -379,6 +380,16 @@ public class JfrPrincipal extends javax.swing.JFrame {
         });
         ferramentas.add(grafico);
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\NetBeansProjects\\InfoTi\\src\\icones\\Backup.png")); // NOI18N
+        jMenuItem3.setText("Backup");
+        jMenuItem3.setPreferredSize(new java.awt.Dimension(200, 50));
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        ferramentas.add(jMenuItem3);
+
         menu.add(ferramentas);
 
         sistema.setBackground(new java.awt.Color(255, 255, 255));
@@ -608,6 +619,13 @@ public class JfrPrincipal extends javax.swing.JFrame {
         grafico.setVisible(true);
     }//GEN-LAST:event_graficoActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        
+        JdlBackup jdlBackup = new JdlBackup(this, true);
+        jdlBackup.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -662,6 +680,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem grafico;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem marcasProdutos;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem miAllClients;
