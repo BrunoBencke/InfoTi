@@ -201,8 +201,7 @@ public class PermissaoDao extends Dao{
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();           
             org.hibernate.Query q = sessao.createQuery("from Permissao WHERE idUsuario = '" + idUsuario + "' AND idTela = '"+ idTela+"'");
-            ArrayList<Permissao> resultado = new ArrayList<Permissao>();
-            resultado = (ArrayList<Permissao>) q.list();
+            ArrayList<Permissao> resultado = (ArrayList<Permissao>) q.list();
 
             Object[][] dadosTabela = null;
             Object[] cabecalho = new Object[3];

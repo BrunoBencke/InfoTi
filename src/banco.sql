@@ -54,12 +54,19 @@ create table pessoa_fisica(idPessoa_Fisica SERIAL NOT NULL,
 constraint pk_pessoa_fisica PRIMARY KEY (idPessoa_Fisica),
 constraint fk_idCliente_cliente FOREIGN KEY (idCliente) REFERENCES cliente);
 
+create table versoes(idVersao SERIAL NOT NULL,
+                      descricao VARCHAR(500),
+					  data TIMESTAMP,
+					  versao VARCHAR(255),
+constraint pk_versoes PRIMARY KEY (idVersao));
+
 create table config(idConfig SERIAL NOT NULL,
                       auditoria INT NOT NULL,
+					  exibir_versoes INT,
 constraint pk_config PRIMARY KEY (idConfig));
 
 INSERT INTO config
-VALUES (default,'1');
+VALUES (default,'1','1');
 
 create table usuario(idUsuario SERIAL NOT NULL,
                       nome VARCHAR(100) NOT NULL,

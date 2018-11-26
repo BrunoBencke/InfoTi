@@ -3,6 +3,7 @@ package telas;
 import apoio.Criptografia;
 import apoio.GravaTxt;
 import apoio.HibernateUtil;
+import dao.ConfigDao;
 import dao.PermissaoDao;
 import entidades.Permissao;
 import entidades.Usuario;
@@ -20,7 +21,9 @@ public class JfrLogin extends javax.swing.JFrame {
     Session sessao = HibernateUtil.getSessionFactory().openSession();
     List resultado = null;
     Criptografia c = new Criptografia();
-    Usuario user;
+    ConfigDao confDao = new ConfigDao();
+    public static Usuario user;
+    Usuario usuario;
     PermissaoDao permDao = new PermissaoDao();
     ArrayList<Permissao> perm;
     GravaTxt gravaTxt = new GravaTxt();
@@ -34,9 +37,10 @@ public class JfrLogin extends javax.swing.JFrame {
             org.hibernate.Query q = sessao.createQuery("from Usuario");
             resultado = q.list();
             for (Object o : resultado) {
-                user = (Usuario) o;
-                if (jtfUsuario.getText().equals(user.getNome()) && c.criptografa(jtfSenha.getText()).equals(user.getSenha())) {
-                    perm = permDao.retornaPermissao(user);
+                usuario = (Usuario) o;
+                if (jtfUsuario.getText().equals(usuario.getNome()) && c.criptografa(jtfSenha.getText()).equals(usuario.getSenha())) {
+                    user = usuario;
+                    perm = permDao.retornaPermissao(user);                    
                     return true;
                 }
             }
@@ -46,8 +50,13 @@ public class JfrLogin extends javax.swing.JFrame {
     public void fazLogin() {
         if (login()) {
             this.setVisible(false);
-            JfrPrincipal telaPrincipal = new JfrPrincipal(user, perm);
-            telaPrincipal.setVisible(true);
+            if (confDao.status_exibir_versoes()) {
+                JdlRelease telaRelease = new JdlRelease(this, rootPaneCheckingEnabled, user, perm);
+                telaRelease.setVisible(true);
+            } else {
+                JfrPrincipal telaPrincipal = new JfrPrincipal(user, perm);
+                telaPrincipal.setVisible(true);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");
             jtfUsuario.setText("");
@@ -144,6 +153,7 @@ public class JfrLogin extends javax.swing.JFrame {
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void jtfUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfUsuarioKeyPressed

@@ -6,9 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,14 +14,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bruno.bencke
+ * @author atendimento
  */
 @Entity
 @Table(name = "config")
@@ -31,7 +27,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Config.findAll", query = "SELECT c FROM Config c")
     , @NamedQuery(name = "Config.findByIdconfig", query = "SELECT c FROM Config c WHERE c.idconfig = :idconfig")
-    , @NamedQuery(name = "Config.findByAuditoria", query = "SELECT c FROM Config c WHERE c.auditoria = :auditoria")})
+    , @NamedQuery(name = "Config.findByAuditoria", query = "SELECT c FROM Config c WHERE c.auditoria = :auditoria")
+    , @NamedQuery(name = "Config.findByExibirVersoes", query = "SELECT c FROM Config c WHERE c.exibirVersoes = :exibirVersoes")})
 public class Config implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,8 +40,8 @@ public class Config implements Serializable {
     @Basic(optional = false)
     @Column(name = "auditoria")
     private int auditoria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idconfig")
-    private List<Usuario> usuarioList;
+    @Column(name = "exibir_versoes")
+    private Integer exibirVersoes;
 
     public Config() {
     }
@@ -74,13 +71,12 @@ public class Config implements Serializable {
         this.auditoria = auditoria;
     }
 
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public Integer getExibirVersoes() {
+        return exibirVersoes;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setExibirVersoes(Integer exibirVersoes) {
+        this.exibirVersoes = exibirVersoes;
     }
 
     @Override

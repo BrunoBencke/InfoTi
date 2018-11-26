@@ -22,6 +22,9 @@ public class JdlPermissoes extends javax.swing.JDialog {
         if (cDao.status_auditoria()) {
             jcbAuditoria.setSelected(true);
         }
+        if (cDao.status_exibir_versoes()) {
+            jcbNaoExibir.setSelected(true);
+        }
     }
     
     public void salvaPermissoes(){
@@ -30,6 +33,11 @@ public class JdlPermissoes extends javax.swing.JDialog {
             cDao.setar_status_auditoria(1);
         } else {
             cDao.setar_status_auditoria(0);
+        }
+        if (jcbNaoExibir.isSelected()) {
+            cDao.setar_status_exibir_versoes(0);
+        } else {
+            cDao.setar_status_exibir_versoes(1);
         }
         if (jcbTelaClientes.isSelected()) {
             permDao.setar_status_permissao(1, 10, 5, usuario.getCodigo());
@@ -80,6 +88,8 @@ public class JdlPermissoes extends javax.swing.JDialog {
         jcbTelaProdutos = new javax.swing.JCheckBox();
         jcbTelaClientes = new javax.swing.JCheckBox();
         jLabel11 = new javax.swing.JLabel();
+        jcbNaoExibir = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -163,27 +173,32 @@ public class JdlPermissoes extends javax.swing.JDialog {
 
         jLabel11.setText("Tela Clientes");
 
+        jLabel1.setText("Exibir Releases");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel10)
-                        .addGap(33, 33, 33)
-                        .addComponent(jcbAuditoria))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel11))
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jcbTelaClientes, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jcbTelaProdutos, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(47, Short.MAX_VALUE))
+                            .addComponent(jcbTelaProdutos, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jcbNaoExibir, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel10)
+                        .addGap(33, 33, 33)
+                        .addComponent(jcbAuditoria)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +215,11 @@ public class JdlPermissoes extends javax.swing.JDialog {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcbTelaProdutos))
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbNaoExibir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(156, 156, 156))
         );
 
         jLabel14.setText("Geral :");
@@ -227,7 +246,7 @@ public class JdlPermissoes extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(dtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,6 +367,7 @@ public class JdlPermissoes extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton dtnSalvar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -359,6 +379,7 @@ public class JdlPermissoes extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox jcbAuditoria;
+    private javax.swing.JCheckBox jcbNaoExibir;
     private javax.swing.JComboBox<String> jcbTela;
     private javax.swing.JCheckBox jcbTelaClientes;
     private javax.swing.JCheckBox jcbTelaProdutos;

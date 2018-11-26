@@ -204,6 +204,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                 user.setNome(txfLogin.getText());
                 user.setSenha(c.criptografa(txfSenha.getText()));
                 config.setAuditoria(1);
+                config.setExibirVersoes(1);
                 d.salvar(config);
                 user.setIdconfig(config);
                 d.salvar(user);
@@ -254,7 +255,7 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
             resposta = JOptionPane.showConfirmDialog(this, "Deseja Realmente Excluir?");
             if (resposta == JOptionPane.YES_OPTION) {
                 user = d.procurarPorId(codUsuario);
-                d.excluir(user,user.toString());
+                d.excluir(user,user.toString());                
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);

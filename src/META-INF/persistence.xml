@@ -29,6 +29,7 @@
     <class>entidades.Tela</class>
     <class>entidades.Arquivada</class>
     <class>entidades.Arquivo</class>
+    <class>entidades.Versoes</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/iNFO-Ti"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
