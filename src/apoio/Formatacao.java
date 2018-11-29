@@ -1,5 +1,6 @@
 package apoio;
 
+import java.sql.Timestamp;
 import java.text.*;
 import java.util.Date;
 import java.util.Locale;
@@ -157,6 +158,12 @@ public class Formatacao {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String dataHoje = df.format(now);
 
+        return dataHoje;
+    }
+    
+    public static String getDataHoraBanco(Date data) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String dataHoje = df.format(data);
         return dataHoje;
     }
 }

@@ -60,6 +60,11 @@ create table versoes(idVersao SERIAL NOT NULL,
 					  versao VARCHAR(255),
 constraint pk_versoes PRIMARY KEY (idVersao));
 
+INSERT INTO versoes
+VALUES (default,'Versão Inicial',CURRENT_TIMESTAMP(0),'1.0.1'),
+(default,'Atualizado Versão de Releases',CURRENT_TIMESTAMP(0),'1.0.1'),
+(default,'Resolvidos Bugs no Cadastro de Usuários',CURRENT_TIMESTAMP(0),'1.0.1');
+
 create table config(idConfig SERIAL NOT NULL,
                       auditoria INT NOT NULL,
 					  exibir_versoes INT,

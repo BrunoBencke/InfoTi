@@ -35,9 +35,9 @@ public class JdlPermissoes extends javax.swing.JDialog {
             cDao.setar_status_auditoria(0);
         }
         if (jcbNaoExibir.isSelected()) {
-            cDao.setar_status_exibir_versoes(0);
-        } else {
             cDao.setar_status_exibir_versoes(1);
+        } else {
+            cDao.setar_status_exibir_versoes(0);
         }
         if (jcbTelaClientes.isSelected()) {
             permDao.setar_status_permissao(1, 10, 5, usuario.getCodigo());

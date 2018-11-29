@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telas;
 
 import dao.ConfigDao;
@@ -10,10 +5,6 @@ import entidades.Permissao;
 import entidades.Usuario;
 import java.util.ArrayList;
 
-/**
- *
- * @author atendimento
- */
 public class JdlRelease extends javax.swing.JDialog {
     
     Usuario user;
@@ -24,7 +15,8 @@ public class JdlRelease extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.user = usuario;
-        this.perm = permissoes;
+        this.perm = permissoes;        
+        cDao.populaVersoes(tblVersoes);
     }
     
     public void check() {
@@ -46,7 +38,7 @@ public class JdlRelease extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblVersoes = new javax.swing.JTable();
         btnEntendido = new javax.swing.JButton();
         jcbNaoExibir = new javax.swing.JCheckBox();
 
@@ -55,7 +47,7 @@ public class JdlRelease extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblVersoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -63,7 +55,7 @@ public class JdlRelease extends javax.swing.JDialog {
                 "Novidades", "Data", "Versão"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblVersoes);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,6 +76,11 @@ public class JdlRelease extends javax.swing.JDialog {
         });
 
         jcbNaoExibir.setText("Não Exibir Novamente");
+        jcbNaoExibir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbNaoExibirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,6 +118,10 @@ public class JdlRelease extends javax.swing.JDialog {
         this.dispose();
         telaPrincipal.setVisible(true);
     }//GEN-LAST:event_btnEntendidoActionPerformed
+
+    private void jcbNaoExibirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbNaoExibirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbNaoExibirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,7 +171,7 @@ public class JdlRelease extends javax.swing.JDialog {
     private javax.swing.JButton btnEntendido;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JCheckBox jcbNaoExibir;
+    private javax.swing.JTable tblVersoes;
     // End of variables declaration//GEN-END:variables
 }

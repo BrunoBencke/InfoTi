@@ -73,5 +73,6 @@ Contributor(s):
     <mapping class="entidades.TelaBotao"/>
     <mapping class="entidades.Arquivada"/>
     <mapping class="entidades.Arquivo"/>
+    <mapping class="entidades.Versoes"/>
   </session-factory>
 </hibernate-configuration>
