@@ -170,20 +170,9 @@ public class ConfigDao{
 
             // permite seleção de apenas uma linha da tabela
             tblVersoes.setSelectionMode(0);
-
-            // redimensiona as colunas de uma tabela
-            TableColumn column = null;
-            for (int i = 0; i < tblVersoes.getColumnCount(); i++) {
-                column = tblVersoes.getColumnModel().getColumn(i);
-                switch (i) {
-                    case 0:
-                        column.setPreferredWidth(17);
-                        break;
-                    case 1:
-                        column.setPreferredWidth(140);
-                        break;
-                }
-            }
+            tblVersoes.setRowHeight(50);
+            //tblVersoes.getColumn("Descrição").setPreferredWidth(2);
+            
         } catch (HibernateException he) {
             he.printStackTrace();
         }
