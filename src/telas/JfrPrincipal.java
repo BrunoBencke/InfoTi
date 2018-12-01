@@ -65,7 +65,8 @@ public class JfrPrincipal extends javax.swing.JFrame {
         email = new javax.swing.JMenuItem();
         xml = new javax.swing.JMenuItem();
         grafico = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        backup = new javax.swing.JMenuItem();
+        versoes = new javax.swing.JMenuItem();
         sistema = new javax.swing.JMenu();
         usuario = new javax.swing.JMenuItem();
         desconectar = new javax.swing.JMenuItem();
@@ -380,15 +381,25 @@ public class JfrPrincipal extends javax.swing.JFrame {
         });
         ferramentas.add(grafico);
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\NetBeansProjects\\InfoTi\\src\\icones\\Backup.png")); // NOI18N
-        jMenuItem3.setText("Backup");
-        jMenuItem3.setPreferredSize(new java.awt.Dimension(200, 50));
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        backup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Backup.png"))); // NOI18N
+        backup.setText("Backup");
+        backup.setPreferredSize(new java.awt.Dimension(200, 50));
+        backup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                backupActionPerformed(evt);
             }
         });
-        ferramentas.add(jMenuItem3);
+        ferramentas.add(backup);
+
+        versoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/versões-32.png"))); // NOI18N
+        versoes.setText("Versões");
+        versoes.setPreferredSize(new java.awt.Dimension(200, 50));
+        versoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                versoesActionPerformed(evt);
+            }
+        });
+        ferramentas.add(versoes);
 
         menu.add(ferramentas);
 
@@ -619,12 +630,15 @@ public class JfrPrincipal extends javax.swing.JFrame {
         grafico.setVisible(true);
     }//GEN-LAST:event_graficoActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        
+    private void backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupActionPerformed
         JdlBackup jdlBackup = new JdlBackup(this, true);
         jdlBackup.setVisible(true);
-        
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_backupActionPerformed
+
+    private void versoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_versoesActionPerformed
+        JdlRelease jdlRelease = new JdlRelease(this, rootPaneCheckingEnabled, user, permissao,false);
+        jdlRelease.setVisible(true);
+    }//GEN-LAST:event_versoesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -669,6 +683,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu adicionais;
     private javax.swing.JMenuItem auditoria;
+    private javax.swing.JMenuItem backup;
     private javax.swing.JMenuItem clientes;
     private javax.swing.JMenuItem config;
     private javax.swing.JMenuItem contasReceber;
@@ -680,7 +695,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem grafico;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem marcasProdutos;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem miAllClients;
@@ -700,6 +714,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem todosPedidos;
     private javax.swing.JMenuItem usuario;
     private javax.swing.JMenu vendas;
+    private javax.swing.JMenuItem versoes;
     private javax.swing.JMenuItem xml;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,13 +10,18 @@ public class JdlRelease extends javax.swing.JDialog {
     Usuario user;
     ArrayList<Permissao> perm;
     ConfigDao cDao = new ConfigDao();
+    Boolean abrirSistema = null;
     
-    public JdlRelease(java.awt.Frame parent, boolean modal, Usuario usuario, ArrayList<Permissao> permissoes) {
+    public JdlRelease(java.awt.Frame parent, boolean modal, Usuario usuario, ArrayList<Permissao> permissoes, boolean abrirSistema) {
         super(parent, modal);
         initComponents();
         this.user = usuario;
-        this.perm = permissoes;        
+        this.perm = permissoes; 
+        this.abrirSistema = abrirSistema;
         cDao.populaVersoes(tblVersoes);
+        if (!abrirSistema) {
+                jcbNaoExibir.remove(this);
+        }
     }
     
     public void check() {
@@ -114,9 +119,13 @@ public class JdlRelease extends javax.swing.JDialog {
 
     private void btnEntendidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntendidoActionPerformed
         check();
-        JfrPrincipal telaPrincipal = new JfrPrincipal(user, perm);
-        this.dispose();
-        telaPrincipal.setVisible(true);
+        if (abrirSistema) {
+            JfrPrincipal telaPrincipal = new JfrPrincipal(user, perm);
+            this.dispose();
+            telaPrincipal.setVisible(true);
+        } else {
+            this.dispose();
+        }
     }//GEN-LAST:event_btnEntendidoActionPerformed
 
     private void jcbNaoExibirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbNaoExibirActionPerformed
@@ -155,7 +164,8 @@ public class JdlRelease extends javax.swing.JDialog {
             public void run() {
                 Usuario user = new Usuario();
                 ArrayList<Permissao> perm = new ArrayList<>();
-                JdlRelease dialog = new JdlRelease(new javax.swing.JFrame(), true,user, perm);
+                Boolean abrirSistema = null;
+                JdlRelease dialog = new JdlRelease(new javax.swing.JFrame(), true,user, perm,abrirSistema);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

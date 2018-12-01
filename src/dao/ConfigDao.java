@@ -1,14 +1,17 @@
 package dao;
-
 import apoio.Calendario;
 import apoio.HibernateUtil;
 import apoio.Formatacao;
+import apoio.TextAreaCellRenderer;
 import entidades.Auditoria;
 import entidades.Config;
 import entidades.Versoes;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.hibernate.HibernateException;
@@ -167,12 +170,36 @@ public class ConfigDao{
                     return false;
                 }
             });
+            
+            //muda cor do cabeçalho da tabela
+//            DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+//            headerRenderer.setBackground(Color.LIGHT_GRAY);
+//
+//            for (int i = 0; i < tblVersoes.getModel().getColumnCount(); i++) {
+//                tblVersoes.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+//            }
 
-            // permite seleção de apenas uma linha da tabela
+            //dimensiona tamanho das colunas da tabela
+            tblVersoes.getColumnModel().getColumn(0).setMaxWidth(1500);
+            tblVersoes.getColumnModel().getColumn(1).setMaxWidth(100);
+            tblVersoes.getColumnModel().getColumn(2).setMaxWidth(300); 
+            
+            //seta quebra de linha na coluna 1 da tabela
+            TableColumn col = tblVersoes.getColumnModel().getColumn(0);  
+            col.setCellRenderer(new TextAreaCellRenderer());
+            
             tblVersoes.setSelectionMode(0);
             tblVersoes.setRowHeight(50);
-            //tblVersoes.getColumn("Descrição").setPreferredWidth(2);
             
+            //centraliza conteudo das colunas
+            DefaultTableCellRenderer centralizar = new DefaultTableCellRenderer() {
+            public void setValue(Object value) {
+                setHorizontalAlignment(JLabel.CENTER);
+                super.setValue(value);
+            }
+            };            
+            tblVersoes.getColumn("Versão").setCellRenderer(centralizar);
+            tblVersoes.getColumn("Data").setCellRenderer(centralizar);
         } catch (HibernateException he) {
             he.printStackTrace();
         }

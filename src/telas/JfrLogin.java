@@ -51,7 +51,7 @@ public class JfrLogin extends javax.swing.JFrame {
         if (login()) {
             this.setVisible(false);
             if (confDao.status_exibir_versoes()) {
-                JdlRelease telaRelease = new JdlRelease(this, rootPaneCheckingEnabled, user, perm);
+                JdlRelease telaRelease = new JdlRelease(this, rootPaneCheckingEnabled, user, perm,true);
                 telaRelease.setVisible(true);
             } else {
                 JfrPrincipal telaPrincipal = new JfrPrincipal(user, perm);
