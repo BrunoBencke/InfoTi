@@ -11,6 +11,7 @@ import static java.awt.event.KeyEvent.VK_ENTER;
 import static java.awt.event.KeyEvent.VK_TAB;
 import java.io.File;
 import java.io.IOException;
+import java.security.Key;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
@@ -73,7 +76,7 @@ public class JfrLogin extends javax.swing.JFrame {
                 jtfSenha.setText("");
                 jtfUsuario.requestFocus();
             }
-        } 
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -207,7 +210,27 @@ public class JfrLogin extends javax.swing.JFrame {
 
             return false;
         }
+        String key = "ABCDEFGH12345678"; // 128 bit key
+        String decrypted = null;
 
+        try {
+            // Create key and cipher
+            Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
+            Cipher cipher = Cipher.getInstance("AES");
+
+            // decrypt the text
+            cipher.init(Cipher.DECRYPT_MODE, aesKey);
+            decrypted = new String(cipher.doFinal(codigo.getBytes()));
+
+            System.err.println(decrypted);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            LabelValidade.setText("Arquivo de licença inválido!");
+
+            return false;
+        }
+        
         Calendar validade = Calendar.getInstance();
 
         try {
@@ -236,7 +259,7 @@ public class JfrLogin extends javax.swing.JFrame {
         Long dias = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 
         if (dias <= 5) {
-            LabelValidade.setText("Prazo de validade do sistema irá expirar em " + dias + " dia(s)!");
+            LabelValidade.setText("Prazo de validade do sistema irá expirar em " + (dias + 1) + " dia(s)!");
         }
 
         return true;
