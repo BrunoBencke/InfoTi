@@ -35,6 +35,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Versoes.findByVersao", query = "SELECT v FROM Versoes v WHERE v.versao = :versao")})
 public class Versoes implements Serializable {
 
+    @Column(name = "atual")
+    private Integer atual;
+    @Column(name = "lido")
+    private Integer lido;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -111,6 +116,22 @@ public class Versoes implements Serializable {
     @Override
     public String toString() {
         return "entidades.Versoes[ idversao=" + idversao + " ]";
+    }
+
+    public Integer getAtual() {
+        return atual;
+    }
+
+    public void setAtual(Integer atual) {
+        this.atual = atual;
+    }
+
+    public Integer getLido() {
+        return lido;
+    }
+
+    public void setLido(Integer lido) {
+        this.lido = lido;
     }
     
 }

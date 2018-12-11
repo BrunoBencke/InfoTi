@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.hibernate.HibernateException;
+import org.hibernate.Transaction;
 
 public class VendaDao extends Dao {
     
@@ -32,6 +33,19 @@ public class VendaDao extends Dao {
             sessao.close();
         }
         return false;
+    }
+
+    public void excluiVenda(Venda v) {
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Transaction t = sessao.beginTransaction();
+            sessao.delete(v);
+            t.commit();
+        } catch (Exception e) {
+            System.out.println("Erro ao Excluir Registro!" + e.toString());
+        } finally {
+            sessao.close();
+        }
     }
 
     public Venda procurarPorId(Integer id) {

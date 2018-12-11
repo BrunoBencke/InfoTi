@@ -32,16 +32,8 @@ public class JdlPedidos extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jcbStatus = new javax.swing.JComboBox<>();
         btnEditar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
-        btnRelatorio = new javax.swing.JButton();
-        txfDataInicial = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txfDataFinal = new javax.swing.JFormattedTextField();
-        jLabel2 = new javax.swing.JLabel();
-        btnBuscar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblVendas = new javax.swing.JTable();
@@ -69,18 +61,6 @@ public class JdlPedidos extends javax.swing.JDialog {
             }
         });
 
-        jcbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aberto", "Cancelado", "Faturado" }));
-        jcbStatus.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jcbStatusItemStateChanged(evt);
-            }
-        });
-        jcbStatus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbStatusActionPerformed(evt);
-            }
-        });
-
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/editar.png"))); // NOI18N
         btnEditar.setToolTipText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -89,64 +69,11 @@ public class JdlPedidos extends javax.swing.JDialog {
             }
         });
 
-        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Exit.png"))); // NOI18N
-        btnExcluir.setToolTipText("Excluir");
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
-            }
-        });
-
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/sair.png"))); // NOI18N
         btnSair.setToolTipText("Sair");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
-            }
-        });
-
-        btnRelatorio.setToolTipText("Imprimir Relatório");
-        btnRelatorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatorioActionPerformed(evt);
-            }
-        });
-
-        try {
-            txfDataInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txfDataInicial.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txfDataInicialKeyPressed(evt);
-            }
-        });
-
-        jLabel1.setText("á");
-
-        try {
-            txfDataFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txfDataFinal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txfDataFinalKeyPressed(evt);
-            }
-        });
-
-        jLabel2.setText("Busca por Período :");
-
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Search.png"))); // NOI18N
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnBuscarKeyPressed(evt);
             }
         });
 
@@ -161,54 +88,20 @@ public class JdlPedidos extends javax.swing.JDialog {
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txfDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txfDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRelatorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txfDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)
-                        .addComponent(txfDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -232,7 +125,7 @@ public class JdlPedidos extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1007, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -297,23 +190,16 @@ public class JdlPedidos extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-//        int linha = tblPedidos.getSelectedRow();
-//        if (linha > -1) {
-//            int codPedido = Integer.valueOf(String.valueOf(tblPedidos.getValueAt(linha, 0)));
-//            pDao.updateStatus(codPedido, 1);
-//            pDao.popularTabelaPedidos(tblPedidos, jcbStatus.getSelectedIndex());
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Selecione um Pedido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
-//        }
+        int linha = tblVendas.getSelectedRow();
+        if (linha > -1) {
+            int codPedido = Integer.valueOf(String.valueOf(tblVendas.getValueAt(linha, 0)));
+            venda = vDao.procurarPorId(codPedido);
+            vDao.excluiVenda(venda);
+            vDao.populaVendas(tblVendas);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Pedido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void jcbStatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbStatusItemStateChanged
-        //new PedidoDao().popularTabelaPedidos(tblPedidos,jcbStatus.getSelectedIndex());
-    }//GEN-LAST:event_jcbStatusItemStateChanged
-
-    private void jcbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbStatusActionPerformed
-        //new PedidoDao().popularTabelaPedidos(tblPedidos,jcbStatus.getSelectedIndex());
-    }//GEN-LAST:event_jcbStatusActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int linha = tblVendas.getSelectedRow();
@@ -339,62 +225,9 @@ public class JdlPedidos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-//        int linha = tblPedidos.getSelectedRow();
-//        if (linha > -1) {
-//            int codPedido = Integer.valueOf(String.valueOf(tblPedidos.getValueAt(linha, 0)));
-//            pDao.deleteTodosItensDoPedido(codPedido);
-//            pDao.delete(codPedido);
-//            pDao.popularTabelaPedidos(tblPedidos, jcbStatus.getSelectedIndex());
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Selecione um Pedido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
-//        }
-    }//GEN-LAST:event_btnExcluirActionPerformed
-
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
-
-    private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioActionPerformed
-//        if (txfDataInicial.getText().equalsIgnoreCase("  /  /    ") || txfDataFinal.getText().equalsIgnoreCase("  /  /    ")) {
-//            JOptionPane.showMessageDialog(this, "Digite a Data Inicial e Final!");
-//        } else {
-//            try {
-//                JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/pedidosPorData.jrxml"));
-//                Map parametros = new HashMap();
-//                parametros.put("dataIni", txfDataInicial.getText());
-//                parametros.put("dataFim", txfDataFinal.getText());
-//                JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConectaBD.getInstance().getConnection());
-//                JasperViewer.viewReport(impressao, false);
-//                txfDataInicial.setText("");
-//                txfDataFinal.setText("");
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, "Erro ao gerar relatório: " + e);
-//            }
-//        }
-    }//GEN-LAST:event_btnRelatorioActionPerformed
-
-    private void txfDataInicialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfDataInicialKeyPressed
-        if (evt.getKeyChar() == VK_ENTER) {
-            txfDataFinal.requestFocus();
-        }
-    }//GEN-LAST:event_txfDataInicialKeyPressed
-
-    private void txfDataFinalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfDataFinalKeyPressed
-        if (evt.getKeyChar() == VK_ENTER) {
-            btnBuscar.requestFocus();
-        }
-    }//GEN-LAST:event_txfDataFinalKeyPressed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        //pDao.popularTabelaPedidosPorData(tblPedidos,txfDataInicial.getText(),txfDataFinal.getText(),jcbStatus.getSelectedIndex());
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void btnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyPressed
-        if (evt.getKeyChar() == VK_ENTER) {
-            btnBuscar.doClick();
-        }
-    }//GEN-LAST:event_btnBuscarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -439,22 +272,14 @@ public class JdlPedidos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
-    private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton btnSair;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> jcbStatus;
     private javax.swing.JTable tblVendas;
-    private javax.swing.JFormattedTextField txfDataFinal;
-    private javax.swing.JFormattedTextField txfDataInicial;
     // End of variables declaration//GEN-END:variables
 }

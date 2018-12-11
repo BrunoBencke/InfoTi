@@ -91,6 +91,20 @@ public class ProdutosDao extends Dao {
         }
         return null;
     }
+    
+    public ArrayList<ProdutoVenda> produtosPedido(int codPedido) {
+        try {
+            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            org.hibernate.Query q = sessao.createQuery("from produto_venda where idVenda = '" + codPedido + "'");
+            ArrayList<ProdutoVenda> resultado = new ArrayList<ProdutoVenda>();
+            resultado = (ArrayList<ProdutoVenda>) q.list();
+            return resultado;
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
+        return null;
+    }
 
     public void populaProduto(JTable tabela) {
         //List resultado = null;

@@ -13,6 +13,7 @@ import entidades.Venda;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -489,18 +490,16 @@ public class JdlNovoPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnFaturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFaturarActionPerformed
-//        ArrayList<ItemPedido> produtos = pDao.produtosDoPedido(pedido.getCod_pedido());
-//        if (produtos.size() < 1) {
-//            JOptionPane.showMessageDialog(this, "Adicione Algum Produto Para Faturar!");
-//        } else {
-//            for (int i = 0; i < produtos.size(); i++) {
-//                ItemPedido item = produtos.get(i);
-//                pDao.baixarEstoque(item.getCod_produto(), item.getQuantidade());
-//            }
-//            JdlCrediario cred = new JdlCrediario(this, rootPaneCheckingEnabled, pedido,tblPedidos);
-//            cred.setVisible(true);
-//            this.dispose();
-//        }
+        ArrayList<ProdutoVenda> produtos = pDao.produtosPedido(venda.getIdvenda());
+        if (produtos.size() < 1) {
+            JOptionPane.showMessageDialog(this, "Adicione Algum Produto Para Faturar!");
+        } else {
+            for (int i = 0; i < produtos.size(); i++) {
+                ProdutoVenda item = produtos.get(i);
+                //pDao.baixarEstoque(item.getIdproduto().getIdproduto(), item.getQuantidade());
+            }
+            this.dispose();
+        }
     }//GEN-LAST:event_btnFaturarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -548,6 +547,9 @@ public class JdlNovoPedido extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JdlNovoPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */

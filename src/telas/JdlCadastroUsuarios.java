@@ -204,7 +204,6 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
                 user.setNome(txfLogin.getText());
                 user.setSenha(c.criptografa(txfSenha.getText()));
                 config.setAuditoria(1);
-                config.setExibirVersoes(1);
                 d.salvar(config);
                 user.setIdconfig(config);
                 d.salvar(user);
@@ -296,6 +295,9 @@ public class JdlCadastroUsuarios extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JdlCadastroUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */

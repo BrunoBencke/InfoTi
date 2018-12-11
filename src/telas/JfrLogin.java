@@ -1,6 +1,7 @@
 package telas;
 
 import apoio.Criptografia;
+import apoio.Decriptador;
 import apoio.GravaTxt;
 import apoio.HibernateUtil;
 import dao.ConfigDao;
@@ -63,12 +64,12 @@ public class JfrLogin extends javax.swing.JFrame {
             if (login()) {
                 this.setVisible(false);
 
-                if (confDao.status_exibir_versoes()) {
-                    JdlRelease telaRelease = new JdlRelease(this, rootPaneCheckingEnabled, user, perm, true);
-                    telaRelease.setVisible(true);
-                } else {
+                if (confDao.statusReleaseAtualLido()) {
                     JfrPrincipal telaPrincipal = new JfrPrincipal(user, perm);
                     telaPrincipal.setVisible(true);
+                } else {
+                    JdlReleaseAtual telaRelease = new JdlReleaseAtual(this, rootPaneCheckingEnabled, user, perm);
+                    telaRelease.setVisible(true);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Preencha os dois campos! Usuário ou senha Incorretos!");
@@ -210,19 +211,12 @@ public class JfrLogin extends javax.swing.JFrame {
 
             return false;
         }
-        String key = "ABCDEFGH12345678"; // 128 bit key
+        String key = "Bar12345Bar12345"; // 128 bit key
+        String initVector = "RandomInitVector";
         String decrypted = null;
 
         try {
-            // Create key and cipher
-            Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
-            Cipher cipher = Cipher.getInstance("AES");
-
-            // decrypt the text
-            cipher.init(Cipher.DECRYPT_MODE, aesKey);
-            decrypted = new String(cipher.doFinal(codigo.getBytes()));
-
-            System.err.println(decrypted);
+            decrypted = Decriptador.decrypt(key, initVector, codigo);
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -230,12 +224,12 @@ public class JfrLogin extends javax.swing.JFrame {
 
             return false;
         }
-        
+
         Calendar validade = Calendar.getInstance();
 
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
-            validade.setTime(sdf.parse(codigo));
+            validade.setTime(sdf.parse(decrypted));
         } catch (ParseException e) {
             LabelValidade.setText("Arquivo de licença inválido!");
 

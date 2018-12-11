@@ -26,6 +26,21 @@ public class ConfigDao{
     Calendario calendario = new Calendario();
     Formatacao formatacao = new Formatacao();
     
+    public Versoes carregaUltimaVersao() {
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            org.hibernate.Query q = sessao.createQuery("from Versoes where atual = '1'");
+            List lista = q.list();
+            Versoes a = (Versoes) lista.get(0);
+            return a;
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return null;
+    }
+
     public boolean status_auditoria() {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
@@ -42,25 +57,6 @@ public class ConfigDao{
         } finally {
             sessao.close();
         }       
-        return false;
-    }
-
-    public boolean status_exibir_versoes() {
-        try {
-            sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query q = sessao.createQuery("from Config where idConfig = '" + user.getIdconfig().getIdconfig() + "'");
-            List lista = q.list();
-            Config a = (Config) lista.get(0);
-            if (a.getExibirVersoes() == 1) {
-                return true;
-            } else if (a.getExibirVersoes() == 0) {
-                return false;
-            }
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        } finally {
-            sessao.close();
-        }
         return false;
     }
 
@@ -99,47 +95,66 @@ public class ConfigDao{
             sessao.close();
         }
     }
-
-    public void setar_status_exibir_versoes(int status) {
+    
+    public boolean statusReleaseAtualLido() {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
-            Transaction t = sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createQuery("from Config where idConfig = '" + user.getIdconfig().getIdconfig() + "'");
+            org.hibernate.Query q = sessao.createQuery("from Versoes where atual = '1'");
             List lista = q.list();
-            Config a = (Config) lista.get(0);
-            if (status == 1) {
-                a.setExibirVersoes(1);
-                auditoria.setDadoAnterior("Exibir Releases Desligado");
-                auditoria.setDadoNovo("Exibir Releases Ligado");
-                auditoria.setData(calendario.obterDataAtualDMA());
-                auditoria.setHora(calendario.obterHoraAtual());
-                auditoria.setIdusuario(user);
-                auditoria.setOperacao("Update");
-                sessao.save(auditoria);
-                sessao.saveOrUpdate(a);
-            } else if (status == 0) {
-                a.setExibirVersoes(0);
-                auditoria.setDadoAnterior("Exibir Releases Ligado");
-                auditoria.setDadoNovo("Exibir Releases Desligado");
-                auditoria.setData(calendario.obterDataAtualDMA());
-                auditoria.setHora(calendario.obterHoraAtual());
-                auditoria.setIdusuario(user);
-                auditoria.setOperacao("Update");
-                sessao.save(auditoria);
-                sessao.saveOrUpdate(a);
+            Versoes a = (Versoes) lista.get(0);
+            if (a.getLido() == 1) {
+                return true;
+            } else if (a.getLido() == 0) {
+                return false;
             }
-            t.commit();
         } catch (HibernateException he) {
             he.printStackTrace();
         } finally {
             sessao.close();
         }
+        return false;
     }
+//
+//    public void setar_status_exibir_versoes(int status) {
+//        try {
+//            sessao = HibernateUtil.getSessionFactory().openSession();
+//            Transaction t = sessao.beginTransaction();
+//            org.hibernate.Query q = sessao.createQuery("from Config where idConfig = '" + user.getIdconfig().getIdconfig() + "'");
+//            List lista = q.list();
+//            Config a = (Config) lista.get(0);
+//            if (status == 1) {
+//                a.setExibirVersoes(1);
+//                auditoria.setDadoAnterior("Exibir Releases Desligado");
+//                auditoria.setDadoNovo("Exibir Releases Ligado");
+//                auditoria.setData(calendario.obterDataAtualDMA());
+//                auditoria.setHora(calendario.obterHoraAtual());
+//                auditoria.setIdusuario(user);
+//                auditoria.setOperacao("Update");
+//                sessao.save(auditoria);
+//                sessao.saveOrUpdate(a);
+//            } else if (status == 0) {
+//                a.setExibirVersoes(0);
+//                auditoria.setDadoAnterior("Exibir Releases Ligado");
+//                auditoria.setDadoNovo("Exibir Releases Desligado");
+//                auditoria.setData(calendario.obterDataAtualDMA());
+//                auditoria.setHora(calendario.obterHoraAtual());
+//                auditoria.setIdusuario(user);
+//                auditoria.setOperacao("Update");
+//                sessao.save(auditoria);
+//                sessao.saveOrUpdate(a);
+//            }
+//            t.commit();
+//        } catch (HibernateException he) {
+//            he.printStackTrace();
+//        } finally {
+//            sessao.close();
+//        }
+//    }
 
     public void populaVersoes(JTable tblVersoes) {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
-            org.hibernate.Query q = sessao.createQuery("from Versoes");
+            org.hibernate.Query q = sessao.createQuery("from Versoes order by idVersao desc");
             ArrayList<Versoes> resultado = new ArrayList<Versoes>();
             resultado = (ArrayList<Versoes>) q.list();
 

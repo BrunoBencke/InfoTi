@@ -242,13 +242,11 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jcbTelaClientes" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="jcbTelaProdutos" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jcbNaoExibir" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -281,12 +279,7 @@
                           <Component id="jLabel12" min="-2" pref="21" max="-2" attributes="0"/>
                           <Component id="jcbTelaProdutos" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jcbNaoExibir" max="32767" attributes="0"/>
-                          <Component id="jLabel1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
+                      <EmptySpace pref="195" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -314,13 +307,6 @@
             <Component class="javax.swing.JLabel" name="jLabel11">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tela Clientes"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JCheckBox" name="jcbNaoExibir">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Exibir Releases"/>
               </Properties>
             </Component>
           </SubComponents>

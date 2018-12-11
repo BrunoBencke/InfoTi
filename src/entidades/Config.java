@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author atendimento
+ * @author Christian
  */
 @Entity
 @Table(name = "config")
@@ -27,8 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Config.findAll", query = "SELECT c FROM Config c")
     , @NamedQuery(name = "Config.findByIdconfig", query = "SELECT c FROM Config c WHERE c.idconfig = :idconfig")
-    , @NamedQuery(name = "Config.findByAuditoria", query = "SELECT c FROM Config c WHERE c.auditoria = :auditoria")
-    , @NamedQuery(name = "Config.findByExibirVersoes", query = "SELECT c FROM Config c WHERE c.exibirVersoes = :exibirVersoes")})
+    , @NamedQuery(name = "Config.findByAuditoria", query = "SELECT c FROM Config c WHERE c.auditoria = :auditoria")})
 public class Config implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,8 +39,6 @@ public class Config implements Serializable {
     @Basic(optional = false)
     @Column(name = "auditoria")
     private int auditoria;
-    @Column(name = "exibir_versoes")
-    private Integer exibirVersoes;
 
     public Config() {
     }
@@ -69,14 +66,6 @@ public class Config implements Serializable {
 
     public void setAuditoria(int auditoria) {
         this.auditoria = auditoria;
-    }
-
-    public Integer getExibirVersoes() {
-        return exibirVersoes;
-    }
-
-    public void setExibirVersoes(Integer exibirVersoes) {
-        this.exibirVersoes = exibirVersoes;
     }
 
     @Override

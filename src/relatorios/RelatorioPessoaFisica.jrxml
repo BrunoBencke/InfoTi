@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioPessoaFisica" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b3d43b4a-ee9e-46f3-8f70-7f3875ff7f28">
+	<queryString>
+		<![CDATA[SELECT
+     c."idcliente",
+     c."nome",
+     c."sexo",
+     pf."cpf",
+     c."telefone"
+FROM
+     "cliente" c,
+     "pessoa_fisica" pf
+WHERE
+     pf.idcliente = c.idcliente
+ORDER BY
+     c.nome]]>
+	</queryString>
+	<field name="idcliente" class="java.lang.Integer"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="sexo" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="telefone" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="80" uuid="d78cc096-c9ac-486d-945e-b0182dbe0356"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="35" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pessoa Fisica]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="28" width="100" height="20" uuid="730b4b38-7682-4a97-a1ff-6806e01c8db6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="28" width="100" height="20" uuid="11e5833a-cae6-42df-842f-5a001a90e005"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="28" width="100" height="20" uuid="17eb9019-7130-448e-b7da-f55a0986a03d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="367" y="28" width="100" height="20" uuid="5f8e5ea5-9ea2-4256-a376-1443d0674456"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="28" width="88" height="20" uuid="f425da1b-7f31-4472-8a50-968552caedf7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefone]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="11" width="100" height="20" uuid="0da8de2b-ea5c-4c2b-99ce-f724c6a2fcad"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{idcliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="11" width="167" height="20" uuid="f54f53fa-2be5-4d7c-8f09-dc11ecbc6b2b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="11" width="100" height="20" uuid="e7de36c3-88c5-43e4-838b-1598f15f813e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="367" y="11" width="100" height="20" uuid="c5451b56-d661-4a1c-a063-32a9c556d9d4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="467" y="11" width="88" height="20" uuid="a461c3c3-4de0-4db0-bf22-e4ecb197533a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

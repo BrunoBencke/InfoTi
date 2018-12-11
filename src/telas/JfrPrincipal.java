@@ -4,12 +4,19 @@ import entidades.Permissao;
 import entidades.Usuario;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class JfrPrincipal extends javax.swing.JFrame {
     
@@ -49,16 +56,14 @@ public class JfrPrincipal extends javax.swing.JFrame {
         pedidos = new javax.swing.JMenuItem();
         todosPedidos = new javax.swing.JMenuItem();
         fianceiro = new javax.swing.JMenu();
-        contasReceber = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         relatorios = new javax.swing.JMenu();
         relatorioClientes = new javax.swing.JMenu();
         miAllClients = new javax.swing.JMenuItem();
+        miAllClients1 = new javax.swing.JMenuItem();
         relatorioFuncionarios = new javax.swing.JMenu();
         miAllWorkers = new javax.swing.JMenuItem();
-        miWorkersPeriod = new javax.swing.JMenuItem();
         relatorioPedidos = new javax.swing.JMenu();
-        miAllOrders = new javax.swing.JMenuItem();
         miOrdersPeriod = new javax.swing.JMenuItem();
         auditoria = new javax.swing.JMenuItem();
         ferramentas = new javax.swing.JMenu();
@@ -207,18 +212,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
         fianceiro.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         fianceiro.setPreferredSize(new java.awt.Dimension(170, 50));
 
-        contasReceber.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        contasReceber.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Payment.png"))); // NOI18N
-        contasReceber.setText("Contas a Receber");
-        contasReceber.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        contasReceber.setPreferredSize(new java.awt.Dimension(200, 50));
-        contasReceber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contasReceberActionPerformed(evt);
-            }
-        });
-        fianceiro.add(contasReceber);
-
         jMenuItem2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/contas_pagar.png"))); // NOI18N
         jMenuItem2.setText("Contas a Pagar");
@@ -254,7 +247,7 @@ public class JfrPrincipal extends javax.swing.JFrame {
 
         miAllClients.setBackground(new java.awt.Color(255, 255, 255));
         miAllClients.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        miAllClients.setText("Todos os itens");
+        miAllClients.setText("Pessoa Fisica");
         miAllClients.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         miAllClients.setPreferredSize(new java.awt.Dimension(200, 50));
         miAllClients.addActionListener(new java.awt.event.ActionListener() {
@@ -264,11 +257,23 @@ public class JfrPrincipal extends javax.swing.JFrame {
         });
         relatorioClientes.add(miAllClients);
 
+        miAllClients1.setBackground(new java.awt.Color(255, 255, 255));
+        miAllClients1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        miAllClients1.setText("Pessoa Juridica");
+        miAllClients1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        miAllClients1.setPreferredSize(new java.awt.Dimension(200, 50));
+        miAllClients1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAllClients1ActionPerformed(evt);
+            }
+        });
+        relatorioClientes.add(miAllClients1);
+
         relatorios.add(relatorioClientes);
 
         relatorioFuncionarios.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         relatorioFuncionarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Worker.png"))); // NOI18N
-        relatorioFuncionarios.setText("Funcionários");
+        relatorioFuncionarios.setText("Produtos");
         relatorioFuncionarios.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         relatorioFuncionarios.setOpaque(true);
         relatorioFuncionarios.setPreferredSize(new java.awt.Dimension(200, 50));
@@ -285,18 +290,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
         });
         relatorioFuncionarios.add(miAllWorkers);
 
-        miWorkersPeriod.setBackground(new java.awt.Color(255, 255, 255));
-        miWorkersPeriod.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        miWorkersPeriod.setText("Período (data)");
-        miWorkersPeriod.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        miWorkersPeriod.setPreferredSize(new java.awt.Dimension(200, 50));
-        miWorkersPeriod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miWorkersPeriodActionPerformed(evt);
-            }
-        });
-        relatorioFuncionarios.add(miWorkersPeriod);
-
         relatorios.add(relatorioFuncionarios);
 
         relatorioPedidos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -305,18 +298,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
         relatorioPedidos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         relatorioPedidos.setOpaque(true);
         relatorioPedidos.setPreferredSize(new java.awt.Dimension(200, 50));
-
-        miAllOrders.setBackground(new java.awt.Color(255, 255, 255));
-        miAllOrders.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        miAllOrders.setText("Todos os itens");
-        miAllOrders.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        miAllOrders.setPreferredSize(new java.awt.Dimension(200, 50));
-        miAllOrders.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miAllOrdersActionPerformed(evt);
-            }
-        });
-        relatorioPedidos.add(miAllOrders);
 
         miOrdersPeriod.setBackground(new java.awt.Color(255, 255, 255));
         miOrdersPeriod.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -531,52 +512,20 @@ public class JfrPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_sairActionPerformed
 
-    private void contasReceberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contasReceberActionPerformed
-//        payment = new dlPayment(this, false);
-//        payment.setVisible(true);
-    }//GEN-LAST:event_contasReceberActionPerformed
-
     private void miOrdersPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOrdersPeriodActionPerformed
 //        orderParameters = new popupOrderParameters(this, true);
 //        orderParameters.setVisible(true);
     }//GEN-LAST:event_miOrdersPeriodActionPerformed
 
-    private void miAllOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAllOrdersActionPerformed
-//        try {
-//            JasperReport partsReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/logs/Orders_noparameters.jrxml"));
-//            Map parameters = new HashMap();
-//            JasperPrint print = JasperFillManager.fillReport(partsReport, parameters, DBConnect.getInstance().getConnection());
-//            JasperViewer.viewReport(print, false);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-    }//GEN-LAST:event_miAllOrdersActionPerformed
-
-    private void miWorkersPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miWorkersPeriodActionPerformed
-//        workerParameters = new popupWorkerParameters(this, true);
-//        workerParameters.setVisible(true);
-    }//GEN-LAST:event_miWorkersPeriodActionPerformed
-
-    private void miAllWorkersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAllWorkersActionPerformed
-//        try {
-//            JasperReport partsReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/logs/Workers_noparameters.jrxml"));
-//            Map parameters = new HashMap();
-//            JasperPrint print = JasperFillManager.fillReport(partsReport, parameters, DBConnect.getInstance().getConnection());
-//            JasperViewer.viewReport(print, false);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-    }//GEN-LAST:event_miAllWorkersActionPerformed
-
     private void miAllClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAllClientsActionPerformed
-//        try {
-//            JasperReport partsReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/logs/Clients_noparameters.jrxml"));
-//            Map parameters = new HashMap();
-//            JasperPrint print = JasperFillManager.fillReport(partsReport, parameters, DBConnect.getInstance().getConnection());
-//            JasperViewer.viewReport(print, false);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+       /* try {
+            JasperReport partsReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/logs/Clients_noparameters.jrxml"));
+            Map parameters = new HashMap();
+           // JasperPrint print = JasperFillManager.fillReport(partsReport, parameters, DBConnect.getInstance().getConnection());
+            //JasperViewer.viewReport(print, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
     }//GEN-LAST:event_miAllClientsActionPerformed
 
     private void marcasProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcasProdutosActionPerformed
@@ -636,9 +585,24 @@ public class JfrPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_backupActionPerformed
 
     private void versoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_versoesActionPerformed
-        JdlRelease jdlRelease = new JdlRelease(this, rootPaneCheckingEnabled, user, permissao,false);
+        JdlReleases jdlRelease = new JdlReleases(this, rootPaneCheckingEnabled, user, permissao);
         jdlRelease.setVisible(true);
     }//GEN-LAST:event_versoesActionPerformed
+
+    private void miAllWorkersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAllWorkersActionPerformed
+        //        try {
+            //            JasperReport partsReport = JasperCompileManager.compileReport(getClass().getResourceAsStream("/logs/Workers_noparameters.jrxml"));
+            //            Map parameters = new HashMap();
+            //            JasperPrint print = JasperFillManager.fillReport(partsReport, parameters, DBConnect.getInstance().getConnection());
+            //            JasperViewer.viewReport(print, false);
+            //        } catch (Exception e) {
+            //            e.printStackTrace();
+            //        }
+    }//GEN-LAST:event_miAllWorkersActionPerformed
+
+    private void miAllClients1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAllClients1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_miAllClients1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -686,7 +650,6 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem backup;
     private javax.swing.JMenuItem clientes;
     private javax.swing.JMenuItem config;
-    private javax.swing.JMenuItem contasReceber;
     private javax.swing.JMenuItem desconectar;
     private javax.swing.JMenuItem email;
     private javax.swing.JMenu ferramentas;
@@ -698,10 +661,9 @@ public class JfrPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem marcasProdutos;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenuItem miAllClients;
-    private javax.swing.JMenuItem miAllOrders;
+    private javax.swing.JMenuItem miAllClients1;
     private javax.swing.JMenuItem miAllWorkers;
     private javax.swing.JMenuItem miOrdersPeriod;
-    private javax.swing.JMenuItem miWorkersPeriod;
     private javax.swing.JMenuItem pedidos;
     private javax.swing.JMenuItem produtos;
     private javax.swing.JMenu registros;
